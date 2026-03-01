@@ -1,0 +1,51 @@
+{
+  "schema_version": "6.0.0",
+  "content_version": "0.0.1",
+  "meta": {
+    "last_played": "2026-03-01T00:00:00Z",
+    "session_number": 0
+  },
+  "character": {
+    "name": "Unnamed",
+    "level": 0
+  },
+  "world": {},
+  "current_scene": {
+    "scene_id": "scene_000",
+    "location": "Starting Location",
+    "region": "starting",
+    "threat_level": 0,
+    "scene_type": "exploration"
+  },
+  "campaign": {
+    "name": "New Campaign",
+    "start_date": "2026-03-01",
+    "current_day": 1,
+    "current_time": "12:00",
+    "current_location": "Starting Location"
+  },
+  "current_day": 1,
+  "current_time": "12:00",
+  "clocks": [],
+  "world_situation": {},
+  "inter_group_relations": [],
+  "pc_standing": [],
+  "human_factions": [],
+  "external_threats": [],
+  "meta_clocks": [],
+  "faction_relationships": [],
+  "known_npcs": [],
+  "known_locations": [],
+  "campaign_arcs": [],
+  "active_quests": [],
+  "chronicle": [],
+  "clock_log": [],
+  "world_pulse": {
+    "day": 1,
+    "news": "",
+    "rumors": [],
+    "trends": [],
+    "arrivals": []
+  },
+  "last_played": "2026-03-01T00:00:00Z"
+}
