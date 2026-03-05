@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "rpg-engine-state-v6",
+  "$id": "rpg-engine-state-v7",
   "title": "RPG Engine — Campaign State (Template)",
-  "description": "Canonical schema for state.json. Schema version 6.0.0. Game-agnostic template — customize character, world_situation, and mechanics for your game.",
+  "description": "Canonical schema for state.json. Schema version 7.0.0. Worlds Without Number — customize character, world_situation, and mechanics for your game.",
   "type": "object",
   "required": [
     "schema_version",
@@ -146,14 +146,55 @@
     "character": {
       "type": "object",
       "required": [
-        "name", "level"
+        "name", "level", "class", "attributes", "hp", "armor_class",
+        "attack_bonus", "skills", "equipment", "saving_throws", "system_strain"
       ],
       "properties": {
         "name": { "type": "string", "minLength": 1 },
-        "level": { "type": "integer", "minimum": 0, "maximum": 100 }
+        "class": { "type": "string", "enum": ["warrior", "expert", "mage"] },
+        "level": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "xp": { "type": "integer", "minimum": 0 },
+        "background": { "type": "string" },
+        "attributes": {
+          "type": "object",
+          "required": ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"],
+          "properties": {
+            "strength": { "type": "integer", "minimum": 3, "maximum": 18 },
+            "dexterity": { "type": "integer", "minimum": 3, "maximum": 18 },
+            "constitution": { "type": "integer", "minimum": 3, "maximum": 18 },
+            "intelligence": { "type": "integer", "minimum": 3, "maximum": 18 },
+            "wisdom": { "type": "integer", "minimum": 3, "maximum": 18 },
+            "charisma": { "type": "integer", "minimum": 3, "maximum": 18 }
+          }
+        },
+        "hp": { "$ref": "#/$defs/resource_pool" },
+        "armor_class": { "type": "integer", "minimum": 0 },
+        "attack_bonus": { "type": "integer", "minimum": 0 },
+        "saving_throws": {
+          "type": "object",
+          "required": ["physical", "evasion", "mental"],
+          "properties": {
+            "physical": { "type": "integer" },
+            "evasion": { "type": "integer" },
+            "mental": { "type": "integer" }
+          }
+        },
+        "skills": { "type": "object", "description": "Skill name -> level (-1 to 4)" },
+        "system_strain": { "$ref": "#/$defs/resource_pool" },
+        "effort": { "$ref": "#/$defs/resource_pool" },
+        "equipment": {
+          "type": "object",
+          "properties": {
+            "readied": { "type": "array", "items": { "type": ["string", "object"] } },
+            "stowed": { "type": "array", "items": { "type": ["string", "object"] } },
+            "coins": { "type": "object" }
+          }
+        },
+        "foci": { "type": "array", "items": { "type": "string" } },
+        "class_abilities": { "type": "array", "items": { "type": "string" } }
       },
       "additionalProperties": true,
-      "description": "Character definition. Required fields are minimal — extend with your game's attributes, resources, equipment, and abilities."
+      "description": "WWN character definition with attributes, HP, AC, skills, equipment, saving throws, and system strain."
     },
 
     "world": {
