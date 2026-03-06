@@ -65,6 +65,9 @@
   "active_quests": [],
   "chronicle": [],
   "clock_log": [],
+  "combat_state": {
+    "active": false
+  },
   "world_pulse": {
     "day": 1,
     "news": "",

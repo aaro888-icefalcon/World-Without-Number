@@ -116,6 +116,7 @@
       "type": "array",
       "items": { "$ref": "#/$defs/clock_log_entry" }
     },
+    "combat_state": { "$ref": "#/$defs/combat_state" },
     "world_pulse": { "$ref": "#/$defs/world_pulse" },
     "last_played": {
       "type": "string",
@@ -430,6 +431,47 @@
         "new_value": { "type": "string" },
         "reason": { "type": "string" }
       }
+    },
+
+    "combat_state": {
+      "type": "object",
+      "required": ["active"],
+      "properties": {
+        "active": { "type": "boolean", "description": "Whether combat is currently in progress" },
+        "round": { "type": "integer", "minimum": 0 },
+        "zones": {
+          "type": "object",
+          "properties": {
+            "melee": { "type": "array", "items": { "type": "string" } },
+            "near": { "type": "array", "items": { "type": "string" } },
+            "far": { "type": "array", "items": { "type": "string" } },
+            "distant": { "type": "array", "items": { "type": "string" } }
+          },
+          "description": "Abstract combat zones — combatant IDs per zone"
+        },
+        "combatants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "hp_current", "hp_max", "zone"],
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "hp_current": { "type": "integer", "minimum": 0 },
+              "hp_max": { "type": "integer", "minimum": 1 },
+              "zone": { "type": "string", "enum": ["melee", "near", "far", "distant"] },
+              "conditions": { "type": "array", "items": { "type": "string" } },
+              "is_pc": { "type": "boolean" }
+            }
+          }
+        },
+        "initiative_order": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Combatant IDs in initiative order"
+        }
+      },
+      "description": "Active combat tracking with zone-based positioning (L8 mitigation)"
     },
 
     "world_pulse": {
