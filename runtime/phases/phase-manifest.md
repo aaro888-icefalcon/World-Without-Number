@@ -20,14 +20,26 @@ Machine-readable mapping of the 6-phase GM pipeline.
 ## PHASE 3: MECHANICAL_RESOLUTION
 - directory: 3-resolution/
 - domains:
-  - core: dice, character, conditions, attributes, skills, equipment, classes, backgrounds, foci
-  - combat: attack resolution, morale, bestiary, zone-based positioning
+  - core: dice, character, conditions, magic, attributes, skills, equipment, classes, backgrounds, foci
+  - combat: attack resolution, morale, bestiary, zone-based positioning, behavior AI, encounter generation
+  - exploration: travel, scene generation, treasure
+  - social: NPC generation, reaction rolls, faction turns
+  - world-building: world tick, clock advancement, world pulse
 - cli_commands:
   - `roll <expression>` — dice roll with arithmetic trace
   - `skill-check --attribute-mod --skill-level --difficulty` — 2d6 skill check
   - `save --type --level --modifier` — saving throw (physical/evasion/mental)
   - `attack --attack-bonus --skill-level --attribute-mod --weapon-damage --shock --target-ac --target-hp` — combat attack
   - `create-character --name --class --background --method` — character creation
+  - `cast-spell --spell-name --caster-level --tradition --current-effort --system-strain --system-strain-max` — spellcasting via Effort
+  - `encounter --terrain --threat-level` — random encounter generation
+  - `travel --terrain --days --supplies [--forage-mod] [--threat-level]` — overland travel resolution
+  - `generate-scene --scene-type [--tag-count] [--threat-level]` — tag-based scene generation
+  - `treasure --tier` — treasure roll by tier (1-5)
+  - `world-tick --days` — advance world clocks and generate world pulse
+  - `generate-npc [--importance] [--region] [--tags]` — NPC with voice card
+  - `reaction-roll [--modifier]` — 2d6 NPC reaction
+  - `faction-turn` — process faction actions from state
 - references:
   - `skills/combat/references/combat-rules.md` — WWN combat procedures
 - tables:
@@ -38,6 +50,16 @@ Machine-readable mapping of the 6-phase GM pipeline.
   - `skills/core/tables/backgrounds.py` — 20 backgrounds
   - `skills/core/tables/foci.py` — focus definitions
   - `skills/combat/tables/bestiary.py` — creature stat blocks
+- scripts:
+  - `skills/core/scripts/magic.py` — spell casting, Effort, arts, tradition management
+  - `skills/combat/scripts/behavior.py` — creature combat AI, behavior trees
+  - `skills/combat/scripts/encounter.py` — encounter generation from terrain/threat
+  - `skills/exploration/scripts/travel.py` — overland travel, foraging, privation
+  - `skills/exploration/scripts/scene.py` — tag-based scene generation
+  - `skills/exploration/scripts/treasure.py` — treasure rolls by tier
+  - `skills/social/scripts/npc.py` — NPC generation with voice cards
+  - `skills/social/scripts/faction.py` — faction turn processing
+  - `skills/world-building/scripts/world_tick.py` — world state advancement
 
 ## PHASE 4: NARRATIVE_TRANSLATION
 - directory: 4-narrative/

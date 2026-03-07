@@ -164,3 +164,145 @@ emergence_cli.py create-character --name STR --class CLASS --background INT \
 | `--method` | choice | No | `standard_array` (default) or `roll_3d6` |
 
 **Output JSON:** Complete character dict with all fields required by state.json `character` schema.
+
+---
+
+### `cast-spell`
+
+Cast a spell using the Effort system.
+
+```
+emergence_cli.py cast-spell --spell-name STR --caster-level INT --tradition TRADITION \
+    --current-effort INT --system-strain INT --system-strain-max INT [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--spell-name` | string | Yes | Name of the spell to cast |
+| `--caster-level` | int | Yes | Caster's character level |
+| `--tradition` | choice | Yes | `high_magic`, `elementalist`, `necromancer`, or `healer` |
+| `--current-effort` | int | Yes | Current uncommitted Effort |
+| `--system-strain` | int | Yes | Current System Strain |
+| `--system-strain-max` | int | Yes | Max System Strain (Constitution score) |
+
+---
+
+### `encounter`
+
+Generate a random encounter for given terrain and threat level.
+
+```
+emergence_cli.py encounter --terrain TERRAIN --threat-level INT [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--terrain` | choice | Yes | `forest`, `plains`, `mountains`, `desert`, `swamp`, `coast`, `ruins`, `urban`, `dungeon`, `wilderness` |
+| `--threat-level` | int | Yes | Area threat level (1-10) |
+
+---
+
+### `travel`
+
+Resolve multi-day overland travel with per-day events.
+
+```
+emergence_cli.py travel --terrain TERRAIN --days INT --supplies INT \
+    [--forage-mod INT] [--threat-level INT] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--terrain` | choice | Yes | `road`, `plains`, `forest`, `hills`, `mountains`, `desert`, `swamp`, `coast`, `jungle` |
+| `--days` | int | Yes | Number of days to travel |
+| `--supplies` | int | Yes | Current ration count |
+| `--forage-mod` | int | No | Wis/Survive modifier for foraging (default: 0) |
+| `--threat-level` | int | No | Area threat level (default: 3) |
+
+---
+
+### `generate-scene`
+
+Generate a playable scene seed from tags.
+
+```
+emergence_cli.py generate-scene --scene-type TYPE [--tag-count INT] [--threat-level INT] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--scene-type` | choice | Yes | `wilderness`, `ruin`, or `community` |
+| `--tag-count` | int | No | Number of tags to combine (default: 2) |
+| `--threat-level` | int | No | Overall threat level (default: 3) |
+
+---
+
+### `treasure`
+
+Roll treasure by tier.
+
+```
+emergence_cli.py treasure --tier INT [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--tier` | int | Yes | Treasure tier 1-5 |
+
+---
+
+### `world-tick`
+
+Advance world state between sessions: process clocks, generate world pulse.
+
+```
+emergence_cli.py world-tick --days INT [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--days` | int | Yes | Number of in-game days elapsed |
+
+Reads `clocks` and `factions` from state.json automatically.
+
+---
+
+### `generate-npc`
+
+Generate an NPC with voice card and personality.
+
+```
+emergence_cli.py generate-npc [--importance LEVEL] [--region STR] [--tags INT] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--importance` | choice | No | `minor` (default), `major`, or `faction_leader` |
+| `--region` | string | No | Region name for flavor (default: `unknown`) |
+| `--tags` | int | No | Number of character tags (default: 1) |
+
+---
+
+### `reaction-roll`
+
+Roll NPC reaction (2d6 + modifier).
+
+```
+emergence_cli.py reaction-roll [--modifier INT] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--modifier` | int | No | Reaction modifier (default: 0) |
+
+---
+
+### `faction-turn`
+
+Run a faction turn for all active factions in state.json.
+
+```
+emergence_cli.py faction-turn [--seed INT]
+```
+
+Reads factions from state.json automatically. Each faction selects an action based on archetype and power level, then rolls 2d6+power bonus to resolve.
