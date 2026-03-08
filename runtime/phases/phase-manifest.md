@@ -13,9 +13,25 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `lore/history-and-ages.md` — timeline of ages (always-load)
   - `lore/geography.md` — major geographic features
   - `lore/languages.md` — languages of the Latter Earth
-  - `lore/nations/*.md` — 40 nation files with §-anchored sections (region-specific load)
+  - `lore/nations/*.md` — 57 nation files with §-anchored sections (region-specific load)
+  - `lore/nations/carven-peaks.md` — NYC/Carven Peaks primary region (NYC campaign)
+  - `lore/nations/manthva.md` — Still Cities on the Gebed Mur (NYC campaign)
+  - `lore/nations/mishar.md` — Arena Kingdom, nearest Amundi neighbor (NYC campaign)
+  - `lore/nations/nabardura.md` — Fragmented Kingdom (NYC campaign)
+  - `lore/nations/fidach.md` — Highland Clans (NYC campaign)
+  - `lore/nations/pelegrin.md` — Ascendant Threat (NYC campaign)
+  - `lore/nations/qasir.md` — Compromised Kingdom (NYC campaign)
+  - `lore/nations/vois.md` — Cautious Republic (NYC campaign)
+  - `lore/nations/couront.md` — Monastic Kingdom (NYC campaign)
+  - `lore/nations/verdancy.md` — The Verdancy ecological threat (NYC campaign)
+  - `lore/nations/black-pact.md` — Black Pact sorcery schools (NYC campaign)
+  - `lore/gallery-system.md` — 9-level gallery dungeon reference (NYC campaign, load when in galleries)
+  - `lore/nyc-factions.md` — NYC internal power blocs and boroughs (NYC campaign, load when in carven-peaks)
+  - `lore/nyc-situation.md` — dynamic start situation and timeline pressures (NYC campaign, session-start load)
+  - `lore/nyc-magic.md` — magic manifestation and attunement (NYC campaign, load for magic scenes)
+  - `lore/imperator.md` — caged entity and surge dynamics (NYC campaign, load for gallery/surge scenes)
 - skills:
-  - `skills/lore-loading.md` — lore selection and context budget rules
+  - `skills/lore-loading.md` — lore selection and context budget rules (updated for NYC region-group loading)
 
 ## PHASE 2: ACTION_INTERPRETATION
 - directory: 2-action-interpretation/

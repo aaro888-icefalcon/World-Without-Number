@@ -53,6 +53,32 @@ Lore documents include `[UNKNOWN]` for deliberately unexplained phenomena:
 - In-world responses: "None can say," "The scholars disagree," "That knowledge was lost with the Prior Ages"
 - The mystery IS the content — preserving it is more important than filling gaps
 
+## NYC Campaign — Region-Group Loading
+
+When `current_scene.region_id` is `carven-peaks` (or any NYC borough variant), the following additional loading rules apply:
+
+### NYC Always-Load (when in Carven Peaks region)
+- `lore/nations/carven-peaks.md` — primary region file (full content)
+- `lore/nyc-factions.md` — factions and boroughs (summary sections only under budget pressure)
+
+### NYC Contextual Loading (load when scene context requires)
+- `lore/gallery-system.md` — when scene involves gallery exploration or gallery-related content
+- `lore/imperator.md` — when scene involves surge events, gallery depth-pushing, or containment references
+- `lore/nyc-magic.md` — when scene involves magic manifestation, attunement, or Legacy-activated abilities
+- `lore/nyc-situation.md` — at session start for timeline context; load relevant section during play
+
+### NYC External Region Loading
+When the scene moves to an NYC-adjacent external region, load:
+- The external region's nation file (e.g., `manthva.md`, `mishar.md`, `verdancy.md`)
+- The Carven Peaks §sensory-palette and §voice-notes only (for NYC NPC dialogue in foreign territory)
+
+### NYC Context Budget Strategy
+NYC cross-cutting lore files are large. Under the 2000-token target:
+1. Load primary region file (carven-peaks.md or external nation) — priority 1
+2. Load one contextual file matching scene type — priority 2
+3. Load §sensory-palette from relevant adjacent regions — priority 3
+4. Defer remaining cross-cutting files to next turn if budget exceeded
+
 ## Lore Grounding (Hard Rule #10)
 
 The LLM may only reference lore loaded in Phase 1 context:

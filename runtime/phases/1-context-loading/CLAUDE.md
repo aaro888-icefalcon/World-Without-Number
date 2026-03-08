@@ -23,7 +23,15 @@ Load game state, scene, lore, and world context before any action interpretation
 - `references/gm-protocol.md` — GM behavioral rules, narrative voice, pacing
 - `skills/lore-loading.md` — lore selection and context budget rules
 - `lore/` — world setting, geography, nations, languages
-- `lore/nations/` — 40 nation files with §-anchored sections
+- `lore/nations/` — 57 nation files with §-anchored sections
+
+## NYC Campaign — Additional Lore
+When `current_scene.region_id` starts with `carven-peaks`, load NYC-specific cross-cutting lore:
+- `lore/nyc-factions.md` — internal factions, boroughs, power blocs (always-load for carven-peaks)
+- `lore/nyc-situation.md` — dynamic start situation and timeline pressures (session-start load)
+- `lore/gallery-system.md` — 9-level gallery dungeon reference (load when in galleries)
+- `lore/nyc-magic.md` — magic manifestation and attunement (load for magic scenes)
+- `lore/imperator.md` — caged entity and surge dynamics (load for gallery/surge scenes)
 
 ## [UNKNOWN] Convention
 Lore documents include `[UNKNOWN]` for deliberately unexplained phenomena. When encountering these markers, narrate as genuine mystery — never invent explanations. See `skills/lore-loading.md` for details.
