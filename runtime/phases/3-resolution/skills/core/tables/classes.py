@@ -122,6 +122,65 @@ PARTIAL_MAGE_CASTING = {
     10: {"max_level": 4, "spells_cast": 5, "spells_prepared": 15},
 }
 
+# Adventurer (multi-class) class definition
+# Adventurers pick two partial classes; their progression depends on the combination.
+CLASSES["adventurer"] = {
+    "description": "A versatile multi-class hero who combines two partial classes.",
+    "hit_die": "varies",  # depends on partial class combination
+    "abilities": {
+        "partial_classes": "Choose two partial classes from: Partial Warrior, Partial Expert, Partial Mage",
+    },
+    "progression": None,  # use ADVENTURER_PROGRESSION below based on combo
+}
+
+# Adventurer combo-specific progression tables
+# Keys are alphabetically sorted partial class pairs.
+# Integer keys are level progression; string keys are metadata.
+ADVENTURER_PROGRESSION = {
+    "partial_expert/partial_warrior": {
+        "hit_die": "1d6+2",
+        "abilities": ["masterful_expertise", "veteran_luck_limited"],
+        1: {"hd": "1d6+2", "ab": 1, "focus": "1 Expert + 1 Warrior + 1 Any"},
+        2: {"hd": "2d6+4", "ab": 2, "focus": "+1 Any"},
+        3: {"hd": "3d6+6", "ab": 2, "focus": None},
+        4: {"hd": "4d6+8", "ab": 3, "focus": None},
+        5: {"hd": "5d6+10", "ab": 4, "focus": "+1 Any"},
+        6: {"hd": "6d6+12", "ab": 5, "focus": None},
+        7: {"hd": "7d6+14", "ab": 5, "focus": "+1 Any"},
+        8: {"hd": "8d6+16", "ab": 6, "focus": None},
+        9: {"hd": "9d6+18", "ab": 6, "focus": None},
+        10: {"hd": "10d6+20", "ab": 7, "focus": "+1 Any"},
+    },
+    "partial_expert/partial_mage": {
+        "hit_die": "1d6",
+        "abilities": ["masterful_expertise"],
+        1: {"hd": "1d6", "ab": 0, "focus": "1 Expert + 1 Any"},
+        2: {"hd": "2d6", "ab": 0, "focus": "+1 Any"},
+        3: {"hd": "3d6", "ab": 0, "focus": None},
+        4: {"hd": "4d6", "ab": 1, "focus": None},
+        5: {"hd": "5d6", "ab": 1, "focus": "+1 Any"},
+        6: {"hd": "6d6", "ab": 1, "focus": None},
+        7: {"hd": "7d6", "ab": 2, "focus": "+1 Any"},
+        8: {"hd": "8d6", "ab": 2, "focus": None},
+        9: {"hd": "9d6", "ab": 2, "focus": None},
+        10: {"hd": "10d6", "ab": 3, "focus": "+1 Any"},
+    },
+    "partial_mage/partial_warrior": {
+        "hit_die": "1d6+1",
+        "abilities": ["veteran_luck_limited"],
+        1: {"hd": "1d6+1", "ab": 1, "focus": "1 Warrior + 1 Any"},
+        2: {"hd": "2d6+2", "ab": 1, "focus": "+1 Any"},
+        3: {"hd": "3d6+3", "ab": 2, "focus": None},
+        4: {"hd": "4d6+4", "ab": 2, "focus": None},
+        5: {"hd": "5d6+5", "ab": 3, "focus": "+1 Any"},
+        6: {"hd": "6d6+6", "ab": 4, "focus": None},
+        7: {"hd": "7d6+7", "ab": 5, "focus": "+1 Any"},
+        8: {"hd": "8d6+8", "ab": 5, "focus": None},
+        9: {"hd": "9d6+9", "ab": 6, "focus": None},
+        10: {"hd": "10d6+10", "ab": 6, "focus": "+1 Any"},
+    },
+}
+
 # Dual partial caster progression
 DUAL_PARTIAL_MAGE_CASTING = {
     1: {"max_level": 1, "spells_cast": 1, "spells_prepared": 3},

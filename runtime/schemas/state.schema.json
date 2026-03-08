@@ -145,7 +145,7 @@
       "required": ["current", "max"],
       "properties": {
         "current": { "type": "integer", "minimum": 0 },
-        "max": { "type": "integer", "minimum": 1 }
+        "max": { "type": "integer", "minimum": 0 }
       },
       "description": "current/max pool; current must be <= max"
     },
@@ -158,7 +158,7 @@
       ],
       "properties": {
         "name": { "type": "string", "minLength": 1 },
-        "class": { "type": "string", "enum": ["warrior", "expert", "mage"] },
+        "class": { "type": "string", "enum": ["warrior", "expert", "mage", "adventurer"] },
         "level": { "type": "integer", "minimum": 1, "maximum": 10 },
         "xp": { "type": "integer", "minimum": 0 },
         "background": { "type": "string" },
@@ -179,11 +179,12 @@
         "attack_bonus": { "type": "integer", "minimum": 0 },
         "saving_throws": {
           "type": "object",
-          "required": ["physical", "evasion", "mental"],
+          "required": ["physical", "evasion", "mental", "luck"],
           "properties": {
             "physical": { "type": "integer" },
             "evasion": { "type": "integer" },
-            "mental": { "type": "integer" }
+            "mental": { "type": "integer" },
+            "luck": { "type": "integer" }
           }
         },
         "skills": { "type": "object", "description": "Skill name -> level (-1 to 4)" },
@@ -198,7 +199,27 @@
           }
         },
         "foci": { "type": "array", "items": { "type": "string" } },
-        "class_abilities": { "type": "array", "items": { "type": "string" } }
+        "class_abilities": { "type": "array", "items": { "type": "string" } },
+        "partial_classes": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["expert", "warrior", "mage"] },
+          "description": "Adventurer partial class selections (exactly 2)"
+        },
+        "tradition": {
+          "type": "string",
+          "enum": ["high_mage", "elementalist", "necromancer", "healer", "vowed"],
+          "description": "Magic tradition for mages and partial mages"
+        },
+        "spells_known": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Names of spells the character knows"
+        },
+        "known_arts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Names of tradition arts the character has access to"
+        }
       },
       "additionalProperties": true,
       "description": "WWN character definition with attributes, HP, AC, skills, equipment, saving throws, and system strain."

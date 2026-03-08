@@ -79,3 +79,66 @@ ARMOR = [
     {"name": "Small Shield", "ac": 13, "cost_sp": 20, "enc": 1, "type": "shield"},
     {"name": "Large Shield", "ac": 14, "cost_sp": 10, "enc": 1, "type": "shield"},
 ]
+
+# Starting equipment packages (WWN 1 p.29)
+# Each package provides a starting gear set; player picks one.
+EQUIPMENT_PACKAGES = {
+    "armored_warrior": {
+        "name": "Armored Warrior's Pack",
+        "armor_ac": 11,
+        "items": [
+            "War shirt armor", "Short sword", "Small shield",
+            "Dagger", "Backpack", "Rations (1 week)", "Waterskin",
+        ],
+        "coins_sp": 10,
+    },
+    "archer": {
+        "name": "Archer's Pack",
+        "armor_ac": 12,
+        "items": [
+            "Buff coat armor", "Small bow", "20 arrows", "Short sword",
+            "Backpack", "Rations (1 week)", "Waterskin",
+        ],
+        "coins_sp": 10,
+    },
+    "skirmisher": {
+        "name": "Skirmisher's Pack",
+        "armor_ac": 13,
+        "items": [
+            "Linothorax armor", "Spear, light", "Dagger",
+            "5 throwing blades", "Backpack", "Rations (1 week)",
+            "Waterskin",
+        ],
+        "coins_sp": 10,
+    },
+    "scholar": {
+        "name": "Scholar's Pack",
+        "armor_ac": 10,
+        "items": [
+            "Staff", "Dagger", "Writing kit", "Lantern",
+            "2 flasks of oil", "Backpack", "Rations (1 week)",
+            "Waterskin",
+        ],
+        "coins_sp": 20,
+    },
+    "rogue": {
+        "name": "Rogue's Pack",
+        "armor_ac": 12,
+        "items": [
+            "Buff coat armor", "Short sword", "Dagger",
+            "Thieves' tools", "Rope (50')", "Grappling hook",
+            "Backpack", "Rations (1 week)", "Waterskin",
+        ],
+        "coins_sp": 10,
+    },
+    "traveler": {
+        "name": "Traveler's Pack",
+        "armor_ac": 10,
+        "items": [
+            "Spear, light", "Dagger", "Lantern", "2 flasks of oil",
+            "Rope (50')", "Bedroll", "Backpack", "Rations (2 weeks)",
+            "Waterskin",
+        ],
+        "coins_sp": 15,
+    },
+}

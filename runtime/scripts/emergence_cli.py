@@ -111,11 +111,27 @@ def cmd_attack(args):
 def cmd_create_character(args):
     """Create a new WWN character."""
     from character import create_character
+    partial_classes = None
+    if args.partial_classes:
+        partial_classes = [p.strip() for p in args.partial_classes.split(",")]
+    foci = None
+    if args.foci:
+        foci = [f.strip() for f in args.foci.split(",")]
+    spells = None
+    if args.spells:
+        spells = [s.strip() for s in args.spells.split(",")]
     char = create_character(
         name=args.name,
         class_name=getattr(args, 'class'),
         background_id=args.background,
         method=args.method,
+        partial_classes=partial_classes,
+        tradition=args.tradition,
+        foci=foci,
+        spells=spells,
+        equipment_package=args.equipment_package,
+        skill_method=args.skill_method,
+        free_skill=args.free_skill,
     )
     char["seed"] = args.seed
     print(json.dumps(char, indent=2, default=str))
@@ -308,9 +324,20 @@ def main():
     # create-character
     p_char = subparsers.add_parser("create-character", parents=[seed_parent], help="Create a new character")
     p_char.add_argument("--name", type=str, required=True)
-    p_char.add_argument("--class", type=str, required=True, choices=["warrior", "expert", "mage"])
+    p_char.add_argument("--class", type=str, required=True, choices=["warrior", "expert", "mage", "adventurer"])
     p_char.add_argument("--background", type=int, required=True)
     p_char.add_argument("--method", type=str, default="standard_array", choices=["standard_array", "roll_3d6"])
+    p_char.add_argument("--partial-classes", type=str, default=None,
+                         help="Comma-separated partial classes for adventurer (e.g., 'expert,warrior')")
+    p_char.add_argument("--tradition", type=str, default=None,
+                         choices=["high_mage", "elementalist", "necromancer", "healer", "vowed"])
+    p_char.add_argument("--foci", type=str, default=None,
+                         help="Comma-separated focus names")
+    p_char.add_argument("--spells", type=str, default=None,
+                         help="Comma-separated starting spell names")
+    p_char.add_argument("--equipment-package", type=str, default=None)
+    p_char.add_argument("--skill-method", type=str, default=None, choices=["quick"])
+    p_char.add_argument("--free-skill", type=str, default=None)
 
     # ── Phase B commands ──────────────────────────────────────────────────────
 
