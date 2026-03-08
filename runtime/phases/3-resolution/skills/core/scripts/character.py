@@ -23,6 +23,7 @@ from backgrounds import BACKGROUNDS
 from foci import FOCI
 from equipment import EQUIPMENT_PACKAGES
 from traditions import TRADITIONS
+from partial_classes import PARTIAL_CLASSES, BASE_TYPE_MAP, INVALID_COMBOS
 
 
 def _roll_3d6():
@@ -109,6 +110,34 @@ def _get_adventurer_combo_key(partial_classes):
     return "/".join(sorted(f"partial_{p}" for p in partial_classes))
 
 
+def _validate_partial_classes(partial_classes):
+    """Validate partial class selections for adventurer, including new classes."""
+    all_valid = {"expert", "warrior", "mage"} | set(PARTIAL_CLASSES.keys())
+    if not set(partial_classes).issubset(all_valid):
+        invalid = set(partial_classes) - all_valid
+        raise ValueError(f"Invalid partial classes: {invalid}. Choose from: {sorted(all_valid)}")
+    if len(set(partial_classes)) != 2:
+        raise ValueError("Adventurer must have 2 different partial classes.")
+    # Check invalid combos
+    for cls in partial_classes:
+        if cls in INVALID_COMBOS:
+            forbidden = INVALID_COMBOS[cls]
+            other = [c for c in partial_classes if c != cls][0]
+            if other in forbidden:
+                raise ValueError(
+                    f"Invalid combo: {cls} cannot be paired with {other}."
+                )
+    # Check from the partial_classes data too (restricted_pairings)
+    for cls in partial_classes:
+        if cls in PARTIAL_CLASSES:
+            restricted = PARTIAL_CLASSES[cls].get("restricted_pairings", set())
+            other = [c for c in partial_classes if c != cls][0]
+            if other in restricted:
+                raise ValueError(
+                    f"Invalid combo: {cls} cannot be paired with {other}."
+                )
+
+
 def _validate_tradition(class_name, tradition, partial_classes=None):
     """Validate tradition selection for the given class."""
     if tradition is None:
@@ -122,6 +151,14 @@ def _validate_tradition(class_name, tradition, partial_classes=None):
                 f"Tradition '{tradition}' is partial-only and cannot be used by a full Mage. "
                 f"Use it with an Adventurer partial mage instead."
             )
+    # Invoker tradition is valid for full mage or partial invoker
+    if tradition == "invoker":
+        if class_name == "mage":
+            return  # Full Invoker (mage class with invoker tradition)
+        if class_name == "adventurer" and partial_classes and "invoker" in partial_classes:
+            return  # Partial Invoker
+        if class_name != "mage" and not (class_name == "adventurer" and partial_classes and "invoker" in partial_classes):
+            raise ValueError("Invoker tradition requires mage class or partial invoker.")
 
 
 def _validate_foci(class_name, foci, partial_classes=None):
@@ -156,16 +193,63 @@ def _validate_foci(class_name, foci, partial_classes=None):
         )
 
 
-def _calculate_effort(class_name, attributes, partial_classes=None):
-    """Calculate Effort pool max for mages."""
+def _calculate_effort(class_name, attributes, partial_classes=None, skills_dict=None):
+    """Calculate Effort pool max based on class and partial class formulas."""
+    int_mod = get_modifier(attributes["intelligence"])
+    wis_mod = get_modifier(attributes["wisdom"])
+    cha_mod = get_modifier(attributes["charisma"])
+    con_mod = get_modifier(attributes["constitution"])
+    dex_mod = get_modifier(attributes["dexterity"])
+
+    # Check for new partial classes with custom effort formulas
+    if class_name == "adventurer" and partial_classes:
+        for pc in partial_classes:
+            if pc in PARTIAL_CLASSES:
+                formula = PARTIAL_CLASSES[pc].get("effort_formula")
+                if formula is None:
+                    # Explicit None means no effort (e.g., Wise, Invoker spell points)
+                    continue
+                # Parse formula and calculate
+                skill_level = 0
+                if skills_dict:
+                    if "magic_skill" in formula:
+                        skill_level = max(0, skills_dict.get("magic", 0))
+                    elif "perform_skill" in formula:
+                        skill_level = max(0, skills_dict.get("perform", 0))
+                    elif "stab_skill" in formula:
+                        skill_level = max(0, skills_dict.get("stab", 0))
+                    elif "survive_skill" in formula:
+                        skill_level = max(0, skills_dict.get("survive", 0))
+                    elif "notice_skill" in formula:
+                        skill_level = max(0, skills_dict.get("notice", 0))
+                    elif "pray_skill" in formula:
+                        skill_level = max(0, skills_dict.get("pray", 0))
+
+                if "max(int_mod, cha_mod)" in formula:
+                    mod = max(int_mod, cha_mod)
+                elif "max(int_mod, con_mod)" in formula:
+                    mod = max(int_mod, con_mod)
+                elif "max(con_mod, cha_mod)" in formula:
+                    mod = max(con_mod, cha_mod)
+                elif "max(dex_mod, int_mod)" in formula:
+                    mod = max(dex_mod, int_mod)
+                elif "max(wis_mod, cha_mod)" in formula:
+                    mod = max(wis_mod, cha_mod)
+                elif "max(int_mod, wis_mod)" in formula:
+                    mod = max(int_mod, wis_mod)
+                elif "cha_mod" in formula:
+                    mod = cha_mod
+                else:
+                    mod = max(int_mod, wis_mod, cha_mod)
+
+                return max(1, skill_level + mod)
+
+    # Standard mage effort
     is_mage = class_name == "mage"
     is_partial_mage = (class_name == "adventurer" and
                        partial_classes and "mage" in partial_classes)
     if not is_mage and not is_partial_mage:
         return 0
-    int_mod = get_modifier(attributes["intelligence"])
-    wis_mod = get_modifier(attributes["wisdom"])
-    cha_mod = get_modifier(attributes["charisma"])
     return max(1, 1 + max(int_mod, wis_mod, cha_mod))
 
 
@@ -199,11 +283,7 @@ def create_character(name, class_name, background_id, method="standard_array",
     if class_name == "adventurer":
         if not partial_classes or len(partial_classes) != 2:
             raise ValueError("Adventurer class requires exactly 2 partial_classes.")
-        valid_partials = {"expert", "warrior", "mage"}
-        if not set(partial_classes).issubset(valid_partials):
-            raise ValueError(f"Invalid partial classes. Choose 2 from: {valid_partials}")
-        if len(set(partial_classes)) != 2:
-            raise ValueError("Adventurer must have 2 different partial classes.")
+        _validate_partial_classes(partial_classes)
 
     # Validate tradition
     _validate_tradition(class_name, tradition, partial_classes)
@@ -255,8 +335,16 @@ def create_character(name, class_name, background_id, method="standard_array",
     # Base AC = 10 + Dex mod (no armor)
     armor_class = 10 + dex_mod
 
+    # 6b. Apply bonus skills from new partial classes
+    if class_name == "adventurer" and partial_classes:
+        for pc in partial_classes:
+            if pc in PARTIAL_CLASSES:
+                bonus = PARTIAL_CLASSES[pc].get("bonus_skill")
+                if bonus and bonus in skills_dict:
+                    skills_dict[bonus] = max(skills_dict[bonus], 0)
+
     # 7. Calculate effort
-    effort_max = _calculate_effort(class_name, attributes, partial_classes)
+    effort_max = _calculate_effort(class_name, attributes, partial_classes, skills_dict)
 
     # 8. Apply equipment package
     readied = []
@@ -307,10 +395,54 @@ def create_character(name, class_name, background_id, method="standard_array",
     # Adventurer-specific fields
     if class_name == "adventurer":
         character["partial_classes"] = sorted(partial_classes)
+        # Assign starting arts from new partial classes
+        known_arts = []
+        for pc in partial_classes:
+            if pc in PARTIAL_CLASSES:
+                pc_data = PARTIAL_CLASSES[pc]
+                if pc_data.get("fixed_progression"):
+                    # Fixed arts (e.g., Mageslayer): assign level 1 arts
+                    fixed = pc_data.get("fixed_arts_by_level", {})
+                    for art_name in fixed.get(1, []):
+                        known_arts.append(art_name)
+                else:
+                    # Normal art progression: count arts gained at level 1
+                    arts_at_1 = pc_data.get("art_progression", {}).get(1, 0)
+                    if arts_at_1 > 0 and pc_data.get("arts"):
+                        # Assign first N arts (player would normally choose)
+                        for i in range(min(arts_at_1, len(pc_data["arts"]))):
+                            known_arts.append(pc_data["arts"][i]["name"])
+        if known_arts:
+            character["known_arts"] = known_arts
 
     # Magic-specific fields
     if tradition:
         character["tradition"] = tradition
+
+    # Full Invoker spell points
+    if class_name == "mage" and tradition == "invoker":
+        inv_data = PARTIAL_CLASSES.get("invoker", {})
+        full_cast = inv_data.get("full_casting", {})
+        sp_entry = full_cast.get(1, {})
+        character["spell_points"] = {
+            "current": sp_entry.get("spell_points", 1),
+            "max": sp_entry.get("spell_points", 1),
+        }
+        # Apply invoker bonus skill
+        if "magic" in skills_dict:
+            skills_dict["magic"] = max(skills_dict.get("magic", -1), 0)
+            character["skills"] = skills_dict
+
+    # Partial Invoker spell points
+    if class_name == "adventurer" and partial_classes and "invoker" in partial_classes:
+        inv_data = PARTIAL_CLASSES.get("invoker", {})
+        partial_cast = inv_data.get("partial_casting", {})
+        sp_entry = partial_cast.get(1, {})
+        character["spell_points"] = {
+            "current": sp_entry.get("spell_points", 1),
+            "max": sp_entry.get("spell_points", 1),
+        }
+
     character["spells_known"] = spells_known
 
     return character

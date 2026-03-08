@@ -91,4 +91,12 @@ TRADITIONS = {
             {"name": "Wind Step", "effort": "scene", "description": "Commit Effort for the scene. Move up to 30 extra feet as a free action once per round."},
         ],
     },
+    "invoker": {
+        "description": "Adunic spell-point caster using High Magic spells without Vancian slots. Uses spell points instead of prepared/cast slots.",
+        "partial_only": False,
+        "has_spells": True,
+        "spell_point_system": True,
+        "restrictions": [],
+        "arts": [],
+    },
 }

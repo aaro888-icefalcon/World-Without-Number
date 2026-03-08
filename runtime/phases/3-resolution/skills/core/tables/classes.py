@@ -181,6 +181,250 @@ ADVENTURER_PROGRESSION = {
     },
 }
 
+# ══════════════════════════════════════════════════════════════════════════════
+# WWN5 OPTIONAL CLASS COMBO TABLES (explicit from PDF)
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Accursed + Expert (WWN5 p.168)
+ADVENTURER_PROGRESSION["partial_accursed/partial_expert"] = {
+    "hit_die": "1d6",
+    "abilities": ["masterful_expertise"],
+    1: {"hd": "1d6", "ab": 0, "focus": "1 Expert + 1 Any"},
+    2: {"hd": "2d6", "ab": 0, "focus": "+1 Any"},
+    3: {"hd": "3d6", "ab": 0, "focus": None},
+    4: {"hd": "4d6", "ab": 1, "focus": None},
+    5: {"hd": "5d6", "ab": 1, "focus": "+1 Any"},
+    6: {"hd": "6d6", "ab": 1, "focus": None},
+    7: {"hd": "7d6", "ab": 2, "focus": "+1 Any"},
+    8: {"hd": "8d6", "ab": 2, "focus": None},
+    9: {"hd": "9d6", "ab": 2, "focus": None},
+    10: {"hd": "10d6", "ab": 3, "focus": "+1 Any"},
+}
+
+# Accursed + Warrior (WWN5 p.168)
+ADVENTURER_PROGRESSION["partial_accursed/partial_warrior"] = {
+    "hit_die": "1d6+2",
+    "abilities": ["veteran_luck_limited"],
+    1: {"hd": "1d6+2", "ab": 1, "focus": "1 Warrior + 1 Any"},
+    2: {"hd": "2d6+4", "ab": 1, "focus": "+1 Any"},
+    3: {"hd": "3d6+6", "ab": 2, "focus": None},
+    4: {"hd": "4d6+8", "ab": 2, "focus": None},
+    5: {"hd": "5d6+10", "ab": 3, "focus": "+1 Any"},
+    6: {"hd": "6d6+12", "ab": 4, "focus": None},
+    7: {"hd": "7d6+14", "ab": 5, "focus": "+1 Any"},
+    8: {"hd": "8d6+16", "ab": 5, "focus": None},
+    9: {"hd": "9d6+18", "ab": 6, "focus": None},
+    10: {"hd": "10d6+20", "ab": 6, "focus": "+1 Any"},
+}
+
+# Accursed + Mage (WWN5 p.168)
+ADVENTURER_PROGRESSION["partial_accursed/partial_mage"] = {
+    "hit_die": "1d6-1",
+    "abilities": [],
+    1: {"hd": "1d6-1", "ab": 0, "focus": "1 Any"},
+    2: {"hd": "2d6-2", "ab": 0, "focus": "+1 Any"},
+    3: {"hd": "3d6-3", "ab": 0, "focus": None},
+    4: {"hd": "4d6-4", "ab": 0, "focus": None},
+    5: {"hd": "5d6-5", "ab": 1, "focus": "+1 Any"},
+    6: {"hd": "6d6-6", "ab": 1, "focus": None},
+    7: {"hd": "7d6-7", "ab": 1, "focus": "+1 Any"},
+    8: {"hd": "8d6-8", "ab": 1, "focus": None},
+    9: {"hd": "9d6-9", "ab": 1, "focus": None},
+    10: {"hd": "10d6-10", "ab": 2, "focus": "+1 Any"},
+}
+
+# Bard + Expert (WWN5 p.170)
+ADVENTURER_PROGRESSION["partial_bard/partial_expert"] = {
+    "hit_die": "1d6",
+    "abilities": ["masterful_expertise"],
+    1: {"hd": "1d6", "ab": 0, "focus": "1 Expert + 1 Any"},
+    2: {"hd": "2d6", "ab": 0, "focus": "+1 Any"},
+    3: {"hd": "3d6", "ab": 0, "focus": None},
+    4: {"hd": "4d6", "ab": 1, "focus": None},
+    5: {"hd": "5d6", "ab": 1, "focus": "+1 Any"},
+    6: {"hd": "6d6", "ab": 1, "focus": None},
+    7: {"hd": "7d6", "ab": 2, "focus": "+1 Any"},
+    8: {"hd": "8d6", "ab": 2, "focus": None},
+    9: {"hd": "9d6", "ab": 2, "focus": None},
+    10: {"hd": "10d6", "ab": 3, "focus": "+1 Any"},
+}
+
+# Bard + Warrior (WWN5 p.170)
+ADVENTURER_PROGRESSION["partial_bard/partial_warrior"] = {
+    "hit_die": "1d6+2",
+    "abilities": ["veteran_luck_limited"],
+    1: {"hd": "1d6+2", "ab": 1, "focus": "1 Warrior + 1 Any"},
+    2: {"hd": "2d6+4", "ab": 2, "focus": "+1 Any"},
+    3: {"hd": "3d6+6", "ab": 2, "focus": None},
+    4: {"hd": "4d6+8", "ab": 3, "focus": None},
+    5: {"hd": "5d6+10", "ab": 4, "focus": "+1 Any"},
+    6: {"hd": "6d6+12", "ab": 5, "focus": None},
+    7: {"hd": "7d6+14", "ab": 5, "focus": "+1 Any"},
+    8: {"hd": "8d6+16", "ab": 6, "focus": None},
+    9: {"hd": "9d6+18", "ab": 6, "focus": None},
+    10: {"hd": "10d6+20", "ab": 7, "focus": "+1 Any"},
+}
+
+# Bard + Mage (WWN5 p.170)
+ADVENTURER_PROGRESSION["partial_bard/partial_mage"] = {
+    "hit_die": "1d6-1",
+    "abilities": [],
+    1: {"hd": "1d6-1", "ab": 0, "focus": "1 Any"},
+    2: {"hd": "2d6-2", "ab": 0, "focus": "+1 Any"},
+    3: {"hd": "3d6-3", "ab": 0, "focus": None},
+    4: {"hd": "4d6-4", "ab": 0, "focus": None},
+    5: {"hd": "5d6-5", "ab": 1, "focus": "+1 Any"},
+    6: {"hd": "6d6-6", "ab": 1, "focus": None},
+    7: {"hd": "7d6-7", "ab": 1, "focus": "+1 Any"},
+    8: {"hd": "8d6-8", "ab": 1, "focus": None},
+    9: {"hd": "9d6-9", "ab": 1, "focus": None},
+    10: {"hd": "10d6-10", "ab": 2, "focus": "+1 Any"},
+}
+
+# Mageslayer + Expert (WWN5 p.172)
+ADVENTURER_PROGRESSION["partial_expert/partial_mageslayer"] = {
+    "hit_die": "1d6",
+    "abilities": ["masterful_expertise"],
+    1: {"hd": "1d6", "ab": 1, "focus": "1 Expert + 1 Any"},
+    2: {"hd": "2d6", "ab": 1, "focus": "+1 Any"},
+    3: {"hd": "3d6", "ab": 2, "focus": None},
+    4: {"hd": "4d6", "ab": 3, "focus": None},
+    5: {"hd": "5d6", "ab": 3, "focus": "+1 Any"},
+    6: {"hd": "6d6", "ab": 4, "focus": None},
+    7: {"hd": "7d6", "ab": 5, "focus": "+1 Any"},
+    8: {"hd": "8d6", "ab": 6, "focus": None},
+    9: {"hd": "9d6", "ab": 7, "focus": None},
+    10: {"hd": "10d6", "ab": 8, "focus": "+1 Any"},
+}
+
+# Mageslayer + Warrior (WWN5 p.172)
+ADVENTURER_PROGRESSION["partial_mageslayer/partial_warrior"] = {
+    "hit_die": "1d6+2",
+    "abilities": ["veteran_luck_limited"],
+    1: {"hd": "1d6+2", "ab": 1, "focus": "1 Warrior + 1 Any"},
+    2: {"hd": "2d6+4", "ab": 2, "focus": "+1 Any"},
+    3: {"hd": "3d6+6", "ab": 3, "focus": None},
+    4: {"hd": "4d6+8", "ab": 4, "focus": None},
+    5: {"hd": "5d6+10", "ab": 5, "focus": "+1 Any"},
+    6: {"hd": "6d6+12", "ab": 6, "focus": None},
+    7: {"hd": "7d6+14", "ab": 7, "focus": "+1 Any"},
+    8: {"hd": "8d6+16", "ab": 8, "focus": None},
+    9: {"hd": "9d6+18", "ab": 9, "focus": None},
+    10: {"hd": "10d6+20", "ab": 10, "focus": "+1 Any"},
+}
+
+# Wise + Expert (WWN5 p.174)
+ADVENTURER_PROGRESSION["partial_expert/partial_wise"] = {
+    "hit_die": "1d6",
+    "abilities": ["masterful_expertise"],
+    1: {"hd": "1d6", "ab": 0, "focus": "1 Expert + 1 Any"},
+    2: {"hd": "2d6", "ab": 0, "focus": "+1 Any"},
+    3: {"hd": "3d6", "ab": 0, "focus": None},
+    4: {"hd": "4d6", "ab": 1, "focus": None},
+    5: {"hd": "5d6", "ab": 1, "focus": "+1 Any"},
+    6: {"hd": "6d6", "ab": 1, "focus": None},
+    7: {"hd": "7d6", "ab": 2, "focus": "+1 Any"},
+    8: {"hd": "8d6", "ab": 2, "focus": None},
+    9: {"hd": "9d6", "ab": 2, "focus": None},
+    10: {"hd": "10d6", "ab": 3, "focus": "+1 Any"},
+}
+
+# Wise + Warrior (WWN5 p.174)
+ADVENTURER_PROGRESSION["partial_warrior/partial_wise"] = {
+    "hit_die": "1d6+2",
+    "abilities": ["veteran_luck_limited"],
+    1: {"hd": "1d6+2", "ab": 1, "focus": "1 Warrior + 1 Any"},
+    2: {"hd": "2d6+4", "ab": 1, "focus": "+1 Any"},
+    3: {"hd": "3d6+6", "ab": 2, "focus": None},
+    4: {"hd": "4d6+8", "ab": 2, "focus": None},
+    5: {"hd": "5d6+5", "ab": 3, "focus": "+1 Any"},
+    6: {"hd": "6d6+12", "ab": 4, "focus": None},
+    7: {"hd": "7d6+14", "ab": 5, "focus": "+1 Any"},
+    8: {"hd": "8d6+16", "ab": 5, "focus": None},
+    9: {"hd": "9d6+18", "ab": 6, "focus": None},
+    10: {"hd": "10d6+20", "ab": 6, "focus": "+1 Any"},
+}
+
+# Wise + Mage (WWN5 p.174)
+ADVENTURER_PROGRESSION["partial_mage/partial_wise"] = {
+    "hit_die": "1d6-1",
+    "abilities": [],
+    1: {"hd": "1d6-1", "ab": 0, "focus": "1 Any"},
+    2: {"hd": "2d6-2", "ab": 0, "focus": "+1 Any"},
+    3: {"hd": "3d6-3", "ab": 0, "focus": None},
+    4: {"hd": "4d6-4", "ab": 0, "focus": None},
+    5: {"hd": "5d6-5", "ab": 1, "focus": "+1 Any"},
+    6: {"hd": "6d6-6", "ab": 1, "focus": None},
+    7: {"hd": "7d6-7", "ab": 1, "focus": "+1 Any"},
+    8: {"hd": "8d6-8", "ab": 1, "focus": None},
+    9: {"hd": "9d6-9", "ab": 1, "focus": None},
+    10: {"hd": "10d6-10", "ab": 2, "focus": "+1 Any"},
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
+# GYRE CLASS COMBO TABLES (use standard partial_mage pattern from WWN core)
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Standard Gyre + Expert table (same as partial_expert/partial_mage)
+_GYRE_EXPERT = {
+    "hit_die": "1d6",
+    "abilities": ["masterful_expertise"],
+    1: {"hd": "1d6", "ab": 0, "focus": "1 Expert + 1 Any"},
+    2: {"hd": "2d6", "ab": 0, "focus": "+1 Any"},
+    3: {"hd": "3d6", "ab": 0, "focus": None},
+    4: {"hd": "4d6", "ab": 1, "focus": None},
+    5: {"hd": "5d6", "ab": 1, "focus": "+1 Any"},
+    6: {"hd": "6d6", "ab": 1, "focus": None},
+    7: {"hd": "7d6", "ab": 2, "focus": "+1 Any"},
+    8: {"hd": "8d6", "ab": 2, "focus": None},
+    9: {"hd": "9d6", "ab": 2, "focus": None},
+    10: {"hd": "10d6", "ab": 3, "focus": "+1 Any"},
+}
+
+# Standard Gyre + Warrior table (same as partial_mage/partial_warrior)
+_GYRE_WARRIOR = {
+    "hit_die": "1d6+1",
+    "abilities": ["veteran_luck_limited"],
+    1: {"hd": "1d6+1", "ab": 1, "focus": "1 Warrior + 1 Any"},
+    2: {"hd": "2d6+2", "ab": 1, "focus": "+1 Any"},
+    3: {"hd": "3d6+3", "ab": 2, "focus": None},
+    4: {"hd": "4d6+4", "ab": 2, "focus": None},
+    5: {"hd": "5d6+5", "ab": 3, "focus": "+1 Any"},
+    6: {"hd": "6d6+6", "ab": 4, "focus": None},
+    7: {"hd": "7d6+7", "ab": 5, "focus": "+1 Any"},
+    8: {"hd": "8d6+8", "ab": 5, "focus": None},
+    9: {"hd": "9d6+9", "ab": 6, "focus": None},
+    10: {"hd": "10d6+10", "ab": 6, "focus": "+1 Any"},
+}
+
+# Generate standard Gyre combos
+import copy
+for _gyre_cls in ["invoker", "skinshifter", "beastmaster", "blood_priest", "thought_noble"]:
+    _expert_key = "/".join(sorted([f"partial_{_gyre_cls}", "partial_expert"]))
+    _warrior_key = "/".join(sorted([f"partial_{_gyre_cls}", "partial_warrior"]))
+    ADVENTURER_PROGRESSION[_expert_key] = copy.deepcopy(_GYRE_EXPERT)
+    ADVENTURER_PROGRESSION[_warrior_key] = copy.deepcopy(_GYRE_WARRIOR)
+
+# Duelist + Expert (standard mage-type / expert table)
+ADVENTURER_PROGRESSION["partial_duelist/partial_expert"] = copy.deepcopy(_GYRE_EXPERT)
+
+# Duelist + Warrior — FRAGILITY FLAW: 1d6 HD instead of 1d6+1
+ADVENTURER_PROGRESSION["partial_duelist/partial_warrior"] = {
+    "hit_die": "1d6",
+    "abilities": ["veteran_luck_limited"],
+    "fragility": True,
+    1: {"hd": "1d6", "ab": 1, "focus": "1 Warrior + 1 Any"},
+    2: {"hd": "2d6", "ab": 1, "focus": "+1 Any"},
+    3: {"hd": "3d6", "ab": 2, "focus": None},
+    4: {"hd": "4d6", "ab": 2, "focus": None},
+    5: {"hd": "5d6", "ab": 3, "focus": "+1 Any"},
+    6: {"hd": "6d6", "ab": 4, "focus": None},
+    7: {"hd": "7d6", "ab": 5, "focus": "+1 Any"},
+    8: {"hd": "8d6", "ab": 5, "focus": None},
+    9: {"hd": "9d6", "ab": 6, "focus": None},
+    10: {"hd": "10d6", "ab": 6, "focus": "+1 Any"},
+}
+
 # Dual partial caster progression
 DUAL_PARTIAL_MAGE_CASTING = {
     1: {"max_level": 1, "spells_cast": 1, "spells_prepared": 3},

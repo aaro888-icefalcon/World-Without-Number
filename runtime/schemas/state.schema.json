@@ -202,12 +202,16 @@
         "class_abilities": { "type": "array", "items": { "type": "string" } },
         "partial_classes": {
           "type": "array",
-          "items": { "type": "string", "enum": ["expert", "warrior", "mage"] },
+          "items": { "type": "string", "enum": [
+            "expert", "warrior", "mage",
+            "accursed", "bard", "mageslayer", "wise",
+            "invoker", "skinshifter", "duelist", "beastmaster", "blood_priest", "thought_noble"
+          ] },
           "description": "Adventurer partial class selections (exactly 2)"
         },
         "tradition": {
           "type": "string",
-          "enum": ["high_mage", "elementalist", "necromancer", "healer", "vowed"],
+          "enum": ["high_mage", "elementalist", "necromancer", "healer", "vowed", "invoker"],
           "description": "Magic tradition for mages and partial mages"
         },
         "spells_known": {

@@ -328,9 +328,9 @@ def main():
     p_char.add_argument("--background", type=int, required=True)
     p_char.add_argument("--method", type=str, default="standard_array", choices=["standard_array", "roll_3d6"])
     p_char.add_argument("--partial-classes", type=str, default=None,
-                         help="Comma-separated partial classes for adventurer (e.g., 'expert,warrior')")
+                         help="Comma-separated partial classes for adventurer (e.g., 'expert,warrior' or 'accursed,warrior')")
     p_char.add_argument("--tradition", type=str, default=None,
-                         choices=["high_mage", "elementalist", "necromancer", "healer", "vowed"])
+                         choices=["high_mage", "elementalist", "necromancer", "healer", "vowed", "invoker"])
     p_char.add_argument("--foci", type=str, default=None,
                          help="Comma-separated focus names")
     p_char.add_argument("--spells", type=str, default=None,
