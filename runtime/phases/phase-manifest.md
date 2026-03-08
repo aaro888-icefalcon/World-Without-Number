@@ -1,6 +1,6 @@
 # Phase Manifest
 
-Machine-readable mapping of the 6-phase GM pipeline.
+Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
 
 ## PHASE 1: CONTEXT_LOADING
 - directory: 1-context-loading/
@@ -8,7 +8,14 @@ Machine-readable mapping of the 6-phase GM pipeline.
 - references:
   - `references/hard-rules.md` — non-negotiable mechanical contract
   - `references/gm-protocol.md` — GM behavioral rules and narrative voice
-- lore: (none yet — populate with world setting and region lore)
+- lore:
+  - `lore/latter-earth-overview.md` — world primer (always-load)
+  - `lore/history-and-ages.md` — timeline of ages (always-load)
+  - `lore/geography.md` — major geographic features
+  - `lore/languages.md` — languages of the Latter Earth
+  - `lore/nations/*.md` — 40 nation files with §-anchored sections (region-specific load)
+- skills:
+  - `skills/lore-loading.md` — lore selection and context budget rules
 
 ## PHASE 2: ACTION_INTERPRETATION
 - directory: 2-action-interpretation/
@@ -23,8 +30,9 @@ Machine-readable mapping of the 6-phase GM pipeline.
   - core: dice, character, conditions, magic, attributes, skills, equipment, classes, backgrounds, foci
   - combat: attack resolution, morale, bestiary, zone-based positioning, behavior AI, encounter generation
   - exploration: travel, scene generation, treasure
-  - social: NPC generation, reaction rolls, faction turns
-  - world-building: world tick, clock advancement, world pulse
+  - social: NPC generation, reaction rolls, faction turns, diplomacy, consequences
+  - world-building: world tick, clock advancement, world pulse, government/society/religion tables
+  - downtime: (placeholder — Phase G)
 - cli_commands:
   - `roll <expression>` — dice roll with arithmetic trace
   - `skill-check --attribute-mod --skill-level --difficulty` — 2d6 skill check
@@ -42,6 +50,9 @@ Machine-readable mapping of the 6-phase GM pipeline.
   - `faction-turn` — process faction actions from state
 - references:
   - `skills/combat/references/combat-rules.md` — WWN combat procedures
+  - `skills/social/references/npc-reactions.md` — NPC reaction table and modifiers
+  - `skills/social/references/faction-rules.md` — faction turn structure and rules
+  - `skills/social/references/court-intrigue.md` — court structure and social maneuvering
 - tables:
   - `skills/core/tables/attributes.py` — attribute modifiers
   - `skills/core/tables/skills.py` — 22 skill definitions
@@ -50,6 +61,12 @@ Machine-readable mapping of the 6-phase GM pipeline.
   - `skills/core/tables/backgrounds.py` — 20 backgrounds
   - `skills/core/tables/foci.py` — focus definitions
   - `skills/combat/tables/bestiary.py` — creature stat blocks
+  - `skills/social/tables/character_tags.py` — d100 NPC character tags
+  - `skills/social/tables/court_tags.py` — court intrigue environment tags
+  - `skills/social/tables/faction_actions.py` — faction action definitions
+  - `skills/world-building/tables/government_tables.py` — government types
+  - `skills/world-building/tables/society_tables.py` — society types and features
+  - `skills/world-building/tables/religion_tables.py` — religion types and practices
 - scripts:
   - `skills/core/scripts/magic.py` — spell casting, Effort, arts, tradition management
   - `skills/combat/scripts/behavior.py` — creature combat AI, behavior trees
@@ -59,24 +76,35 @@ Machine-readable mapping of the 6-phase GM pipeline.
   - `skills/exploration/scripts/treasure.py` — treasure rolls by tier
   - `skills/social/scripts/npc.py` — NPC generation with voice cards
   - `skills/social/scripts/faction.py` — faction turn processing
+  - `skills/social/scripts/diplomacy.py` — persuasion, negotiation, favor tracking
+  - `skills/social/scripts/consequence.py` — consequence tracker, timer checking
   - `skills/world-building/scripts/world_tick.py` — world state advancement
 
 ## PHASE 4: NARRATIVE_TRANSLATION
 - directory: 4-narrative/
 - references:
   - `references/narration-mappings.md` — mechanical-to-narrative translation rules
-- assets: (none yet — populate with display templates)
+  - `references/latter-earth-voice.md` — prose style guide (tone, vocabulary, sensory palette)
+  - `references/threat-environment-mapping.md` — threat level to environmental description
+  - `references/npc-dialogue-protocol.md` — NPC dialogue generation steps
+- assets:
+  - `assets/character-sheet-template.md` — end-of-turn character sheet display
+  - `assets/scene-template.md` — scene rendering template
+- tables:
+  - `tables/failure_flavors.py` — failure complication flavor text by domain
 
 ## PHASE 5: STATE_PERSISTENCE
 - directory: 5-persistence/
 - cli_commands: validate-state (post-write check)
 - references:
-  - `schemas/state.schema.json` — state shape contract
+  - `schemas/state.schema.json` — state shape contract (v7.5.0)
 - skills:
   - `skills/state-persistence.md` — state update procedures and turn receipt
 
 ## PHASE 6: VALIDATION
 - directory: 6-validation/
-- cli_commands: validate-state, validate-reference-freshness
+- cli_commands: validate-state, validate-reference-freshness, validate-narration-grounding
 - skills:
   - `skills/response-gate.md` — turn completeness verification checklist
+- validators:
+  - `scripts/validate_narration_grounding.py` — narration grounding check (development-time)

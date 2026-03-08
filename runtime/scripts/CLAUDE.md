@@ -24,6 +24,7 @@ Entry point scripts for CLI execution and validation. Domain modules (the actual
 | `validate_reference_freshness.py` | Reference path freshness check | Development only |
 | `validate_docs_structure.py` | Documentation structure + schema-doc sync check | Development only |
 | `validate_canonical_references.py` | Canonical reference path validator | Development only |
+| `validate_narration_grounding.py` | Narration grounding check — flags hallucinated proper nouns | Development only |
 
 ## CLI Commands (emergence_cli.py)
 
@@ -52,7 +53,9 @@ Domain scripts are physically co-located with their skills in Phase 3:
 - `phases/3-resolution/skills/combat/scripts/` — combat.py, behavior.py, encounter.py
 - `phases/3-resolution/skills/combat/tables/` — bestiary.py
 - `phases/3-resolution/skills/exploration/scripts/` — travel.py, scene.py, treasure.py
-- `phases/3-resolution/skills/social/scripts/` — npc.py, faction.py
+- `phases/3-resolution/skills/social/scripts/` — npc.py, faction.py, diplomacy.py, consequence.py
+- `phases/3-resolution/skills/social/tables/` — character_tags.py, court_tags.py, faction_actions.py
 - `phases/3-resolution/skills/world-building/scripts/` — world_tick.py
+- `phases/3-resolution/skills/world-building/tables/` — government_tables.py, society_tables.py, religion_tables.py
 
 emergence_cli.py's sys.path includes all domain directories automatically.

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "rpg-engine-state-v7",
   "title": "RPG Engine — Campaign State (Template)",
-  "description": "Canonical schema for state.json. Schema version 7.0.0. Worlds Without Number — customize character, world_situation, and mechanics for your game.",
+  "description": "Canonical schema for state.json. Schema version 7.5.0. Worlds Without Number — customize character, world_situation, and mechanics for your game.",
   "type": "object",
   "required": [
     "schema_version",
@@ -102,7 +102,7 @@
     },
     "campaign_arcs": {
       "type": "array",
-      "items": { "type": "object" }
+      "items": { "$ref": "#/$defs/campaign_arc" }
     },
     "active_quests": {
       "type": "array",
@@ -117,6 +117,12 @@
       "items": { "$ref": "#/$defs/clock_log_entry" }
     },
     "combat_state": { "$ref": "#/$defs/combat_state" },
+    "consequence_tracker": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/consequence_entry" },
+      "description": "Pending consequences with trigger conditions and timers"
+    },
+    "session": { "$ref": "#/$defs/session" },
     "world_pulse": { "$ref": "#/$defs/world_pulse" },
     "last_played": {
       "type": "string",
@@ -215,7 +221,8 @@
           "type": "string",
           "enum": ["combat", "exploration", "social", "downtime", "travel"]
         },
-        "encounter_type": { "type": "string" }
+        "encounter_type": { "type": "string" },
+        "region_id": { "type": "string", "description": "Links to nation/region lore file for context loading" }
       }
     },
 
@@ -233,7 +240,23 @@
           "type": "string",
           "pattern": "^\\d{2}:\\d{2}$"
         },
-        "current_location": { "type": "string" }
+        "current_location": { "type": "string" },
+        "scene_rhythm": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Recent scene type history for pacing"
+        },
+        "session_summary": { "type": ["string", "null"], "description": "Last session summary (~200 words)" },
+        "supplies": {
+          "type": "object",
+          "properties": {
+            "food": { "type": "integer", "minimum": 0 },
+            "water": { "type": "integer", "minimum": 0 },
+            "torches": { "type": "integer", "minimum": 0 },
+            "tools": { "type": "integer", "minimum": 0 }
+          },
+          "description": "Party supply tracking"
+        }
       }
     },
 
@@ -308,7 +331,9 @@
         "faction_id": { "type": "string" },
         "rank": { "type": "string" },
         "disposition": { "type": "string" },
-        "reputation_events": { "type": "array" }
+        "reputation_events": { "type": "array" },
+        "reputation_score": { "type": "integer", "description": "Numeric reputation (-10 to +10)" },
+        "last_interaction": { "type": ["string", "null"], "description": "Summary of last interaction with this faction" }
       }
     },
 
@@ -334,6 +359,25 @@
               "role": { "type": "string" }
             }
           }
+        },
+        "assets": {
+          "type": "object",
+          "description": "Faction assets (force, cunning, wealth)"
+        },
+        "goals": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Active faction goals"
+        },
+        "current_action": { "type": ["string", "null"], "description": "Current faction action in progress" },
+        "resources": {
+          "type": "object",
+          "description": "Faction resources (gold, influence, military)"
+        },
+        "turn_history": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "History of faction turn actions and results"
         }
       }
     },
@@ -386,7 +430,15 @@
         "last_seen": { "type": "string" },
         "trust": { "type": "integer", "minimum": 0, "maximum": 10 },
         "motivation": { "type": ["string", "null"] },
-        "secret": { "type": ["string", "null"] }
+        "secret": { "type": ["string", "null"] },
+        "voice_card": { "type": "string", "description": "2-3 sentence prompt for LLM dialogue generation" },
+        "personality_traits": { "type": "string" },
+        "speech_patterns": { "type": "string" },
+        "key_phrases": { "type": "array", "items": { "type": "string" } },
+        "last_interaction_summary": { "type": ["string", "null"] },
+        "relationship_arc": { "type": ["string", "null"] },
+        "importance": { "type": "string", "enum": ["minor", "major", "faction_leader"] },
+        "character_tags": { "type": "array", "items": { "type": "string" } }
       }
     },
 
@@ -491,6 +543,59 @@
         "arrivals": {
           "type": "array",
           "items": { "type": ["string", "object"] }
+        }
+      }
+    },
+
+    "consequence_entry": {
+      "type": "object",
+      "required": ["id", "trigger_condition", "timer_days", "consequence", "source_turn", "status"],
+      "properties": {
+        "id": { "type": "string" },
+        "trigger_condition": { "type": "string", "description": "Condition that fires the consequence" },
+        "timer_days": { "type": "integer", "minimum": 0, "description": "Days until auto-trigger (0 = immediate on condition)" },
+        "consequence": { "type": "string", "description": "What happens when triggered" },
+        "source_turn": { "type": "integer", "minimum": 1, "description": "Day this consequence was created" },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "triggered", "resolved", "expired"]
+        },
+        "resolution": { "type": ["string", "null"], "description": "How it was resolved" }
+      }
+    },
+
+    "session": {
+      "type": "object",
+      "properties": {
+        "drama_budget": { "type": "integer", "minimum": 0, "description": "Dramatic escalations remaining (starts at 3)" },
+        "drama_events": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Log of dramatic moments this session"
+        }
+      },
+      "description": "Per-session tracking (drama budget, narrative state)"
+    },
+
+    "campaign_arc": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "completed", "failed", "dormant"] },
+        "description": { "type": "string" },
+        "beats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "beat_name": { "type": "string" },
+              "trigger_condition": { "type": "string" },
+              "status": { "type": "string", "enum": ["pending", "triggered", "completed"] },
+              "payoff_description": { "type": "string" }
+            }
+          },
+          "description": "Narrative beats that trigger based on conditions"
         }
       }
     }

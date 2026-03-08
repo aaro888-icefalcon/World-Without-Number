@@ -72,8 +72,66 @@ The consequence fires. Narrate it with appropriate gravity — this is a forced 
 
 Introduce the character with a brief scene that establishes them in the world. Reference their background and class in narrative terms, not mechanical ones.
 
-## Voice Rules (from gm-protocol.md)
+### §spell-cast — Spell Casting (Tenet T2: Tension)
 
+Describe the magical effect BEFORE revealing the mechanical result:
+- **Spell attempt**: Describe the gathering of power, the words spoken, the reality bending
+- **Success**: The spell takes hold — describe the visible magical effect with sensory detail
+- **Failure** (insufficient Effort/System Strain): The magic frays, unravels, or misfires — always a consequence, never silence
+- **Effort commitment**: Note the cost in narrative terms: "You feel the strain settle into your bones" (scene), "A deep weariness claims you" (day), "Something fundamental shifts within" (indefinite)
+
+### §travel — Travel and Journey
+
+Environmental sensory detail per terrain type:
+- **Road**: The comfort of packed earth, fellow travelers, milestones
+- **Forest**: Canopy light, animal sounds, undergrowth density
+- **Mountains**: Thin air, exposed stone, wind, vertigo
+- **Desert**: Heat shimmer, sand texture, desiccation
+- **Swamp**: Humidity, stagnant water, insects, sucking mud
+- **Coast**: Salt air, surf sound, wheeling birds, tidal changes
+
+Per-day travel narration should be concise (~50 words per uneventful day). Events and encounters get full treatment.
+
+### §social — Social Interactions
+
+NPC body language and environmental reactions:
+- **Hostile**: Narrowed eyes, hand near weapon, tense posture, crowded space
+- **Unfriendly**: Arms crossed, short answers, sideways glances
+- **Neutral**: Measured responses, waiting, assessing
+- **Friendly**: Open posture, eye contact, offered refreshment
+- **Enthusiastic**: Warm greeting, physical contact, immediate offers of help
+
+Reaction rolls should be narrated through NPC behavior, not as visible numbers.
+
+### §exploration — Scene Discovery
+
+When entering a new scene, layer detail:
+1. **First impression**: What dominates the senses (largest/loudest/most striking feature)
+2. **Closer look**: 2-3 notable details that reward attention
+3. **Hidden elements**: Hinted at but not revealed without investigation
+
+### §consequence — Forced Consequences
+
+When CLI output includes a forced consequence (death, morale break, critical effect), narrate it EXACTLY as determined. Use gravity appropriate to the consequence. Do not soften, reinterpret, or add escape clauses. BINDING — this is Hard Rule #5.
+
+### §routine-events — Routine Events (Guideline G7)
+
+Cap at ~150 words. These are everyday moments:
+- Shopping, resting, minor travel, asking basic questions
+- Keep prose functional but still sensory
+- Don't belabor the mundane — convey it and move on
+
+### §dramatic-moments — Major Story Beats
+
+Full narration with sensory detail (~200-300 words):
+- Betrayals, revelations, deaths, major discoveries
+- Slow the pace — let the moment breathe
+- Use the Latter Earth voice at full strength here
+- Reference prior events for continuity ("The words echo the warning the merchant gave you three days past...")
+
+## Voice Rules
+
+See `references/latter-earth-voice.md` for full voice guide. Summary:
 - **Concrete and sensory**: what does the player see, hear, smell?
 - **Restrained exposition**: show, don't tell
 - **Latter Earth tone**: archaic, melancholy, wondrous, tinged with decay
@@ -89,9 +147,17 @@ Introduce the character with a brief scene that establishes them in the world. R
 | Major story moment | ~200 words | 300 |
 | Travel/transition | ~50 words | 100 |
 
-## Forced Consequence Narration
+## Drama Budget Integration
 
-When CLI output includes a forced consequence (death, morale break, critical effect), narrate it EXACTLY as determined. Use gravity appropriate to the consequence. Do not soften, reinterpret, or add escape clauses.
+Check `session.drama_budget` before escalating:
+- If budget > 0: dramatic escalation is allowed (costs 1 point)
+- If budget = 0: remaining encounters should be lower-stakes
+- Drama budget is invisible to the player — GM adjusts tone naturally
+- Dramatic moments include: life-threatening combat, betrayal, major revelation, NPC death
+
+## Failure Flavor Integration
+
+On any failure result, consult `tables/failure_flavors.py` for the appropriate domain. Use the flavor text as a PROMPT — adapt it to the current scene context. Never use the raw text verbatim if it doesn't fit the situation.
 
 ## End-of-Turn Format
 

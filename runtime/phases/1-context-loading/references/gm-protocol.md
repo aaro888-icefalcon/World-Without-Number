@@ -75,3 +75,29 @@ Before generating NPC dialogue, load the NPC's voice card from `state.json`:
 - `key_phrases`: 1-2 signature expressions
 
 Maintain these patterns consistently across sessions.
+
+## Drama Budget (Mechanical)
+
+The `session.drama_budget` field tracks dramatic escalation allowance:
+- Starts at 3 per session
+- Dramatic events cost 1: life-threatening combat, betrayal, major revelation, NPC death
+- When budget reaches 0, remaining encounters should be lower-stakes
+- The budget is invisible to the player — adjust encounter intensity naturally
+- Budget resets at session start (update `session.drama_budget` to 3, clear `session.drama_events`)
+- Log each dramatic moment in `session.drama_events`
+
+## Consequence Tracking
+
+Check `consequence_tracker` at the start of every turn:
+- Consequences with `timer_days` that have expired → trigger automatically
+- Consequences with `trigger_condition` → check if condition is met
+- Triggered consequences: narrate with gravity (Hard Rule #12)
+- Max 20 active consequences. Oldest with expired timers auto-resolve.
+
+## Arc Beat Checking
+
+Check `campaign_arcs[].beats` during Phase 1:
+- Beats define SITUATIONS, not outcomes
+- When a beat's trigger condition is met, change status to "triggered"
+- Queue a narrative event for Phase 4
+- The beat creates a scene; player choices determine what happens (never railroad)

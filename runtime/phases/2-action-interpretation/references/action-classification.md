@@ -24,6 +24,15 @@ This prevents misinterpretation (AI Limitation L2) and preserves player agency.
 | "I try to / I attempt to [skill-based action]" | Skill Check | `skill-check` | `skill-check --attribute-mod 1 --skill-level 0 --difficulty 8` |
 | "I dodge / I resist / I try to avoid" | Saving Throw | `save` | `save --type evasion --level 1 --modifier 1` |
 | "Roll [dice]" (explicit dice request) | Dice Roll | `roll` | `roll 1d20+3` |
+| "I cast [spell] / I use magic" | Spellcasting | `cast-spell` | `cast-spell --spell-name "Coruscating Coffin" --caster-level 3 --tradition high_magic --current-effort 1 --system-strain 0 --system-strain-max 11` |
+| "Let's travel / we head toward / we march" | Travel | `travel` | `travel --terrain forest --days 3 --supplies 10` |
+| "I search / I look for treasure / what's in the chest" | Treasure | `treasure` | `treasure --tier 3` |
+| "What happens in town / time passes / we rest for a week" | World Tick | `world-tick` | `world-tick --days 7` |
+| "I talk to / I approach / how does the NPC react" | Reaction | `reaction-roll` | `reaction-roll --modifier 2` |
+| "Describe the NPC / who is this person" | NPC Generation | `generate-npc` | `generate-npc --importance major --region coastal --tags 2` |
+| "What are the factions doing / between-session time" | Faction Turn | `faction-turn` | `faction-turn` |
+| "What's in this area / describe the scene" | Scene Generation | `generate-scene` | `generate-scene --scene-type wilderness --tag-count 2 --threat-level 3` |
+| "Generate an encounter / what do we find" | Encounter | `encounter` | `encounter --terrain forest --threat-level 4` |
 | Pure narrative / dialogue / observation | No Mechanic | (none) | Resolve in Phase 4 narratively — no CLI needed |
 
 ## Attribute/Skill Selection Guide

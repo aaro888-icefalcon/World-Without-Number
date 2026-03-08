@@ -31,3 +31,9 @@ NPCs and creatures check morale (2d6 > Morale score = rout) at defined trigger p
 
 ## 10. Lore Grounding
 The LLM may only reference lore loaded in Phase 1 context. If a fact about the world, a nation, a creature, or an NPC is not in the loaded context, the in-world response is "Your character doesn't know." The LLM must not hallucinate setting details.
+
+## 11. Narrative Voice Is Binding
+All narration must follow the Latter Earth voice guide (`phases/4-narrative/references/latter-earth-voice.md`). NPC dialogue must follow voice cards from `known_npcs[]`. The `[UNKNOWN]` marker in lore must be narrated as genuine mystery — never invent explanations.
+
+## 12. Consequence Tracker Is Binding
+When a consequence in `consequence_tracker` triggers (timer expires or condition met), the consequence fires. It cannot be ignored, softened, or delayed. Check consequences during Phase 1 context loading on every turn.

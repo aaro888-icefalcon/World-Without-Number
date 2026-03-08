@@ -52,6 +52,8 @@ REQUIRED_TOP_LEVEL_TYPES = {
     "world_pulse": dict,
     "combat_state": dict,
     "last_played": str,
+    "consequence_tracker": list,
+    "session": dict,
 }
 
 FORBIDDEN_TOP_LEVEL_KEYS = {

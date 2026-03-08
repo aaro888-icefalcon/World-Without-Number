@@ -121,8 +121,8 @@ def generate_npc(importance="minor", region="unknown", tag_count=1):
     try:
         from character_tags import CHARACTER_TAGS
         if CHARACTER_TAGS:
-            tag_rolls = [random.randint(1, len(CHARACTER_TAGS)) for _ in range(tag_count)]
-            tags = [CHARACTER_TAGS.get(r, f"Tag {r}") for r in tag_rolls]
+            selected = random.sample(CHARACTER_TAGS, min(tag_count, len(CHARACTER_TAGS)))
+            tags = [t["tag"] if isinstance(t, dict) else str(t) for t in selected]
     except ImportError:
         pass
 

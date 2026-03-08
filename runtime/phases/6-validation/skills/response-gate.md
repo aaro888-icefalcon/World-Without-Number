@@ -31,6 +31,15 @@ This skill runs as the final check before a turn response is delivered to the pl
 - [ ] Narration references only lore loaded in Phase 1 context
 - [ ] No invented NPC names, locations, or world facts that aren't in state or loaded lore
 - [ ] Spell effects, creature abilities, and item properties come from extracted data tables
+- [ ] NPC dialogue follows voice card from `known_npcs[]` (speech_patterns, key_phrases)
+- [ ] Region descriptions match loaded nation lore file
+
+### 5. Social & Narrative Integrity
+- [ ] If NPC interaction occurred, `known_npcs[].last_interaction_summary` updated
+- [ ] If dramatic event occurred, `session.drama_budget` decremented
+- [ ] If scene type changed, `campaign.scene_rhythm` updated
+- [ ] If consequence should have triggered (timer expired), it was checked
+- [ ] Latter Earth voice maintained (per `references/latter-earth-voice.md`)
 
 ## Halt Conditions
 

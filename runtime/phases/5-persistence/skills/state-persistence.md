@@ -24,6 +24,15 @@ Review CLI output from Phase 3 for any state mutations:
 | Equipment change | `character.equipment.readied` / `stowed` / `coins` |
 | Scene change | `current_scene.*` fields |
 | Time passage | `campaign.current_day`, `campaign.current_time`, `current_day`, `current_time` |
+| NPC interaction | `known_npcs[].last_interaction_summary`, `.trust`, `.disposition` |
+| Faction turn | `human_factions[].turn_history`, `.current_action` |
+| Consequence created | Append to `consequence_tracker` |
+| Consequence triggered | Update `consequence_tracker[].status` to `"triggered"` |
+| Drama event | Decrement `session.drama_budget`, append to `session.drama_events` |
+| Scene type tracking | Append to `campaign.scene_rhythm` (keep last 10 entries) |
+| Supply change | Update `campaign.supplies.*` |
+| Arc beat triggered | Update `campaign_arcs[].beats[].status` to `"triggered"` |
+| Region change | Update `current_scene.region_id` |
 
 ### Step 2: Apply Changes
 

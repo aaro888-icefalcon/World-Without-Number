@@ -17,6 +17,12 @@ Translate CLI mechanical results into immersive Latter Earth narrative.
 
 ## Key References
 - `references/narration-mappings.md` — treatment rules by mechanic type, word count guidelines
+- `references/latter-earth-voice.md` — tone, vocabulary, sentence rhythm, sensory palette
+- `references/threat-environment-mapping.md` — threat level to environmental description mapping
+- `references/npc-dialogue-protocol.md` — NPC dialogue generation steps (voice derivation, trust gates, continuity)
+- `assets/character-sheet-template.md` — end-of-turn character sheet display format
+- `assets/scene-template.md` — scene rendering template (location, threat, NPCs, objectives)
+- `tables/failure_flavors.py` — failure complication flavor text by domain
 
 ## Word Count Guidelines
 - Routine action: ~100 words (max 150)
