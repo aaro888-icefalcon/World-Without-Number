@@ -7,18 +7,14 @@ Update state.json with all mechanical changes from the current turn.
 - Before validation (Phase 6)
 
 ## Mandatory Steps
-1. Update character stats (HP, resources, conditions)
-2. Update current scene (location, NPCs, threats)
-3. Update world state (clocks, faction states, relationships)
-4. Update chronicle with turn summary
-5. Update meta.last_played timestamp
+1. Identify all state changes from Phase 3 CLI output
+2. Apply changes to state.json (HP, conditions, equipment, scene, time)
+3. Append chronicle entry for significant events
+4. Update `meta.last_played` and `last_played` timestamps
+5. Maintain sync invariants: `current_day == campaign.current_day`, `current_time == campaign.current_time`
 6. Write state.json
 
 ## Key Resources
 - Schema contract: `schemas/state.schema.json` — written state must conform
 - Validator: `scripts/validate_state.py` — run after every state write
-
-## Content To Create
-
-- **`skills/state-persistence.md`** — Detailed persistence procedures
-- **`turn-receipt-template.json`** — Turn receipt format template
+- Procedure detail: `skills/state-persistence.md`

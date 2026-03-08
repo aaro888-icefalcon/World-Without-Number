@@ -10,14 +10,20 @@ Load game state, scene, lore, and world context before any action interpretation
 ## Mandatory Steps
 1. Read `state.json` — character, scene, world, clocks, chronicle
 2. Read current scene context from `current_scene` in state
-3. Load relevant lore when player references game-specific content
-4. Load hard rules and GM protocol (always-load references)
+3. Load hard rules and GM protocol (always-load references)
+4. Load lore per `skills/lore-loading.md`:
+   - Always load: `lore/latter-earth-overview.md`, `lore/history-and-ages.md`
+   - Region-specific: `lore/nations/<region_id>.md` based on `current_scene.region_id`
+   - Context budget: ~2000 tokens of lore per turn (max 5000)
+5. Check `campaign_arcs[].beats` for any triggered beat conditions
+6. Check `consequence_tracker` for pending consequences that should fire
 
-## Content To Create
+## Key Resources
+- `references/hard-rules.md` — non-negotiable mechanical contract (10 rules)
+- `references/gm-protocol.md` — GM behavioral rules, narrative voice, pacing
+- `skills/lore-loading.md` — lore selection and context budget rules
+- `lore/` — world setting, geography, nations, languages
+- `lore/nations/` — 40 nation files with §-anchored sections
 
-Populate this phase with your game's content:
-
-- **`references/`** — Hard rules, GM protocol, character creation rules
-- **`lore/`** — World setting, geography, factions, creatures
-- **`skills/`** — State loading, lore loading, scene context skills
-- **`assets/`** — Templates (world state, character creation)
+## [UNKNOWN] Convention
+Lore documents include `[UNKNOWN]` for deliberately unexplained phenomena. When encountering these markers, narrate as genuine mystery — never invent explanations. See `skills/lore-loading.md` for details.

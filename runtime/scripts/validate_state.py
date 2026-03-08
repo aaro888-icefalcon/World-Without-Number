@@ -50,7 +50,10 @@ REQUIRED_TOP_LEVEL_TYPES = {
     "chronicle": list,
     "clock_log": list,
     "world_pulse": dict,
+    "combat_state": dict,
     "last_played": str,
+    "consequence_tracker": list,
+    "session": dict,
 }
 
 FORBIDDEN_TOP_LEVEL_KEYS = {

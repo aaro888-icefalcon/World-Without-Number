@@ -1,26 +1,23 @@
 # Phase 1 — Context Loading: Content Inventory
 
-This phase is empty — populate with your game's context loading content.
-
-## Expected Content
-
-### References
+## References
 | File | Purpose |
 |---|---|
-| `references/hard-rules.md` | Non-negotiable GM procedures |
-| `references/gm-protocol.md` | Full adjudication protocol |
-| `references/creation.md` | Character creation rules |
+| `references/hard-rules.md` | Non-negotiable GM procedures (10 rules) |
+| `references/gm-protocol.md` | Full GM adjudication protocol, narrative voice, pacing |
 
-### Lore
+## Lore
 | File | Purpose |
 |---|---|
-| `lore/core/setting.md` | World setting and premise |
-| `lore/core/geography.md` | Geographic regions |
+| `lore/latter-earth-overview.md` | World primer — the Latter Earth setting overview |
+| `lore/history-and-ages.md` | Timeline of ages, rise and fall of civilizations |
+| `lore/geography.md` | Major geographic features — seas, mountains, rivers, climate |
+| `lore/languages.md` | Languages spoken in the Latter Earth |
+| `lore/index.md` | Master lore inventory |
+| `lore/nations/index.md` | Nation file listing (40 nations) |
+| `lore/nations/*.md` | Individual nation files with §history, §geography, §government, §culture, §sensory-palette, §voice-notes, §adventure-hooks |
 
-### Skills
+## Skills
 | File | Purpose |
 |---|---|
-| `skills/state-loading.md` | Load and parse state.json at turn start |
-| `skills/lore-loading.md` | Load relevant lore based on context |
-| `skills/scene-context.md` | Establish current scene from state |
-| `skills/new-game-setup.md` | Session zero: generate world, character, initial state |
+| `skills/lore-loading.md` | Context selection — which lore to load based on current region |

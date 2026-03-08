@@ -1,23 +1,20 @@
 # Phase 4 — Narrative Translation: Content Inventory
 
-This phase is empty — populate with your game's narrative content.
-
-## Expected Content
-
-### Skills
+## References
 | File | Purpose |
 |---|---|
-| `skills/narration.md` | Core narrative translation procedures |
-| `skills/combat-display.md` | Combat state display format |
+| `references/narration-mappings.md` | Mechanical-to-narrative translation rules by mechanic type |
+| `references/latter-earth-voice.md` | Prose style guide: tone, vocabulary, sentence rhythm, sensory palette |
+| `references/threat-environment-mapping.md` | Threat level to environmental sensory description mapping |
+| `references/npc-dialogue-protocol.md` | Step-by-step protocol for generating consistent NPC dialogue |
 
-### References
+## Assets
 | File | Purpose |
 |---|---|
-| `references/narration-examples.md` | Example narrations for tone calibration |
-| `references/narration-mappings.md` | Mechanical-to-narrative mapping guide |
+| `assets/character-sheet-template.md` | Compact character sheet display template (end-of-turn / on-request) |
+| `assets/scene-template.md` | Scene rendering template (location, threat, NPCs, objectives) |
 
-### Assets
+## Tables
 | File | Purpose |
 |---|---|
-| `assets/character-sheet-template.md` | Character display template |
-| `assets/current-scene-template.md` | Scene presentation template |
+| `tables/failure_flavors.py` | Failure complication flavor text by domain (combat, skill, spell, travel, social, save) |
