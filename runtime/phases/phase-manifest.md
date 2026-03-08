@@ -83,6 +83,9 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `skills/world-building/tables/government_tables.py` — government types
   - `skills/world-building/tables/society_tables.py` — society types and features
   - `skills/world-building/tables/religion_tables.py` — religion types and practices
+  - `skills/exploration/tables/wilderness_tags.py` — 22 wilderness environment tags for scene generation
+  - `skills/exploration/tables/ruin_tags.py` — 22 ruin/dungeon environment tags for scene generation
+  - `skills/exploration/tables/community_tags.py` — 22 community/settlement tags for scene generation
 - scripts:
   - `skills/core/scripts/magic.py` — spell casting, Effort, arts, tradition management
   - `skills/combat/scripts/behavior.py` — creature combat AI, behavior trees

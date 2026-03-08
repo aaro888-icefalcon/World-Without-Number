@@ -29,8 +29,7 @@ TEST_MODULES = [
 
 # Optional game-specific tests (only run if they exist)
 OPTIONAL_MODULES = [
-    # Add your game's test modules here. Example:
-    # ("Balance: Hit Rates", "balance_test_a1"),
+    ("Exploration: Tag Tables", "test_exploration_tables"),
 ]
 
 
