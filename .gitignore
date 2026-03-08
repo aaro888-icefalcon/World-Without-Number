@@ -1,2 +1,8 @@
 __pycache__/
 *.pyc
+
+# Temporary PDF text extraction files
+WWN4_text.txt
+wwn2_text.txt
+wwn_layout.txt
+wwn_text.txt

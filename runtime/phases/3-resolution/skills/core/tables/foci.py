@@ -132,4 +132,15 @@ FOCI = {
         "level_1": "Gain a minor physical mutation or alien trait with a small mechanical benefit.",
         "level_2": "The trait intensifies. +1 to a chosen attribute (max 18) and an additional minor power.",
     },
+    "specialist": {
+        "type": "any",
+        "repeatable": True,
+        "level_1": "Gain skill-0 in a chosen skill if unskilled. Choose a skill; gain +1 to non-combat checks with it.",
+        "level_2": "+2 to non-combat checks with the chosen skill. Can take this focus multiple times for different skills.",
+    },
+    "traditional_education": {
+        "type": "any",
+        "class_restriction": "invoker",
+        "level_1": "Gain one High Mage art. The Invoker can use this art as if they were a High Mage of their caster level.",
+    },
 }
