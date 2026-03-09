@@ -16,7 +16,8 @@ Entry point scripts for CLI execution and validation. Domain modules (the actual
 
 | Script | Purpose | Runtime-safe |
 |---|---|---|
-| `emergence_cli.py` | Unified CLI dispatcher — 16 commands registered (Phases A–D) | Yes |
+| `emergence_cli.py` | Unified CLI dispatcher — 17 commands registered (Phases A–E) | Yes |
+| `initialize_game.py` | Game initialization — generate complete starting state | Yes |
 | `validate_state.py` | State JSON schema validation | Yes |
 | `validate_turn_input.py` | Player action provenance validation | Yes |
 | `validate_turn_receipt.py` | Turn receipt schema validation | Yes |
@@ -46,6 +47,7 @@ Entry point scripts for CLI execution and validation. Domain modules (the actual
 | `faction-turn` | Run faction turn for all factions | social |
 | `level-up` | Advance character to target level | core |
 | `generate-dungeon` | Generate procedural dungeon | exploration |
+| `initialize-game` | Initialize new game (character + world state) | initialization |
 
 ## Domain Module Locations
 

@@ -21,7 +21,8 @@
 ## Entry Point Scripts
 | File | Purpose |
 |---|---|
-| `scripts/emergence_cli.py` | Unified CLI dispatcher |
+| `scripts/emergence_cli.py` | Unified CLI dispatcher (17 commands) |
+| `scripts/initialize_game.py` | Game initialization — character + world seeding |
 | `scripts/validate_state.py` | State JSON validator |
 | `scripts/validate_canonical_references.py` | Canonical reference path validator |
 | `scripts/validate_reference_freshness.py` | Reference path checker |

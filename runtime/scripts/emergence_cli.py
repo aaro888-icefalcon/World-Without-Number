@@ -21,6 +21,7 @@ Commands:
     generate-npc     Generate an NPC with voice card
     reaction-roll    Roll NPC reaction (2d6)
     faction-turn     Run a faction turn
+    initialize-game  Initialize a new game (character + world state)
 """
 
 import argparse
@@ -302,6 +303,37 @@ def cmd_generate_dungeon(args):
     print(json.dumps(result, indent=2, default=str))
 
 
+def cmd_initialize_game(args):
+    """Initialize a new game — create character and seed world state."""
+    from initialize_game import initialize_game
+    partial_classes = None
+    if args.partial_classes:
+        partial_classes = [p.strip() for p in args.partial_classes.split(",")]
+    foci = None
+    if args.foci:
+        foci = [f.strip() for f in args.foci.split(",")]
+    spells = None
+    if args.spells:
+        spells = [s.strip() for s in args.spells.split(",")]
+    result = initialize_game(
+        name=args.name,
+        class_name=getattr(args, 'class'),
+        background_id=args.background,
+        method=args.method,
+        campaign=args.campaign,
+        partial_classes=partial_classes,
+        tradition=args.tradition,
+        foci=foci,
+        spells=spells,
+        equipment_package=args.equipment_package,
+        skill_method=args.skill_method,
+        free_skill=args.free_skill,
+        seed=args.seed,
+    )
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # MAIN — ARGUMENT PARSER
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -449,6 +481,26 @@ def main():
     p_dungeon.add_argument("--depth", type=int, required=True, help="Dungeon depth (affects rooms and threat)")
     p_dungeon.add_argument("--theme", type=str, default=None, help="Dungeon theme (or random)")
 
+    # ── Phase E commands — Initialization ─────────────────────────────────────
+
+    # initialize-game
+    p_init = subparsers.add_parser("initialize-game", parents=[seed_parent], help="Initialize a new game")
+    p_init.add_argument("--name", type=str, required=True, help="Character name")
+    p_init.add_argument("--class", type=str, required=True, choices=["warrior", "expert", "mage", "adventurer"])
+    p_init.add_argument("--background", type=int, required=True, help="Background ID (1-20)")
+    p_init.add_argument("--method", type=str, default="standard_array", choices=["standard_array", "roll_3d6"])
+    p_init.add_argument("--campaign", type=str, default="default", choices=["default", "nyc"],
+                         help="Campaign to initialize")
+    p_init.add_argument("--partial-classes", type=str, default=None,
+                         help="Comma-separated partial classes for adventurer")
+    p_init.add_argument("--tradition", type=str, default=None,
+                         choices=["high_mage", "elementalist", "necromancer", "healer", "vowed", "invoker"])
+    p_init.add_argument("--foci", type=str, default=None, help="Comma-separated focus names")
+    p_init.add_argument("--spells", type=str, default=None, help="Comma-separated starting spells")
+    p_init.add_argument("--equipment-package", type=str, default=None)
+    p_init.add_argument("--skill-method", type=str, default=None, choices=["quick"])
+    p_init.add_argument("--free-skill", type=str, default=None)
+
     # ── Parse and dispatch ────────────────────────────────────────────────────
 
     args = parser.parse_args()
@@ -477,6 +529,7 @@ def main():
         "faction-turn": cmd_faction_turn,
         "level-up": cmd_level_up,
         "generate-dungeon": cmd_generate_dungeon,
+        "initialize-game": cmd_initialize_game,
     }
 
     if args.command not in commands:

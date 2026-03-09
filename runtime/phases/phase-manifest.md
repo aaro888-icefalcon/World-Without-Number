@@ -4,7 +4,8 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
 
 ## PHASE 1: CONTEXT_LOADING
 - directory: 1-context-loading/
-- cli_commands: (none — this phase reads state and lore files)
+- cli_commands:
+  - `initialize-game --name --class --background --campaign [--method] [--partial-classes] [--tradition] [--foci] [--seed]` — full game initialization (character + world state)
 - references:
   - `references/hard-rules.md` — non-negotiable mechanical contract
   - `references/gm-protocol.md` — GM behavioral rules and narrative voice
@@ -31,6 +32,7 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `lore/nyc-magic.md` — magic manifestation and attunement (NYC campaign, load for magic scenes)
   - `lore/imperator.md` — caged entity and surge dynamics (NYC campaign, load for gallery/surge scenes)
 - skills:
+  - `skills/game-initialization.md` — new game startup protocol (interactive character creation and world seeding)
   - `skills/lore-loading.md` — lore selection and context budget rules (updated for NYC region-group loading)
 
 ## PHASE 2: ACTION_INTERPRETATION

@@ -5,7 +5,12 @@ Load game state, scene, lore, and world context before any action interpretation
 ## When This Phase Runs
 - Start of every turn
 - Start of every session
-- When setting up a new game
+- When setting up a new game (see game-initialization skill)
+
+## New Game Detection
+Before running the standard context loading steps, check:
+- `meta.session_number == 0` OR `character.name == "Unnamed Hero"` → Run game initialization protocol (`skills/game-initialization.md`)
+- Otherwise → Proceed with standard context loading
 
 ## Mandatory Steps
 1. Read `state.json` — character, scene, world, clocks, chronicle
