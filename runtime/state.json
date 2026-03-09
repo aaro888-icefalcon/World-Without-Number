@@ -37,7 +37,7 @@
       "readied": ["Accursed Blade — two-handed (2d6+1 magic dmg, Shock 2/15, atk w/ Magic skill, no Effort)"],
       "stowed": [
         "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs, looted water bottles x4, energy bars x6)",
-        "Duffel bag (chilled meal-prep containers x6, ice packs, scavenged water bottles x3, canned tuna x2, box of crackers)",
+        "Duffel bag (ice packs [thawed], scavenged water bottles x3, canned tuna x2, box of crackers)",
         "Akhil's backpack (scavenged water bottles x6, canned goods x4, box of matches, first aid supplies from Mount Sinai)",
         "Bellevue haul (water jugs x8 from cafeteria storage)"
       ],
@@ -54,8 +54,8 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_009",
-    "location": "Shake's apartment, near Bellevue, Manhattan",
+    "scene_id": "scene_010",
+    "location": "Bellevue neighborhood, Lower East Side, Manhattan",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
     "threat_level": 1,
@@ -64,12 +64,12 @@
   "campaign": {
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
-    "current_day": 1,
-    "current_time": "23:30",
-    "current_location": "Shake's apartment, near Bellevue, Manhattan"
+    "current_day": 2,
+    "current_time": "10:00",
+    "current_location": "Bellevue neighborhood, Lower East Side, Manhattan"
   },
-  "current_day": 1,
-  "current_time": "23:30",
+  "current_day": 2,
+  "current_time": "10:00",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -174,9 +174,9 @@
   ],
   "world_situation": {
     "transport_hour": 0,
-    "population_state": "mass panic and confusion — initial surge underway",
-    "infrastructure": "All electronics and engines failing simultaneously",
-    "gallery_status": "Initial surge underway — servitors breaching across Manhattan subway galleries",
+    "population_state": "Day 2 — shock settling into grim reality. People sheltering indoors. NYPD/FDNY attempting to organize without technology. Surge casualties visible — bodies being carried up from subway entrances.",
+    "infrastructure": "All electronics and engines dead. Fire hydrants being cracked for water on some blocks. Stores emptied or guarded.",
+    "gallery_status": "Initial surge subsiding — subway entrances being barricaded by civilians. Galleries remain active threat but no new major breach.",
     "food_reserves_days": 10,
     "jda_formed": false,
     "five_revelations": {
@@ -376,6 +376,20 @@
       "event": "Shake scouts Bellevue Hospital complex solo. Darkvision advantage. Notice SUCCESS (9 vs DC 9, margin 0) — barely finds what he's looking for. Pharmacy partially looted but back stock intact. Recovers 8 water jugs from cafeteria storage room. Skeleton crew still operating: a few nurses, couple of residents. Building structurally sound. Returns to apartment with water haul.",
       "significance": "moderate",
       "tags": ["scout", "bellevue", "scavenge", "water", "solo"]
+    },
+    {
+      "day": 2,
+      "time": "07:00",
+      "event": "Brothers sleep in shifts — Shake takes first watch, Akhil relieves at 3 AM. Night passes without incident. Wake at 7 AM (internal clock — no day/night cycle visible in cavern). Eat energy bars and canned tuna for breakfast, share water. Full rest — HP restored, Effort reset.",
+      "significance": "minor",
+      "tags": ["rest", "apartment", "day_transition"]
+    },
+    {
+      "day": 2,
+      "time": "08:30",
+      "event": "Shake ventures out solo into Day 2 Manhattan. Darkvision advantage in building interiors. SCAVENGE FAILED (Notice 9 vs DC 10, margin -1) — easy pickings are gone. Stores stripped or being guarded. Other scavengers have been out all night. INTELLIGENCE GATHERING SUCCESS (Notice 9 vs DC 8, margin +1): observes NYPD foot patrols with megaphones, civilian subway barricades, fire hydrants cracked for water, bodies being carried up from underground. Bellevue becoming de facto community hub. Hears rumor that the water surrounding the island isn't the East River. FDNY reportedly organizing command post at City Hall.",
+      "significance": "major",
+      "tags": ["scout", "day_2", "intelligence", "failed_scavenge", "world_state"]
     }
   ],
   "clock_log": [
@@ -397,10 +411,14 @@
     "drama_events": []
   },
   "world_pulse": {
-    "day": 1,
-    "news": "Sunday evening, normal commuter traffic. Amtrak Northeast Regional arriving Penn Station.",
-    "rumors": [],
-    "trends": [],
+    "day": 2,
+    "news": "Monday morning — T+16 hours. Manhattan adjusting to permanent twilight. NYPD organizing foot patrols with megaphones. Hospitals overwhelmed. Grocery stores empty or defended.",
+    "rumors": [
+      "Subway barricades holding but people hear sounds from below at night",
+      "Someone at Bellevue claims the water around the island isn't the East River — it's something else",
+      "FDNY chief seen organizing a command post at City Hall with hand-drawn maps"
+    ],
+    "trends": ["civilian barricading of subway entrances", "fire hydrant water distribution", "hospitals becoming community hubs"],
     "arrivals": []
   },
   "last_played": "2026-03-09T18:00:00Z"
