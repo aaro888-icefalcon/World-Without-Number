@@ -56,7 +56,23 @@ Present the background, skills, and boosts to the player. Show final attribute s
 
 ### Step 3: Background Focus
 
-Present available foci and recommend 1-2 that complement the character concept and background. This is the character's first focus pick.
+Present all available foci organized by category, and recommend 1-2 that complement the character concept and background. This is the character's first focus pick.
+
+**Foci Categories** (present ALL categories — player may pick from any they qualify for):
+
+- **General Foci** (any class): alert, artisan, assassin, authority, close_combatant, connected, cultured, dealmaker, die_hard, diplomatic_grace, gifted_chirurgeon, henchkeeper, impostor, lucky, poisoner, rider, specialist, spirit_familiar, trapmaster, unique_gift, well_met, xenoblooded
+- **Warrior Foci** (Warriors or Partial Warriors only): armsmaster, close_combatant, deadeye, impervious_defense, shocking_assault, snipers_eye, unarmed_combatant, valiant_defender, whirlwind_assault
+- **Maqqatban Knight Foci** (Warrior/Partial Warrior only, one style max): all_directions_edge_style, catalytic_soul_style, ghost_archer_style, one_point_strike_style, pyre_of_heaven_style, righteous_iron_style, world_tree_lance_style, wrathful_mountain_style
+- **Expert Foci** (Experts or Partial Experts only): polymath
+- **Amundi Godblood Foci** (Expert/Partial Expert only, one godblood max): danger_sense, folie_a_deux, master_tracker, night_walker, pack_beast, provident_crafter, walk_like_wind, wildtongue
+- **Arcane Secret Foci** (Mages or Partial Mages only, one secret max): armored_magic, atlantean_divination, iteral_pacting, nagadi_hemomancy, old_empire_sigilism, vothite_mind_sorcery
+- **Non-Mage Foci** (cannot be taken by Mages/Partial Mages): developed_attribute, nullifier
+- **Non-Human Origin Foci** (any class, one origin max): man, accipiter_anak, aristoi_anak, choeru_beastfolk, deepfolk, ghoul, guer_beastfolk, harbinger_anak, hua_beastfolk, kitsune_beastfolk, manu_beastfolk, nahu_beastfolk, pichi_beastfolk, piren_beastfolk, special_origin, sui_beastfolk, usagi_beastfolk, zakathi
+
+**Extended partial class base types for focus eligibility:**
+- Partial Expert includes: expert, bard, wise
+- Partial Warrior includes: warrior, mageslayer
+- Partial Mage includes: mage, accursed, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble
 
 Wait for player choice.
 
@@ -74,15 +90,31 @@ Classes:
 
 If **Adventurer** is chosen, ask which two partial classes:
 - Core: warrior, expert, mage
-- Extended: accursed, bard, mageslayer, wise, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble
+- Extended (expert-type): bard, wise
+- Extended (warrior-type): mageslayer
+- Extended (mage-type): accursed, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble
 
-If a partial class includes mage (or is a magic tradition), prompt for tradition selection.
+**Invalid combinations:** mageslayer cannot pair with any mage-type partial class.
+
+If the class is **Mage** or any partial class has base type mage (mage, accursed, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble), prompt for **tradition selection**:
+
+```
+Mage Traditions:
+  high_mage     — Classical wizard. Versatile arcane spells through study.
+  elementalist  — Wielder of primal elemental forces (fire, water, earth, air).
+  necromancer   — Master of death magic, undead creation, and life force.
+  healer        — Supernatural healing physician. (Partial tradition only)
+  vowed         — Ascetic martial artist channeling power through discipline. (Partial tradition only)
+  invoker       — Adunic spell-point caster using High Magic spells without Vancian slots.
+```
+
+Note: healer and vowed are partial-only traditions (Adventurer with partial mage, not full Mage class).
 
 Wait for player choice.
 
 ### Step 5: Second Focus and Free Skill
 
-Present available foci (filtered by class restrictions from Step 4). This is the character's second focus pick.
+Present all available foci again (same categories as Step 3, filtered by class restrictions from Step 4). This is the character's second focus pick. The player may not pick the same focus twice (unless it is marked repeatable, e.g., specialist, developed_attribute).
 
 Then ask for one free skill pick (any skill set to level 0).
 

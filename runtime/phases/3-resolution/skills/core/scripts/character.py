@@ -225,6 +225,24 @@ def _validate_tradition(class_name, tradition, partial_classes=None):
             raise ValueError("Invoker tradition requires mage class or partial invoker.")
 
 
+def _resolve_base_types(partial_classes):
+    """Resolve the base types (warrior/expert/mage) for a list of partial classes.
+
+    Extended partial classes map to base types via BASE_TYPE_MAP:
+      - bard, wise → expert
+      - mageslayer → warrior
+      - accursed, invoker, skinshifter, duelist, beastmaster, blood_priest,
+        thought_noble → mage
+    """
+    base_types = set()
+    if not partial_classes:
+        return base_types
+    for pc in partial_classes:
+        base = BASE_TYPE_MAP.get(pc, pc)
+        base_types.add(base)
+    return base_types
+
+
 def _validate_foci(class_name, foci, partial_classes=None):
     """Validate focus picks against class restrictions."""
     if not foci:
@@ -233,15 +251,15 @@ def _validate_foci(class_name, foci, partial_classes=None):
         if f not in FOCI:
             raise ValueError(f"Unknown focus: {f}. Choose from: {list(FOCI.keys())}")
 
+    # Resolve base types for extended partial classes (e.g., bard → expert)
+    base_types = _resolve_base_types(partial_classes) if partial_classes else set()
+
     is_mage = class_name == "mage"
-    is_partial_mage = (class_name == "adventurer" and partial_classes
-                       and "mage" in partial_classes)
+    is_partial_mage = (class_name == "adventurer" and "mage" in base_types)
     is_expert = class_name == "expert"
-    is_partial_expert = (class_name == "adventurer" and partial_classes
-                         and "expert" in partial_classes)
+    is_partial_expert = (class_name == "adventurer" and "expert" in base_types)
     is_warrior = class_name == "warrior"
-    is_partial_warrior = (class_name == "adventurer" and partial_classes
-                          and "warrior" in partial_classes)
+    is_partial_warrior = (class_name == "adventurer" and "warrior" in base_types)
 
     for f in foci:
         ftype = FOCI[f].get("type", "any")
