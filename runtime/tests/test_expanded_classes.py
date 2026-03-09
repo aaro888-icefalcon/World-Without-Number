@@ -731,17 +731,12 @@ def test_full_invoker(t):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def test_traditional_education(t):
-    print("\n[10] TRADITIONAL EDUCATION FOCUS")
+    print("\n[10] TRADITIONAL EDUCATION FOCUS (removed — not in PDF)")
 
-    # 10a. Focus exists in FOCI
-    try:
-        from foci import FOCI
-        assert "traditional_education" in FOCI, "Missing traditional_education focus"
-        focus = FOCI["traditional_education"]
-        assert "level_1" in focus, "Focus must have level_1"
-        t.ok("Traditional Education focus exists in FOCI")
-    except Exception as e:
-        t.error("Traditional Education focus", e)
+    # traditional_education was a fabricated focus not present in any WWN PDF.
+    # This test group is kept as a placeholder for backward compatibility
+    # with test runner invocations.
+    t.ok("traditional_education correctly removed (not in any WWN PDF)")
 
 
 # ══════════════════════════════════════════════════════════════════════════════

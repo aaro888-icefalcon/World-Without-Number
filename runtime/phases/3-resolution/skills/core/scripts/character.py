@@ -169,17 +169,47 @@ def _validate_foci(class_name, foci, partial_classes=None):
         if f not in FOCI:
             raise ValueError(f"Unknown focus: {f}. Choose from: {list(FOCI.keys())}")
 
+    is_mage = class_name == "mage"
+    is_partial_mage = (class_name == "adventurer" and partial_classes
+                       and "mage" in partial_classes)
+    is_expert = class_name == "expert"
+    is_partial_expert = (class_name == "adventurer" and partial_classes
+                         and "expert" in partial_classes)
+    is_warrior = class_name == "warrior"
+    is_partial_warrior = (class_name == "adventurer" and partial_classes
+                          and "warrior" in partial_classes)
+
+    for f in foci:
+        ftype = FOCI[f].get("type", "any")
+
+        # non_mage: cannot be taken by Mages or Partial Mages
+        if ftype == "non_mage" and (is_mage or is_partial_mage):
+            raise ValueError(
+                f"Focus '{f}' cannot be taken by Mages or Partial Mages."
+            )
+
+        # mage_only: only Mages or Partial Mages
+        if ftype == "mage_only" and not (is_mage or is_partial_mage):
+            raise ValueError(
+                f"Focus '{f}' can only be taken by Mages or Partial Mages."
+            )
+
+        # expert_only: only Experts or Partial Experts
+        if ftype == "expert_only" and not (is_expert or is_partial_expert):
+            raise ValueError(
+                f"Focus '{f}' can only be taken by Experts or Partial Experts."
+            )
+
     warrior_picks = sum(1 for f in foci if FOCI[f].get("type") == "warrior")
 
-    if class_name == "warrior":
+    if is_warrior:
         max_warrior = len(foci)
-    elif class_name == "expert":
+    elif is_expert:
         max_warrior = 1  # only the "Any" slot accepts warrior-type
-    elif class_name == "mage":
+    elif is_mage:
         max_warrior = 1
     elif class_name == "adventurer":
-        has_warrior = partial_classes and "warrior" in partial_classes
-        if has_warrior:
+        if is_partial_warrior:
             max_warrior = len(foci)  # warrior slot + any slot all accept warrior
         else:
             max_warrior = 1  # only the any slot
