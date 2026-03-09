@@ -54,8 +54,8 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_010",
-    "location": "Bellevue neighborhood, Lower East Side, Manhattan",
+    "scene_id": "scene_011",
+    "location": "NYU Langone Medical Center, Manhattan",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
     "threat_level": 1,
@@ -65,11 +65,11 @@
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 2,
-    "current_time": "10:00",
-    "current_location": "Bellevue neighborhood, Lower East Side, Manhattan"
+    "current_time": "11:30",
+    "current_location": "NYU Langone Medical Center, Manhattan"
   },
   "current_day": 2,
-  "current_time": "10:00",
+  "current_time": "11:30",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -238,7 +238,7 @@
       "region": "manhattan",
       "threat_level": 0,
       "discovered_day": 1,
-      "notes": "Shake's workplace and adjacent apartment. Major medical facility. Scouted Night 1 ~23:00 (Notice SUCCESS, 9 vs DC 9): pharmacy partially looted but back stock intact, water jugs x8 recovered from cafeteria storage, surgical supplies available. Staff skeleton crew — some nurses and a few residents still on site. Building structurally sound."
+      "notes": "Shake's workplace and adjacent apartment. Major medical complex — two institutions sharing campus. BELLEVUE (public, scouted Night 1): pharmacy back stock intact, cafeteria storage raided for water, skeleton crew, becoming community hub with crowd gathering. LANGONE (private/academic, scouted Day 2, Notice SUCCESS 9 vs DC 8): mostly deserted — attendings and private docs fled. Research wings empty. BUT: supply stockrooms largely untouched (nobody thought to check academic side), backup generator fuel reserves (useless for generators but flammable), Shake has badge access to restricted floors. Key difference: Bellevue is where the people are, Langone is where the untouched supplies are."
     },
     {
       "id": "loc_004",
@@ -390,6 +390,13 @@
       "event": "Shake ventures out solo into Day 2 Manhattan. Darkvision advantage in building interiors. SCAVENGE FAILED (Notice 9 vs DC 10, margin -1) — easy pickings are gone. Stores stripped or being guarded. Other scavengers have been out all night. INTELLIGENCE GATHERING SUCCESS (Notice 9 vs DC 8, margin +1): observes NYPD foot patrols with megaphones, civilian subway barricades, fire hydrants cracked for water, bodies being carried up from underground. Bellevue becoming de facto community hub. Hears rumor that the water surrounding the island isn't the East River. FDNY reportedly organizing command post at City Hall.",
       "significance": "major",
       "tags": ["scout", "day_2", "intelligence", "failed_scavenge", "world_state"]
+    },
+    {
+      "day": 2,
+      "time": "10:30",
+      "event": "Shake scouts NYU Langone — his own workplace. Notice SUCCESS (9 vs DC 8, margin +1). Stark contrast with Bellevue next door. Langone is a ghost: private attendings fled to families, research wings dark and empty, admin offices abandoned. But the academic/private side means nobody looted it the way they hit Bellevue. Supply stockrooms on restricted floors still intact — Shake has badge access. Finds: untouched surgical supply closets, research lab chemical stores, backup generator diesel (useless for power but flammable), cafeteria dry goods in sealed storage. Meanwhile Bellevue is packed — crowd on the steps, whiteboard maps, doctors organizing. Two hospitals, same campus: one has the people, the other has the stuff.",
+      "significance": "major",
+      "tags": ["scout", "nyu_langone", "bellevue", "intelligence", "supplies", "day_2"]
     }
   ],
   "clock_log": [
