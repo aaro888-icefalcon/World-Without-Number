@@ -37,7 +37,7 @@
       "readied": ["Accursed Blade (1d8, magical, unstable — first manifestation)"],
       "stowed": [
         "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs, looted water bottles x4, energy bars x6)",
-        "Duffel bag (chilled meal-prep containers x6, ice packs)"
+        "Duffel bag (chilled meal-prep containers x6, ice packs, scavenged water bottles x3, canned tuna x2, box of crackers)"
       ],
       "coins": { "copper": 0, "silver": 0, "gold": 0 },
       "notes": "Left $40 cash on counter of Penn Station shop for looted supplies"
@@ -52,22 +52,22 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_005",
-    "location": "8th Avenue and 31st Street, Manhattan surface — first emergence",
+    "scene_id": "scene_006",
+    "location": "Shake's apartment, near NYU Langone / Bellevue, Manhattan surface",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
-    "threat_level": 2,
+    "threat_level": 1,
     "scene_type": "exploration"
   },
   "campaign": {
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "18:35",
-    "current_location": "8th Avenue and 31st Street, Manhattan surface"
+    "current_time": "19:20",
+    "current_location": "Shake's apartment, near NYU Langone / Bellevue"
   },
   "current_day": 1,
-  "current_time": "18:35",
+  "current_time": "19:20",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -309,6 +309,13 @@
       "event": "Shake emerges from 8th Ave exit with ~47 survivors. FIRST REVELATION: world_outside — Manhattan is inside a colossal cavern. No sky. Bioluminescent blue-green ceiling ~200ft up. Underground lake surrounds the island. Gallery mouths visible in distant cavern walls. Behind them, gallery seal breach begins (clock_gallery_seals → 1, portent fired). Screaming from below.",
       "significance": "critical",
       "tags": ["surface_emergence", "revelation_world_outside", "gallery_breach", "clock_tick"]
+    },
+    {
+      "day": 1,
+      "time": "19:20",
+      "event": "Shake treks 2 miles east from 8th Ave to apartment near Bellevue through panicking Manhattan streets. Scavenges supplies from abandoned bodega (Notice SUCCESS, 8 vs DC 7, margin +1): water bottles x3, canned tuna x2, box of crackers. Penn Station group dispersed during trek — each heading to their own people. Witnesses chaos: subway entrances with screaming from below, thousands on streets, no working technology, blue-green cavern light. Arrives at apartment building.",
+      "significance": "moderate",
+      "tags": ["travel", "scavenge", "apartment", "bellevue"]
     }
   ],
   "clock_log": [
