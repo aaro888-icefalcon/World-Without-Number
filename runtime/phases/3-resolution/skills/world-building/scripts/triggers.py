@@ -5,8 +5,13 @@ Read-only analysis of state.json to surface:
   - Consequences whose timers have expired (days_remaining <= 0)
   - Campaign arc beats with mechanically-evaluable trigger conditions
   - Proactive GM command suggestions (encounter, faction-turn, world-tick)
+  - Post-resolution state-delta detection (day change, location change, etc.)
 
 Does NOT mutate state. Returns a list of suggested commands for the GM to execute.
+
+Two entry points:
+  - check_all_triggers(state)              — pre-turn evaluation (turn loop step 0)
+  - check_post_resolution(pre_snap, post)  — post-resolution safety net (turn loop step 5.5)
 """
 
 import re
@@ -345,5 +350,224 @@ def check_all_triggers(state):
         "proactive_suggestions": suggestions,
         "clock_status": get_clock_status(clocks),
         "commands_to_fire": commands_to_fire,
+        "arithmetic_trace": " | ".join(trace_parts),
+    }
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# State snapshot (for post-resolution delta detection)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Fields tracked for delta detection. These are the state paths that, when
+# changed during a turn, indicate follow-up commands are needed.
+_SNAPSHOT_FIELDS = [
+    "current_day",
+    "current_scene.location",
+    "current_scene.threat_level",
+    "combat_state.active",
+    "combat_state.enemies",
+]
+
+
+def create_state_snapshot(state):
+    """Capture a lightweight snapshot of state fields relevant to delta detection.
+
+    Call this BEFORE step 4 (mechanical resolution). Pass the snapshot to
+    check_post_resolution() after step 5 (persist) to detect what changed.
+
+    Args:
+        state: full state.json dict
+
+    Returns:
+        dict with snapshot values for tracked fields
+    """
+    snap = {}
+    for field_path in _SNAPSHOT_FIELDS:
+        parts = field_path.split(".")
+        value = state
+        for part in parts:
+            if isinstance(value, dict):
+                value = value.get(part)
+            else:
+                value = None
+                break
+        snap[field_path] = value
+
+    # Snapshot XP for level-up detection
+    character = state.get("character", {})
+    snap["character.xp"] = character.get("xp", 0)
+    snap["character.level"] = character.get("level", 1)
+
+    # Snapshot known_npcs count for NPC generation detection
+    snap["known_npcs_count"] = len(state.get("known_npcs", []))
+
+    # Snapshot known_locations count
+    snap["known_locations_count"] = len(state.get("known_locations", []))
+
+    return snap
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Post-resolution delta detection (Layer 3 safety net)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# XP thresholds for WWN leveling (cumulative XP required for each level)
+_XP_THRESHOLDS = {
+    2: 3, 3: 6, 4: 12, 5: 18, 6: 27, 7: 39, 8: 54, 9: 72, 10: 93,
+}
+
+
+def check_post_resolution(pre_snapshot, post_state, already_executed=None):
+    """Detect state changes from the just-completed command and suggest follow-ups.
+
+    This is the Layer 3 safety net. It runs after step 5 (persist) and catches
+    chain reactions that the chain registry (Layer 2) might have missed.
+
+    Args:
+        pre_snapshot: dict from create_state_snapshot() taken before step 4
+        post_state: full state.json dict after step 5 (persist)
+        already_executed: set of command names already executed/queued this turn
+                         (for deduplication — prevents double-firing)
+
+    Returns:
+        dict with:
+          - deltas: list of detected state changes
+          - commands_to_fire: list of follow-up command suggestions
+          - arithmetic_trace: string summary
+    """
+    if already_executed is None:
+        already_executed = set()
+
+    post_snapshot = create_state_snapshot(post_state)
+    deltas = []
+    commands = []
+
+    # 1. Day changed → world-tick needed (if not already run)
+    pre_day = pre_snapshot.get("current_day")
+    post_day = post_snapshot.get("current_day")
+    if pre_day is not None and post_day is not None and post_day > pre_day:
+        days_advanced = post_day - pre_day
+        deltas.append({
+            "field": "current_day",
+            "before": pre_day,
+            "after": post_day,
+            "description": f"Day advanced by {days_advanced}",
+        })
+        if "world-tick" not in already_executed:
+            commands.append({
+                "command": "world-tick",
+                "args": {"days": days_advanced},
+                "reason": f"In-game day advanced ({pre_day} → {post_day})",
+                "source": "post_resolution_delta",
+                "priority": "high",
+            })
+
+    # 2. Location changed → check if generate-scene needed
+    pre_loc = pre_snapshot.get("current_scene.location")
+    post_loc = post_snapshot.get("current_scene.location")
+    if pre_loc != post_loc and post_loc is not None:
+        deltas.append({
+            "field": "current_scene.location",
+            "before": pre_loc,
+            "after": post_loc,
+            "description": f"Location changed to {post_loc}",
+        })
+        # Check if new location is unknown
+        known_locs = {
+            loc.get("name", "").lower()
+            for loc in post_state.get("known_locations", [])
+        }
+        if post_loc.lower() not in known_locs and "generate-scene" not in already_executed:
+            commands.append({
+                "command": "generate-scene",
+                "args": {
+                    "scene_type": "community",
+                    "threat_level": post_state.get("current_scene", {}).get("threat_level", 3),
+                },
+                "reason": f"Entered unknown location: {post_loc}",
+                "source": "post_resolution_delta",
+                "priority": "high",
+            })
+
+        # New location with high threat → encounter check
+        post_threat = post_snapshot.get("current_scene.threat_level", 0)
+        if post_threat and post_threat >= 2 and "encounter" not in already_executed:
+            terrain = _infer_terrain(post_state.get("current_scene", {}))
+            commands.append({
+                "command": "encounter",
+                "args": {"terrain": terrain, "threat_level": post_threat},
+                "reason": f"Entered area with threat_level={post_threat}",
+                "source": "post_resolution_delta",
+                "priority": "medium",
+            })
+
+    # 3. Combat ended (was active, now not) → treasure check
+    pre_combat = pre_snapshot.get("combat_state.active")
+    post_combat = post_snapshot.get("combat_state.active")
+    if pre_combat and not post_combat:
+        deltas.append({
+            "field": "combat_state.active",
+            "before": True,
+            "after": False,
+            "description": "Combat ended",
+        })
+        if "treasure" not in already_executed:
+            commands.append({
+                "command": "treasure",
+                "args": {"tier": 1},
+                "reason": "Combat ended — loot check (GM confirms if loot exists)",
+                "source": "post_resolution_delta",
+                "priority": "medium",
+            })
+
+    # 4. XP threshold crossed → prompt level-up
+    pre_xp = pre_snapshot.get("character.xp", 0)
+    post_xp = post_snapshot.get("character.xp", 0)
+    current_level = post_snapshot.get("character.level", 1)
+    if post_xp > pre_xp and current_level < 10:
+        next_level = current_level + 1
+        threshold = _XP_THRESHOLDS.get(next_level)
+        if threshold is not None and post_xp >= threshold:
+            deltas.append({
+                "field": "character.xp",
+                "before": pre_xp,
+                "after": post_xp,
+                "description": f"XP reached {post_xp} (level {next_level} threshold: {threshold})",
+            })
+            if "level-up" not in already_executed:
+                commands.append({
+                    "command": "level-up",
+                    "args": {},
+                    "reason": f"XP ({post_xp}) meets level {next_level} threshold ({threshold})",
+                    "source": "post_resolution_delta",
+                    "priority": "high",
+                })
+
+    # 5. Run check-triggers if any high-priority command was suggested
+    #    (catches cascading effects from the commands above)
+    high_priority = [c for c in commands if c["priority"] == "high"]
+    if high_priority and "check-triggers" not in already_executed:
+        commands.append({
+            "command": "check-triggers",
+            "args": {},
+            "reason": f"{len(high_priority)} high-priority follow-up(s) detected — re-evaluate triggers",
+            "source": "post_resolution_delta",
+            "priority": "low",
+        })
+
+    # Build trace
+    trace_parts = [
+        f"{len(deltas)} delta(s) detected",
+        f"{len(commands)} follow-up(s) suggested",
+        f"{len(already_executed)} already executed",
+    ]
+    if deltas:
+        delta_summary = ", ".join(d["field"] for d in deltas)
+        trace_parts.append(f"Changed: {delta_summary}")
+
+    return {
+        "deltas": deltas,
+        "commands_to_fire": commands,
+        "already_executed": list(already_executed),
         "arithmetic_trace": " | ".join(trace_parts),
     }

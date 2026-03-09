@@ -37,9 +37,11 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
 
 ## PHASE 2: ACTION_INTERPRETATION
 - directory: 2-action-interpretation/
-- cli_commands: (none — this phase classifies actions, does not execute)
+- cli_commands:
+  - `expand-action --action <type> [--state-path]` — expand classified action into command sequence (pre-commands + primary + chains)
+  - `state-snapshot [--state-path]` — create pre-resolution state snapshot for delta detection
 - references:
-  - `references/action-classification.md` — intent-to-action classification rules
+  - `references/action-classification.md` — intent-to-action classification rules (includes GM-initiated triggers, compound actions, state-dependent routing)
   - `references/cli-reference.md` — complete CLI command contract and argument specs
 
 ## PHASE 3: MECHANICAL_RESOLUTION
@@ -106,7 +108,8 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `skills/social/scripts/diplomacy.py` — persuasion, negotiation, favor tracking
   - `skills/social/scripts/consequence.py` — consequence tracker, timer checking
   - `skills/world-building/scripts/world_tick.py` — world state advancement
-  - `skills/world-building/scripts/triggers.py` — trigger condition evaluator (clocks, consequences, arcs, proactive suggestions)
+  - `skills/world-building/scripts/triggers.py` — trigger condition evaluator (clocks, consequences, arcs, proactive suggestions, post-resolution delta detection)
+  - `skills/world-building/scripts/chain_registry.py` — command chain rules, action expansion, post-command chaining
 
 ## PHASE 4: NARRATIVE_TRANSLATION
 - directory: 4-narrative/
@@ -123,7 +126,9 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
 
 ## PHASE 5: STATE_PERSISTENCE
 - directory: 5-persistence/
-- cli_commands: validate-state (post-write check)
+- cli_commands:
+  - validate-state (post-write check)
+  - `post-resolution --pre-snapshot <path> [--state-path] [--already-executed]` — detect state deltas, suggest follow-up commands
 - references:
   - `schemas/state.schema.json` — state shape contract (v7.5.0)
 - skills:

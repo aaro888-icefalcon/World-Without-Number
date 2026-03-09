@@ -22,6 +22,9 @@ Commands:
     reaction-roll    Roll NPC reaction (2d6)
     faction-turn     Run a faction turn
     check-triggers   Evaluate all pending trigger conditions
+    expand-action    Expand classified action into command sequence (step 1.5)
+    post-resolution  Detect state deltas and suggest follow-ups (step 5.5)
+    state-snapshot   Create pre-resolution state snapshot
     initialize-game  Initialize a new game (character + world state)
 """
 
@@ -327,6 +330,76 @@ def cmd_check_triggers(args):
     print(json.dumps(result, indent=2, default=str))
 
 
+def cmd_expand_action(args):
+    """Expand a classified action into a full command sequence."""
+    from chain_registry import expand_action
+
+    # Load current state
+    state_path = args.state_path
+    if not os.path.isabs(state_path):
+        state_path = os.path.join(_parent_dir, state_path)
+
+    state = {}
+    if os.path.exists(state_path):
+        with open(state_path) as f:
+            state = json.load(f)
+
+    result = expand_action(args.action, state)
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
+def cmd_post_resolution(args):
+    """Check for state changes after command execution and suggest follow-ups."""
+    from triggers import check_post_resolution, create_state_snapshot
+
+    # Load pre-snapshot
+    pre_path = args.pre_snapshot
+    if not os.path.isabs(pre_path):
+        pre_path = os.path.join(_parent_dir, pre_path)
+
+    with open(pre_path) as f:
+        pre_snapshot = json.load(f)
+
+    # Load current (post) state
+    state_path = args.state_path
+    if not os.path.isabs(state_path):
+        state_path = os.path.join(_parent_dir, state_path)
+
+    state = {}
+    if os.path.exists(state_path):
+        with open(state_path) as f:
+            state = json.load(f)
+
+    # Parse already-executed commands
+    already_executed = set()
+    if args.already_executed:
+        already_executed = {cmd.strip() for cmd in args.already_executed.split(",")}
+
+    result = check_post_resolution(pre_snapshot, state, already_executed)
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
+def cmd_state_snapshot(args):
+    """Create a state snapshot for post-resolution delta detection."""
+    from triggers import create_state_snapshot
+
+    # Load current state
+    state_path = args.state_path
+    if not os.path.isabs(state_path):
+        state_path = os.path.join(_parent_dir, state_path)
+
+    state = {}
+    if os.path.exists(state_path):
+        with open(state_path) as f:
+            state = json.load(f)
+
+    snapshot = create_state_snapshot(state)
+    snapshot["seed"] = args.seed
+    print(json.dumps(snapshot, indent=2, default=str))
+
+
 def cmd_initialize_game(args):
     """Initialize a new game — create character and seed world state."""
     from initialize_game import initialize_game
@@ -513,6 +586,32 @@ def main():
     p_dungeon.add_argument("--depth", type=int, required=True, help="Dungeon depth (affects rooms and threat)")
     p_dungeon.add_argument("--theme", type=str, default=None, help="Dungeon theme (or random)")
 
+    # ── Phase F commands — Action Routing ────────────────────────────────────
+
+    # expand-action
+    p_expand = subparsers.add_parser("expand-action", parents=[seed_parent],
+                                      help="Expand classified action into command sequence")
+    p_expand.add_argument("--action", type=str, required=True,
+                          help="Classified action type (e.g., travel, attack, reaction-roll)")
+    p_expand.add_argument("--state-path", type=str, default="state.json",
+                          help="Path to state.json")
+
+    # post-resolution
+    p_post = subparsers.add_parser("post-resolution", parents=[seed_parent],
+                                    help="Detect state changes and suggest follow-up commands")
+    p_post.add_argument("--pre-snapshot", type=str, required=True,
+                        help="Path to pre-resolution state snapshot JSON")
+    p_post.add_argument("--state-path", type=str, default="state.json",
+                        help="Path to current state.json (post-resolution)")
+    p_post.add_argument("--already-executed", type=str, default=None,
+                        help="Comma-separated list of already-executed command names")
+
+    # state-snapshot
+    p_snap = subparsers.add_parser("state-snapshot", parents=[seed_parent],
+                                    help="Create state snapshot for delta detection")
+    p_snap.add_argument("--state-path", type=str, default="state.json",
+                        help="Path to state.json")
+
     # ── Phase E commands — Initialization ─────────────────────────────────────
 
     # initialize-game
@@ -560,6 +659,9 @@ def main():
         "reaction-roll": cmd_reaction_roll,
         "faction-turn": cmd_faction_turn,
         "check-triggers": cmd_check_triggers,
+        "expand-action": cmd_expand_action,
+        "post-resolution": cmd_post_resolution,
+        "state-snapshot": cmd_state_snapshot,
         "level-up": cmd_level_up,
         "generate-dungeon": cmd_generate_dungeon,
         "initialize-game": cmd_initialize_game,
