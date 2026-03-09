@@ -36,10 +36,11 @@
     "equipment": {
       "readied": ["Accursed Blade (1d8, magical, unstable — first manifestation)"],
       "stowed": [
-        "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs)",
+        "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs, looted water bottles x4, energy bars x6)",
         "Duffel bag (chilled meal-prep containers x6, ice packs)"
       ],
-      "coins": { "copper": 0, "silver": 0, "gold": 0 }
+      "coins": { "copper": 0, "silver": 0, "gold": 0 },
+      "notes": "Left $40 cash on counter of Penn Station shop for looted supplies"
     },
     "foci": ["all_directions_edge_style", "healer"],
     "class_abilities": ["veteran_luck_limited"],
@@ -62,11 +63,11 @@
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "18:20",
+    "current_time": "18:25",
     "current_location": "Penn Station, Manhattan"
   },
   "current_day": 1,
-  "current_time": "18:20",
+  "current_time": "18:25",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -279,6 +280,13 @@
       "event": "Group moves toward platform. Notice/scavenge FAILED (3 vs DC 6) — nothing useful found. Connect/leadership FAILED (4 vs DC 8) — group fragments, 5 passengers split off. Notice/threats FAILED (6 vs DC 8) — Shake misses the tracery pattern converging on the concourse until too late. Arrives at main concourse with 7 of 12 passengers.",
       "significance": "moderate",
       "tags": ["penn_station", "failed_check", "group_fragmented", "tunnel_traverse"]
+    },
+    {
+      "day": 1,
+      "time": "18:25",
+      "event": "Shake loots Penn Station shop for water and energy bars (Notice SUCCESS, 7 vs DC 6), leaves cash. Fails to identify safer exit (Know FAILED, 7 vs DC 8) — heads directly toward 7th Ave central stairwell where tracery shimmer is thickest. Approaching breach point with 7 civilians.",
+      "significance": "major",
+      "tags": ["penn_station", "scavenge", "failed_check", "gallery_approach"]
     }
   ],
   "clock_log": [],
