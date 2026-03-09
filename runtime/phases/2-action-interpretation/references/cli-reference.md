@@ -306,3 +306,74 @@ emergence_cli.py faction-turn [--seed INT]
 ```
 
 Reads factions from state.json automatically. Each faction selects an action based on archetype and power level, then rolls 2d6+power bonus to resolve.
+
+---
+
+### `level-up`
+
+Advance a character to a target level.
+
+```
+emergence_cli.py level-up --name STR --class CLASS --current-level INT --target-level INT \
+    --attributes JSON --hp-max INT --attack-bonus INT \
+    [--tradition STR] [--partial-classes STR [STR ...]] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--name` | string | Yes | Character name |
+| `--class` | choice | Yes | `warrior`, `expert`, `mage`, or `adventurer` |
+| `--current-level` | int | Yes | Current character level |
+| `--target-level` | int | Yes | Target level (2-10) |
+| `--attributes` | JSON string | Yes | JSON dict of attribute scores |
+| `--hp-max` | int | Yes | Current max HP |
+| `--attack-bonus` | int | Yes | Current attack bonus |
+| `--tradition` | string | No | Spellcasting tradition (for mages/partial mages) |
+| `--partial-classes` | string list | No | Adventurer partial classes (e.g., `warrior mage`) |
+
+**Output JSON:**
+```json
+{
+  "character": { "...updated character dict..." },
+  "changes": ["Level 2: gained 4 HP, AB now +1", "..."],
+  "focus_picks_available": 1,
+  "spell_advancement": null,
+  "seed": 42
+}
+```
+
+---
+
+### `generate-dungeon`
+
+Generate a procedural dungeon with rooms, encounters, and treasure.
+
+```
+emergence_cli.py generate-dungeon --depth INT [--theme STR] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--depth` | int | Yes | Dungeon depth level (1-5) |
+| `--theme` | string | No | Dungeon theme (e.g., `tomb`, `mine`, `temple`, `sewer`) |
+
+**Output JSON:**
+```json
+{
+  "theme": "tomb",
+  "depth": 3,
+  "rooms": [
+    {
+      "id": 1,
+      "type": "corridor",
+      "encounter": null,
+      "hazard": null,
+      "treasure": null,
+      "connections": [2],
+      "is_boss": false
+    }
+  ],
+  "room_count": 7,
+  "seed": 42
+}
+```

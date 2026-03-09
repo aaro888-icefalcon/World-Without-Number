@@ -30,6 +30,7 @@ TEST_MODULES = [
 # Optional game-specific tests (only run if they exist)
 OPTIONAL_MODULES = [
     ("Exploration: Tag Tables", "test_exploration_tables"),
+    ("Full Plan: All Phases", "test_full_plan"),
 ]
 
 
