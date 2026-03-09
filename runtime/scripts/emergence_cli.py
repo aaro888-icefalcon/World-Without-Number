@@ -21,6 +21,10 @@ Commands:
     generate-npc     Generate an NPC with voice card
     reaction-roll    Roll NPC reaction (2d6)
     faction-turn     Run a faction turn
+    check-triggers   Evaluate all pending trigger conditions
+    expand-action    Expand classified action into command sequence (step 1.5)
+    post-resolution  Detect state deltas and suggest follow-ups (step 5.5)
+    state-snapshot   Create pre-resolution state snapshot
     initialize-game  Initialize a new game (character + world state)
 """
 
@@ -303,6 +307,99 @@ def cmd_generate_dungeon(args):
     print(json.dumps(result, indent=2, default=str))
 
 
+def cmd_check_triggers(args):
+    """Check all trigger conditions against current state."""
+    from triggers import check_all_triggers
+
+    # Load current state
+    state_path = args.state_path
+    if not os.path.isabs(state_path):
+        state_path = os.path.join(_parent_dir, state_path)
+
+    state = {}
+    if os.path.exists(state_path):
+        with open(state_path) as f:
+            state = json.load(f)
+
+    # Optional day override for hypothetical checks
+    if args.current_day is not None:
+        state["current_day"] = args.current_day
+
+    result = check_all_triggers(state)
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
+def cmd_expand_action(args):
+    """Expand a classified action into a full command sequence."""
+    from chain_registry import expand_action
+
+    # Load current state
+    state_path = args.state_path
+    if not os.path.isabs(state_path):
+        state_path = os.path.join(_parent_dir, state_path)
+
+    state = {}
+    if os.path.exists(state_path):
+        with open(state_path) as f:
+            state = json.load(f)
+
+    result = expand_action(args.action, state)
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
+def cmd_post_resolution(args):
+    """Check for state changes after command execution and suggest follow-ups."""
+    from triggers import check_post_resolution, create_state_snapshot
+
+    # Load pre-snapshot
+    pre_path = args.pre_snapshot
+    if not os.path.isabs(pre_path):
+        pre_path = os.path.join(_parent_dir, pre_path)
+
+    with open(pre_path) as f:
+        pre_snapshot = json.load(f)
+
+    # Load current (post) state
+    state_path = args.state_path
+    if not os.path.isabs(state_path):
+        state_path = os.path.join(_parent_dir, state_path)
+
+    state = {}
+    if os.path.exists(state_path):
+        with open(state_path) as f:
+            state = json.load(f)
+
+    # Parse already-executed commands
+    already_executed = set()
+    if args.already_executed:
+        already_executed = {cmd.strip() for cmd in args.already_executed.split(",")}
+
+    result = check_post_resolution(pre_snapshot, state, already_executed)
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
+def cmd_state_snapshot(args):
+    """Create a state snapshot for post-resolution delta detection."""
+    from triggers import create_state_snapshot
+
+    # Load current state
+    state_path = args.state_path
+    if not os.path.isabs(state_path):
+        state_path = os.path.join(_parent_dir, state_path)
+
+    state = {}
+    if os.path.exists(state_path):
+        with open(state_path) as f:
+            state = json.load(f)
+
+    snapshot = create_state_snapshot(state)
+    snapshot["seed"] = args.seed
+    print(json.dumps(snapshot, indent=2, default=str))
+
+
 def cmd_initialize_game(args):
     """Initialize a new game — create character and seed world state."""
     from initialize_game import initialize_game
@@ -315,6 +412,15 @@ def cmd_initialize_game(args):
     spells = None
     if args.spells:
         spells = [s.strip() for s in args.spells.split(",")]
+    attribute_assignments = None
+    if args.attribute_assignments:
+        attribute_assignments = {}
+        for pair in args.attribute_assignments.split(","):
+            attr, val = pair.strip().split("=")
+            attribute_assignments[attr.strip()] = int(val.strip())
+    background_skills = None
+    if args.background_skills:
+        background_skills = [s.strip() for s in args.background_skills.split(",")]
     result = initialize_game(
         name=args.name,
         class_name=getattr(args, 'class'),
@@ -329,6 +435,10 @@ def cmd_initialize_game(args):
         skill_method=args.skill_method,
         free_skill=args.free_skill,
         seed=args.seed,
+        attribute_assignments=attribute_assignments,
+        background_skills=background_skills,
+        physical_boost=args.physical_boost,
+        mental_boost=args.mental_boost,
     )
     result["seed"] = args.seed
     print(json.dumps(result, indent=2, default=str))
@@ -448,6 +558,14 @@ def main():
     p_tick = subparsers.add_parser("world-tick", parents=[seed_parent], help="Advance world state")
     p_tick.add_argument("--days", type=int, required=True)
 
+    # check-triggers
+    p_triggers = subparsers.add_parser("check-triggers", parents=[seed_parent],
+                                       help="Evaluate all pending trigger conditions")
+    p_triggers.add_argument("--state-path", type=str, default="state.json",
+                            help="Path to state.json (default: runtime/state.json)")
+    p_triggers.add_argument("--current-day", type=int, default=None,
+                            help="Override current_day for hypothetical checks")
+
     # ── Phase D commands ──────────────────────────────────────────────────────
 
     # generate-npc
@@ -481,6 +599,32 @@ def main():
     p_dungeon.add_argument("--depth", type=int, required=True, help="Dungeon depth (affects rooms and threat)")
     p_dungeon.add_argument("--theme", type=str, default=None, help="Dungeon theme (or random)")
 
+    # ── Phase F commands — Action Routing ────────────────────────────────────
+
+    # expand-action
+    p_expand = subparsers.add_parser("expand-action", parents=[seed_parent],
+                                      help="Expand classified action into command sequence")
+    p_expand.add_argument("--action", type=str, required=True,
+                          help="Classified action type (e.g., travel, attack, reaction-roll)")
+    p_expand.add_argument("--state-path", type=str, default="state.json",
+                          help="Path to state.json")
+
+    # post-resolution
+    p_post = subparsers.add_parser("post-resolution", parents=[seed_parent],
+                                    help="Detect state changes and suggest follow-up commands")
+    p_post.add_argument("--pre-snapshot", type=str, required=True,
+                        help="Path to pre-resolution state snapshot JSON")
+    p_post.add_argument("--state-path", type=str, default="state.json",
+                        help="Path to current state.json (post-resolution)")
+    p_post.add_argument("--already-executed", type=str, default=None,
+                        help="Comma-separated list of already-executed command names")
+
+    # state-snapshot
+    p_snap = subparsers.add_parser("state-snapshot", parents=[seed_parent],
+                                    help="Create state snapshot for delta detection")
+    p_snap.add_argument("--state-path", type=str, default="state.json",
+                        help="Path to state.json")
+
     # ── Phase E commands — Initialization ─────────────────────────────────────
 
     # initialize-game
@@ -488,9 +632,10 @@ def main():
     p_init.add_argument("--name", type=str, required=True, help="Character name")
     p_init.add_argument("--class", type=str, required=True, choices=["warrior", "expert", "mage", "adventurer"])
     p_init.add_argument("--background", type=int, required=True, help="Background ID (1-20)")
-    p_init.add_argument("--method", type=str, default="standard_array", choices=["standard_array", "roll_3d6"])
-    p_init.add_argument("--campaign", type=str, default="default", choices=["default", "nyc"],
-                         help="Campaign to initialize")
+    p_init.add_argument("--method", type=str, default="boosted_3d6",
+                         choices=["boosted_3d6", "standard_array", "roll_3d6"])
+    p_init.add_argument("--campaign", type=str, default="nyc", choices=["default", "nyc"],
+                         help="Campaign to initialize (default: nyc)")
     p_init.add_argument("--partial-classes", type=str, default=None,
                          help="Comma-separated partial classes for adventurer")
     p_init.add_argument("--tradition", type=str, default=None,
@@ -500,6 +645,16 @@ def main():
     p_init.add_argument("--equipment-package", type=str, default=None)
     p_init.add_argument("--skill-method", type=str, default=None, choices=["quick"])
     p_init.add_argument("--free-skill", type=str, default=None)
+    p_init.add_argument("--attribute-assignments", type=str, default=None,
+                         help="Comma-separated attr=score pairs, e.g. 'strength=14,dexterity=12,...'")
+    p_init.add_argument("--background-skills", type=str, default=None,
+                         help="Comma-separated 2 skill names granted by background")
+    p_init.add_argument("--physical-boost", type=str, default=None,
+                         choices=["strength", "dexterity", "constitution"],
+                         help="Physical attribute to boost +2 from background")
+    p_init.add_argument("--mental-boost", type=str, default=None,
+                         choices=["intelligence", "wisdom", "charisma"],
+                         help="Mental attribute to boost +2 from background")
 
     # ── Parse and dispatch ────────────────────────────────────────────────────
 
@@ -527,6 +682,10 @@ def main():
         "generate-npc": cmd_generate_npc,
         "reaction-roll": cmd_reaction_roll,
         "faction-turn": cmd_faction_turn,
+        "check-triggers": cmd_check_triggers,
+        "expand-action": cmd_expand_action,
+        "post-resolution": cmd_post_resolution,
+        "state-snapshot": cmd_state_snapshot,
         "level-up": cmd_level_up,
         "generate-dungeon": cmd_generate_dungeon,
         "initialize-game": cmd_initialize_game,

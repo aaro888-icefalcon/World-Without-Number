@@ -16,7 +16,7 @@ _tables_dir = os.path.join(os.path.dirname(_this_dir), "tables")
 if _tables_dir not in sys.path:
     sys.path.insert(0, _tables_dir)
 
-from attributes import ATTRIBUTES, get_modifier, STANDARD_ARRAY
+from attributes import ATTRIBUTES, get_modifier, STANDARD_ARRAY, BOOSTED_FLOOR
 from skills import SKILLS
 from classes import CLASSES, ADVENTURER_PROGRESSION, XP_TABLE
 from backgrounds import BACKGROUNDS
@@ -30,22 +30,46 @@ def _roll_3d6():
     return sum(random.randint(1, 6) for _ in range(3))
 
 
-def generate_attributes(method="standard_array"):
+def generate_attributes(method="boosted_3d6", attribute_assignments=None):
     """Generate the six attributes.
 
     Methods:
+        boosted_3d6: Roll 3d6 for each attribute, then replace the lowest with 14.
+                     If attribute_assignments is provided, use those values directly
+                     (GM assigns rolled scores to attributes based on player concept).
         standard_array: Assign [14, 12, 11, 10, 9, 7] to attributes (randomly ordered)
         roll_3d6: Roll 3d6 for each attribute in order
     """
     attr_names = list(ATTRIBUTES.keys())
-    if method == "standard_array":
+    if method == "boosted_3d6":
+        if attribute_assignments:
+            # GM-assigned: validate all 6 attributes present
+            if set(attribute_assignments.keys()) != set(attr_names):
+                raise ValueError(
+                    f"Must assign all 6 attributes. Got: {list(attribute_assignments.keys())}"
+                )
+            # Validate at least one score is >= BOOSTED_FLOOR
+            values = list(attribute_assignments.values())
+            if max(values) < BOOSTED_FLOOR:
+                raise ValueError(
+                    f"At least one attribute must be >= {BOOSTED_FLOOR} (the boosted floor)."
+                )
+            return dict(attribute_assignments)
+        else:
+            # Roll 3d6 for each, then replace lowest with 14
+            attrs = {name: _roll_3d6() for name in attr_names}
+            lowest_attr = min(attrs, key=attrs.get)
+            if attrs[lowest_attr] < BOOSTED_FLOOR:
+                attrs[lowest_attr] = BOOSTED_FLOOR
+            return attrs
+    elif method == "standard_array":
         values = list(STANDARD_ARRAY)
         random.shuffle(values)
         return dict(zip(attr_names, values))
     elif method == "roll_3d6":
         return {name: _roll_3d6() for name in attr_names}
     else:
-        raise ValueError(f"Unknown method: {method}. Use 'standard_array' or 'roll_3d6'.")
+        raise ValueError(f"Unknown method: {method}. Use 'boosted_3d6', 'standard_array', or 'roll_3d6'.")
 
 
 def calculate_saving_throws(level, attributes):
@@ -86,18 +110,58 @@ def calculate_hp(hit_die_str, con_mod):
     return {"current": max(1, total), "max": max(1, total)}
 
 
-def apply_background(background_id, skills_dict):
-    """Apply a background's free skill to the character's skill dict."""
+def apply_background(background_id, skills_dict, background_skills=None):
+    """Apply a background's skills to the character's skill dict.
+
+    Args:
+        background_id: Background ID (1-20).
+        skills_dict: Character skill dict (modified in place).
+        background_skills: List of 2 skill names chosen by GM from the background's
+                          skill list. If None, falls back to free_skill only.
+    """
     bg = BACKGROUNDS[background_id]
-    free_skill = bg["free_skill"]  # e.g., "Stab-0"
-    skill_name = free_skill.split("-")[0].lower()
-    if skill_name in skills_dict:
-        skills_dict[skill_name] = max(skills_dict[skill_name], 0)
+    if background_skills:
+        # New streamlined model: GM picks 2 skills from background
+        for skill_name in background_skills:
+            skill_key = skill_name.lower()
+            if skill_key in skills_dict:
+                skills_dict[skill_key] = max(skills_dict[skill_key], 0)
+    else:
+        # Legacy fallback: just apply free skill
+        free_skill = bg["free_skill"]  # e.g., "Stab-0"
+        skill_name = free_skill.split("-")[0].lower()
+        if skill_name in skills_dict:
+            skills_dict[skill_name] = max(skills_dict[skill_name], 0)
     return bg["name"]
 
 
+def apply_background_boosts(attributes, physical_boost, mental_boost):
+    """Apply +2 background boosts to one physical and one mental attribute.
+
+    Args:
+        attributes: Character attribute dict (modified in place).
+        physical_boost: One of "strength", "dexterity", "constitution".
+        mental_boost: One of "intelligence", "wisdom", "charisma".
+
+    Returns:
+        Dict describing the boosts applied.
+    """
+    physical_attrs = {"strength", "dexterity", "constitution"}
+    mental_attrs = {"intelligence", "wisdom", "charisma"}
+
+    if physical_boost not in physical_attrs:
+        raise ValueError(f"Physical boost must be one of {physical_attrs}, got '{physical_boost}'")
+    if mental_boost not in mental_attrs:
+        raise ValueError(f"Mental boost must be one of {mental_attrs}, got '{mental_boost}'")
+
+    attributes[physical_boost] = min(18, attributes[physical_boost] + 2)
+    attributes[mental_boost] = min(18, attributes[mental_boost] + 2)
+
+    return {"physical": physical_boost, "mental": mental_boost}
+
+
 def apply_quick_skills(background_id, skills_dict):
-    """Apply a background's quick skills (all at level-0)."""
+    """Apply a background's quick skills (all at level-0). Legacy method."""
     bg = BACKGROUNDS[background_id]
     for qs in bg.get("quick_skills", []):
         skill_name = qs.split("-")[0].lower()
@@ -283,17 +347,19 @@ def _calculate_effort(class_name, attributes, partial_classes=None, skills_dict=
     return max(1, 1 + max(int_mod, wis_mod, cha_mod))
 
 
-def create_character(name, class_name, background_id, method="standard_array",
+def create_character(name, class_name, background_id, method="boosted_3d6",
                      partial_classes=None, tradition=None, foci=None,
                      spells=None, equipment_package=None, skill_method=None,
-                     free_skill=None):
+                     free_skill=None, attribute_assignments=None,
+                     background_skills=None, physical_boost=None,
+                     mental_boost=None):
     """Create a complete WWN character.
 
     Args:
         name: Character name.
         class_name: One of warrior, expert, mage, adventurer.
         background_id: Background ID (1-20).
-        method: Attribute generation method (standard_array or roll_3d6).
+        method: Attribute generation method (boosted_3d6, standard_array, or roll_3d6).
         partial_classes: For adventurer, list of 2 partial class names.
         tradition: Magic tradition name for mage or partial mage.
         foci: List of focus names to pick at level 1.
@@ -301,6 +367,10 @@ def create_character(name, class_name, background_id, method="standard_array",
         equipment_package: Equipment package key or "roll_coins".
         skill_method: "quick" to use background quick skills.
         free_skill: Skill name for free skill pick (set to level-0).
+        attribute_assignments: Dict mapping attribute names to scores (for boosted_array).
+        background_skills: List of 2 skill names granted by background (GM-selected).
+        physical_boost: Physical attribute to boost +2 (str/dex/con).
+        mental_boost: Mental attribute to boost +2 (int/wis/cha).
 
     Returns a dict suitable for embedding in state.json character field.
     """
@@ -324,16 +394,20 @@ def create_character(name, class_name, background_id, method="standard_array",
     cls = CLASSES[class_name]
 
     # 1. Generate attributes
-    attributes = generate_attributes(method)
+    attributes = generate_attributes(method, attribute_assignments)
+
+    # 1b. Apply background boosts (+2 to one physical, +2 to one mental)
+    if physical_boost and mental_boost:
+        apply_background_boosts(attributes, physical_boost, mental_boost)
 
     # 2. Initialize skills (all at -1 = unskilled)
     skills_dict = {s: -1 for s in SKILLS.keys()}
 
-    # 3. Apply background free skill
-    bg_name = apply_background(background_id, skills_dict)
+    # 3. Apply background skills
+    bg_name = apply_background(background_id, skills_dict, background_skills)
 
-    # 4. Apply quick skills if requested
-    if skill_method == "quick":
+    # 4. Apply quick skills if requested (legacy path)
+    if skill_method == "quick" and not background_skills:
         apply_quick_skills(background_id, skills_dict)
 
     # 5. Apply free skill pick

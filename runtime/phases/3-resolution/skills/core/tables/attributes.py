@@ -22,6 +22,9 @@ ATTRIBUTES = {
 # Standard array for point-buy character creation
 STANDARD_ARRAY = [14, 12, 11, 10, 9, 7]
 
+# Minimum guaranteed score for the boosted_3d6 method
+BOOSTED_FLOOR = 14
+
 
 def get_modifier(score):
     """Return the attribute modifier for a given score."""

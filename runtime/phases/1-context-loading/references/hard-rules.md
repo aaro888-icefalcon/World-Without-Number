@@ -37,3 +37,6 @@ All narration must follow the Latter Earth voice guide (`phases/4-narrative/refe
 
 ## 12. Consequence Tracker Is Binding
 When a consequence in `consequence_tracker` triggers (timer expires or condition met), the consequence fires. It cannot be ignored, softened, or delayed. Check consequences during Phase 1 context loading on every turn.
+
+## 13. Scene Pressure Is Binding
+When `select_move` returns a forced Tier 2 or Tier 3 consequence, it fires. It cannot be softened, delayed, or narratively circumvented. The `suggested_mutations` are applied to state. The `suggested_chain` command executes with binding results. Telegraphed threats that escalate become real mechanical events, not narrative flavor. The game cannot go more than 4 turns without a hard consequence landing (Tier 2 forced at `turns_since_hard_move >= 5`). Source: `gm_moves.py`.

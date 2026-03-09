@@ -377,3 +377,112 @@ emergence_cli.py generate-dungeon --depth INT [--theme STR] [--seed INT]
   "seed": 42
 }
 ```
+
+---
+
+### `expand-action`
+
+Expand a classified action into a full command sequence with pre-commands and post-chains.
+
+```
+emergence_cli.py expand-action --action STR [--state-path PATH] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--action` | string | Yes | Classified action type (e.g., `travel`, `attack`, `reaction-roll`) |
+| `--state-path` | string | No | Path to state.json (default: `state.json`) |
+
+**Output JSON:**
+```json
+{
+  "action_type": "travel",
+  "pre_commands": [],
+  "primary": "travel",
+  "declared_chains": [
+    {
+      "follow_up": "world-tick",
+      "reason": "Travel advances in-game time",
+      "priority": "high",
+      "status": "will_fire",
+      "args": {}
+    }
+  ],
+  "advisories": [],
+  "arithmetic_trace": "Action: travel | Primary: travel | Post: world-tick",
+  "seed": 42
+}
+```
+
+---
+
+### `state-snapshot`
+
+Create a lightweight state snapshot for post-resolution delta detection.
+
+```
+emergence_cli.py state-snapshot [--state-path PATH] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--state-path` | string | No | Path to state.json (default: `state.json`) |
+
+**Output JSON:**
+```json
+{
+  "current_day": 2,
+  "current_scene.location": "Penn Station",
+  "current_scene.threat_level": 3,
+  "combat_state.active": false,
+  "combat_state.enemies": null,
+  "character.xp": 0,
+  "character.level": 1,
+  "known_npcs_count": 1,
+  "known_locations_count": 5,
+  "seed": 42
+}
+```
+
+---
+
+### `post-resolution`
+
+Detect state changes after command execution and suggest follow-up commands.
+
+```
+emergence_cli.py post-resolution --pre-snapshot PATH [--state-path PATH] \
+    [--already-executed STR] [--seed INT]
+```
+
+| Argument | Type | Required | Description |
+|---|---|---|---|
+| `--pre-snapshot` | string | Yes | Path to pre-resolution snapshot JSON |
+| `--state-path` | string | No | Path to current state.json (default: `state.json`) |
+| `--already-executed` | string | No | Comma-separated list of already-executed command names |
+
+**Output JSON:**
+```json
+{
+  "deltas": [
+    {
+      "field": "current_day",
+      "before": 1,
+      "after": 4,
+      "description": "Day advanced by 3"
+    }
+  ],
+  "commands_to_fire": [
+    {
+      "command": "world-tick",
+      "args": {"days": 3},
+      "reason": "In-game day advanced (1 → 4)",
+      "source": "post_resolution_delta",
+      "priority": "high"
+    }
+  ],
+  "already_executed": ["travel"],
+  "arithmetic_trace": "1 delta(s) detected | 1 follow-up(s) suggested | 1 already executed | Changed: current_day",
+  "seed": 42
+}
+```

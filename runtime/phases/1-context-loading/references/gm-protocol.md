@@ -101,3 +101,38 @@ Check `campaign_arcs[].beats` during Phase 1:
 - When a beat's trigger condition is met, change status to "triggered"
 - Queue a narrative event for Phase 4
 - The beat creates a scene; player choices determine what happens (never railroad)
+
+## Scene Pressure (Anti-Stagnation)
+
+The move system prevents play from stagnating. Every player-action turn produces a minimum Tier 1 GM move. No turn is narratively empty.
+
+### Tier 1 — Soft Move (Telegraph)
+On every player-action turn, the world reacts. Foreshadow future danger, reveal information, evolve the scene. Create `telegraphed_threats` through sensory detail — sounds, smells, environmental signs. The player should feel that something is stirring.
+
+Narration: ~50 words woven into the command narration, not a separate block.
+
+### Tier 2 — Hard Move (Consequence)
+A consequence lands on the PC. This fires naturally from catastrophic failures (skill-check margin <= -5), hostile reaction-rolls, or travel privation. It is also forced every 5 consecutive Tier 1 turns. Exactly one mechanical mutation. If active telegraphs exist, the oldest one escalates — the foreshadowed threat becomes real.
+
+Narration: §consequence treatment (~150 words). Reference the prior telegraph if one existed. The consequence is BINDING (Hard Rule #13).
+
+### Tier 3 — World Move (The World Acts)
+The world pursues its own agenda. Fires naturally from clock completions and faction actions, or forced every 8 consecutive Tier 1 turns. May produce multiple state changes. This is NOT directed at the PC — it is something that happens in the world.
+
+Narration: §dramatic-moments treatment (200-300 words). Costs 1 drama_budget.
+
+### Counter Rules
+- Single counter: `session.turns_since_hard_move`
+- Tier 1 → counter increments by 1
+- Tier 2+ → counter resets to 0
+- Counter resets to 0 at session start
+- Maximum consecutive soft-only turns: 4
+
+### Command Dispatch
+Each player-action primary has its own move dispatcher in `gm_moves.py`:
+- **skill-check**: gate-type aware, margin thresholds
+- **attack**: battlefield evolves every round, behavior profile foreshadow
+- **save**: reactive — resolves prior threat, event leaves a mark
+- **cast-spell**: magic ripples without double-taxing spell costs
+- **reaction-roll**: disposition IS the move, diplomacy integration
+- **travel**: promote most dramatic event, portents outrank travel events

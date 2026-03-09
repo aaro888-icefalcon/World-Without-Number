@@ -57,6 +57,29 @@ BEHAVIOR_PROFILES = {
 }
 
 
+def get_profile_description(profile_name):
+    """Return a narrative foreshadow string for a behavior profile.
+
+    Used by the anti-stagnation move system to generate Tier 1 foreshadow
+    text when an enemy is downed but others remain.
+
+    Args:
+        profile_name: one of the BEHAVIOR_PROFILES keys
+
+    Returns:
+        A short narrative string describing the remaining enemies' reaction.
+    """
+    descriptions = {
+        "aggressive": "The remaining creatures press their attack with renewed fury",
+        "cautious": "The survivors hesitate, reassessing their approach",
+        "pack": "The remaining pack members regroup, coordinating their next move",
+        "guardian": "The defenders hold their ground, unflinching",
+        "spellcaster": "The caster steps back, gathering energy for a retaliatory strike",
+        "ambush": "The creature melts back into shadow, repositioning",
+    }
+    return descriptions.get(profile_name, "The remaining enemies regroup")
+
+
 def get_profile_for_creature(creature):
     """Determine behavior profile from creature stats and type."""
     creature_type = creature.get("type", "")

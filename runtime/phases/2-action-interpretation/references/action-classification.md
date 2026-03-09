@@ -68,3 +68,63 @@ When the player's intent maps to a skill check, choose the most appropriate comb
 ## Fallback Rule
 
 If no specific CLI command matches the player's creative action, fall back to `skill-check` with the most appropriate attribute/skill combination and a GM-chosen difficulty. Never respond with "you can't do that" unless the action is physically impossible.
+
+---
+
+## Command Expansion (Step 1.5)
+
+After classifying the player's intent, run `expand-action` to get the full command sequence:
+
+```
+emergence_cli.py expand-action --action <classified-command> --state-path state.json
+```
+
+This returns pre-commands (that must run before the primary), the primary command, and declared post-chains (that will fire after). Execute the full sequence in order. See `chain_registry.py` for the authoritative chain rules.
+
+## GM-Initiated Triggers
+
+These commands fire based on world state, **not** player intent. The GM must check these conditions proactively. `check-triggers` (step 0) evaluates most automatically; the table below covers cases requiring GM judgment.
+
+| Condition | Command | When to Check | Priority |
+|---|---|---|---|
+| Location `threat_level` >= 2 | `encounter` (rolled, not guaranteed) | Every location transition | Medium |
+| NPC not in `known_npcs` and player interacts | `generate-npc` → `reaction-roll` | First interaction with unnamed NPC | High |
+| In-game day advances (any cause) | `world-tick --days N` | After travel, rest, or time-skip | High |
+| 7+ days since last faction turn | `faction-turn` | After any `world-tick` | High |
+| Environmental hazard in scene | `save` (type varies) | Player enters or interacts with hazard | High |
+| PC XP >= next level threshold | Prompt player for `level-up` | Session start or after XP gain | Medium |
+| Consequence timer expires | Fire consequence (hard rule #12) | Checked by `check-triggers` automatically | High |
+| Clock portent unfired at/below current | Fire portent narrative | Checked by `check-triggers` automatically | High |
+
+## Compound Actions
+
+Some player intents require multiple commands executed in sequence. Classify as the **primary** action; `expand-action` handles chaining automatically.
+
+| Player Intent | Primary Command | Also Runs (via chain registry) | Notes |
+|---|---|---|---|
+| "I talk to the stranger" (unknown NPC) | `reaction-roll` | `generate-npc` (pre-command) | expand-action prepends generate-npc if NPC not in known_npcs |
+| "We travel to the coast" | `travel` | `world-tick` (post-chain) | Days elapsed from travel feed into world-tick |
+| "We rest for the night" | `world-tick --days 1` | `check-triggers` (post-chain) | Time advancement chains trigger evaluation |
+| "I kill the last goblin" (target dies) | `attack` | `treasure` (conditional post-chain) | Only fires if target_down=true; GM confirms loot exists |
+| "I search the ruins and loot the bodies" | `skill-check` then `treasure` | — | Classify as skill-check first; if successful, run treasure separately |
+
+## State-Dependent Routing
+
+The same player intent may map to different commands depending on game state. Check these conditions during classification:
+
+| Player Intent | State Condition | Route To | Otherwise |
+|---|---|---|---|
+| "Describe the area" / scene description | Location NOT in `known_locations` | `generate-scene` | Narrate from existing `current_scene` (no CLI) |
+| "I talk to [NPC name]" | NPC NOT in `known_npcs` | `generate-npc` → `reaction-roll` | `reaction-roll` only (NPC already exists) |
+| "I attack" | `combat_state.active` is false | Start combat: set up combat state, THEN `attack` | `attack` directly (combat already active) |
+| "I rest / camp for the night" | In dangerous area (`threat_level` >= 3) | `encounter` check THEN `world-tick` | `world-tick --days 1` directly |
+
+## Post-Resolution Safety Net (Step 5.5)
+
+After persisting state, the turn loop runs `post-resolution` to detect state changes the chain registry might have missed. This catches:
+- Day advancement from any source → suggests `world-tick`
+- Location transitions → suggests `generate-scene` if location unknown
+- Combat ending → suggests `treasure`
+- XP crossing level threshold → suggests `level-up`
+
+See `triggers.py:check_post_resolution()` for the authoritative delta detection logic.
