@@ -68,6 +68,31 @@ Do not create `README.md` or `START-HERE.md` for new directories. Use `index.md`
 - Runtime hub: `runtime/index.md`
 - Phase manifest: `runtime/phases/phase-manifest.md`
 
+## Runtime Turn Loop (Mandatory Sequence)
+
+Every game turn follows this sequence. No steps may be skipped or reordered.
+
+0. **World preamble** — `check-triggers`. Fire high-priority commands.
+1. **Capture + classify** — Player intent → CLI command via `action-classification.md`.
+   If "no mechanic" → classify as `narrative` pseudo-command (still enters the loop).
+2. **Expand** — `expand-action` → pre-commands + primary + declared chains.
+3. **Validate input** — Provenance check.
+4. **Snapshot** — `state-snapshot` (for delta detection).
+5. **Execute** — pre-commands → primary → post-chains. Track `executed_commands`.
+6. **★ Select GM move** — `select-move` on primary result.
+   - EVERY player-action turn produces minimum Tier 1.
+   - Tier 1: soft move (foreshadow, telegraph, opportunity, information).
+   - Tier 2: hard move (consequence lands, telegraph escalates). Forced after 5 Tier 1 turns.
+   - Tier 3: world move (clock/faction/environment shift). Forced after 8 Tier 1 turns.
+   - Source: `gm-move-taxonomy.md`. Script: `gm_moves.py`.
+7. **Narrate** — Phase 4, informed by move selection output.
+8. **Persist** — Phase 5. Includes move mutations (telegraphs, escalations, element usage, counter updates).
+9. **Post-resolution** — `post-resolution` safety net. Up to 3 iterations.
+10. **Validate** — `validate-state`.
+11. **Receipt** — Log full command sequence + move selection + seeds.
+
+Detail: `runtime/turn-loop.md`. Phase instructions: `runtime/phases/<N>/CLAUDE.md`.
+
 ## Repository Map
 
 - `runtime/`             → Game system (6-phase GM pipeline)

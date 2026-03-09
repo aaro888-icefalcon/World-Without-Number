@@ -57,13 +57,32 @@ This document defines the strict turn protocol for runtime play.
         - For `"conditional"` chains, evaluate the condition against the result and execute if met.
    - Execute only documented runtime-safe `emergence-cli` commands.
    - Do not substitute hand-rolled mechanics.
-   - Track all executed commands in an `executed_commands` set (for deduplication in step 7).
+   - Track all executed commands in an `executed_commands` set (for deduplication in step 8).
+   - Accumulate `chain_results` dict keyed by chain command name → result.
 
-6. **Persist canonical updates**
-   - Write resulting canonical state updates.
+6. **★ Select GM move (anti-stagnation)**
+   - Run `select_move(command_name, command_result, ...)` from `gm_moves.py` on the primary result.
+   - **Every player-action turn produces minimum Tier 1.** No Tier 0 exits. (Hard Rule #13)
+   - **Tier 1** (soft move): foreshadow, telegraph, opportunity, information. Counter increments.
+   - **Tier 2** (hard move): consequence lands, telegraph escalates. Forced after 5 consecutive Tier 1 turns. Counter resets.
+   - **Tier 3** (world move): clock/faction/environment shift. Forced after 8 consecutive Tier 1 turns. Counter resets.
+   - Apply `suggested_mutations` from the move output to state.
+   - Execute `suggested_chain` command if specified.
+   - Feed `narrative_directive` to Phase 4 narration.
+   - Update `session.turns_since_hard_move` per `counter_update`.
+   - Six command dispatchers handle player-action primaries differently:
+     - `skill-check`: gate-type aware, margin thresholds, telegraph escalation
+     - `attack`: battlefield evolves every round, behavior profile foreshadow
+     - `save`: reactive — resolves prior threat, event leaves a mark
+     - `cast-spell`: magic ripples without double-taxing spell costs
+     - `reaction-roll`: disposition IS the move, diplomacy integration
+     - `travel`: promote most dramatic event, portents outrank travel events
+
+7. **Persist canonical updates**
+   - Write resulting canonical state updates (including move mutations from step 6).
    - Record RNG seed if randomness was used.
 
-7. **Post-resolution trigger check (safety net)**
+8. **Post-resolution trigger check (safety net)**
    - Run `post-resolution --pre-snapshot <snapshot-path> --state-path state.json --already-executed <comma-list>`.
    - Review `commands_to_fire` in the output.
    - Execute any `priority: "high"` follow-ups (day advancement, location change detection, XP threshold).
@@ -71,20 +90,20 @@ This document defines the strict turn protocol for runtime play.
    - **Depth limit**: repeat this step at most 3 times. If follow-ups generate further follow-ups, stop after 3 iterations and log remaining suggestions in the turn receipt.
    - Re-persist state after any follow-up commands.
 
-8. **Post-validate state**
+9. **Post-validate state**
    - Re-run `validate-state`.
    - If post-validation fails, reject turn and flag remediation in development mode.
 
-9. **Regenerate derived outputs**
-   - Update any derived artifacts required by current workflow.
-   - Never hand-edit derived artifacts.
+10. **Regenerate derived outputs**
+    - Update any derived artifacts required by current workflow.
+    - Never hand-edit derived artifacts.
 
-10. **Write turn receipt**
-    - Persist: full command sequence executed (pre-commands + primary + chains + post-resolution follow-ups), high-level outputs, files touched, checks run/passed, seeds, and any post-resolution deltas detected.
+11. **Write turn receipt**
+    - Persist: full command sequence executed (pre-commands + primary + chains + post-resolution follow-ups + move selection), high-level outputs, files touched, checks run/passed, seeds, move tier fired, and any post-resolution deltas detected.
 
 ## Acceptance rule
 
-A turn is accepted only if all steps (0 through 10) complete successfully in order.
+A turn is accepted only if all steps (0 through 11) complete successfully in order.
 
 ## Halt conditions
 
@@ -100,6 +119,7 @@ A turn is accepted only if all steps (0 through 10) complete successfully in ord
 
 ```
 Step 0:  check-triggers ─── fire high-priority pre-turn commands
+                │            (includes anti-stagnation check)
                 │
 Step 1:  Classify intent ─── action-classification.md
                 │
@@ -111,13 +131,20 @@ Step 2:  expand-action ──── chain_registry.py
 Steps 3-4: Validate ─── state-snapshot
                 │
 Step 5:  Execute ─── pre_commands → primary → post-chains
-                │         (evaluate conditions against each result)
+                │         (evaluate conditions, accumulate chain_results)
                 │
-Step 6:  Persist state
+Step 6:  ★ Select GM move ─── gm_moves.py
+                │         ├── dispatch by command type
+                │         ├── minimum Tier 1 (no Tier 0)
+                │         ├── Tier 2 forced at 5 consecutive Tier 1
+                │         ├── Tier 3 forced at 8 consecutive Tier 1
+                │         └── apply mutations, feed narrative_directive
                 │
-Step 7:  post-resolution ─── detect deltas (day, location, combat, XP)
+Step 7:  Persist state (+ move mutations + counter update)
+                │
+Step 8:  post-resolution ─── detect deltas (day, location, combat, XP)
                 │               ├── fire high-priority follow-ups
                 │               └── repeat up to 3x
                 │
-Steps 8-10: Validate → Regenerate → Receipt
+Steps 9-11: Validate → Regenerate → Receipt
 ```

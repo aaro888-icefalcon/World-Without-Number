@@ -1,5 +1,5 @@
 {
-  "schema_version": "7.5.0",
+  "schema_version": "7.6.0",
   "content_version": "1.0.0",
   "meta": {
     "last_played": "2026-03-09T18:00:00Z",
@@ -59,7 +59,8 @@
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
     "threat_level": 1,
-    "scene_type": "exploration"
+    "scene_type": "exploration",
+    "telegraphed_threats": []
   },
   "campaign": {
     "name": "World Without Number — NYC",
@@ -415,7 +416,8 @@
   "consequence_tracker": [],
   "session": {
     "drama_budget": 3,
-    "drama_events": []
+    "drama_events": [],
+    "turns_since_hard_move": 0
   },
   "world_pulse": {
     "day": 2,

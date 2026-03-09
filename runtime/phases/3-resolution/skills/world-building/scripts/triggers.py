@@ -329,7 +329,33 @@ def check_all_triggers(state):
             "source": "proactive",
         })
 
+    # 5. Anti-stagnation check
+    session = state.get("session", {})
+    turns_since_hard_move = session.get("turns_since_hard_move", 0)
+    stagnation_info = None
+    if turns_since_hard_move >= 8:
+        stagnation_info = {"forced_tier": 3, "turns": turns_since_hard_move}
+        commands_to_fire.append({
+            "command": "select-move",
+            "args": {"tier": 3},
+            "reason": f"Anti-stagnation: turns_since_hard_move={turns_since_hard_move} (threshold: 8)",
+            "source": "anti_stagnation",
+            "priority": "high",
+        })
+    elif turns_since_hard_move >= 5:
+        stagnation_info = {"forced_tier": 2, "turns": turns_since_hard_move}
+        commands_to_fire.append({
+            "command": "select-move",
+            "args": {"tier": 2},
+            "reason": f"Anti-stagnation: turns_since_hard_move={turns_since_hard_move} (threshold: 5)",
+            "source": "anti_stagnation",
+            "priority": "high",
+        })
+
     # Arithmetic trace
+    stagnation_trace = f"stagnation counter={turns_since_hard_move}"
+    if stagnation_info:
+        stagnation_trace += f" → FORCED tier {stagnation_info['forced_tier']}"
     trace_parts = [
         f"Day {current_day}",
         f"{len(missed_portents)} missed portent(s)",
@@ -338,6 +364,7 @@ def check_all_triggers(state):
         f"{len(arc_result['triggered'])} triggered arc beat(s)",
         f"{len(arc_result['requires_gm_judgment'])} beat(s) need GM judgment",
         f"{len(suggestions)} proactive suggestion(s)",
+        stagnation_trace,
         f"{len(commands_to_fire)} total command(s) to fire",
     ]
 

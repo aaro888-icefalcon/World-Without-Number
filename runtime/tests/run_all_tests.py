@@ -32,6 +32,7 @@ TEST_MODULES = [
 OPTIONAL_MODULES = [
     ("S3: Trigger Evaluation", "test_triggers"),
     ("S4: Chain Registry & Post-Resolution", "test_chain_registry"),
+    ("S5: Anti-Stagnation Moves", "test_moves"),
     ("Exploration: Tag Tables", "test_exploration_tables"),
     ("Full Plan: All Phases", "test_full_plan"),
 ]
