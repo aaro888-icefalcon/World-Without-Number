@@ -32,9 +32,9 @@
       "connect": 0
     },
     "system_strain": { "current": 0, "max": 11 },
-    "effort": { "current": 1, "max": 2 },
+    "effort": { "current": 0, "max": 2 },
     "equipment": {
-      "readied": ["Accursed Blade — two-handed form (1d10, magical, stable manifestation)"],
+      "readied": ["Accursed Blade — two-handed (2d6+1 magic dmg, Shock 2/15, atk w/ Magic skill, no Effort)"],
       "stowed": [
         "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs, looted water bottles x4, energy bars x6)",
         "Duffel bag (chilled meal-prep containers x6, ice packs, scavenged water bottles x3, canned tuna x2, box of crackers)"
@@ -52,8 +52,8 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_006",
-    "location": "Shake's apartment, near NYU Langone / Bellevue, Manhattan surface",
+    "scene_id": "scene_007",
+    "location": "Akhil's building, East Side, Manhattan surface",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
     "threat_level": 1,
@@ -63,11 +63,11 @@
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "19:25",
-    "current_location": "Shake's apartment, 16th floor, near NYU Langone / Bellevue"
+    "current_time": "19:50",
+    "current_location": "Akhil's building, 15 blocks north of Bellevue"
   },
   "current_day": 1,
-  "current_time": "19:25",
+  "current_time": "19:50",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -247,7 +247,7 @@
       "description": "NYC is transported to the Latter Earth. Survive the immediate chaos and find your people.",
       "beats": [
         { "beat_name": "The Lights Go Out", "trigger_condition": "Transport occurs", "status": "completed", "payoff_description": "All technology fails. The train stops. Darkness." },
-        { "beat_name": "Find Akhil", "trigger_condition": "Player decides to locate brother", "status": "pending", "payoff_description": "Akhil location and status revealed" },
+        { "beat_name": "Find Akhil", "trigger_condition": "Player decides to locate brother", "status": "in_progress", "payoff_description": "Akhil location and status revealed" },
         { "beat_name": "The First Surge", "trigger_condition": "Gallery Seal Degradation clock hits 1", "status": "completed", "payoff_description": "Servitors breach the galleries. Mass casualties." }
       ]
     }
@@ -323,6 +323,13 @@
       "event": "Shake re-manifests Accursed Blade in two-handed form (Magic/INT SUCCESS, 12 vs DC 8, margin +4). Blade is stable, responsive — no pain, no flicker. Effort recommitted (1/2). Weapon upgraded to 1d10 two-handed.",
       "significance": "moderate",
       "tags": ["accursed", "accursed_blade", "stable_manifestation"]
+    },
+    {
+      "day": 1,
+      "time": "19:50",
+      "event": "Shake corrects blade understanding (no Effort needed, 2d6+Magic two-handed, Shock 2/15). Dismisses blade, gears up at apartment, changes into scrubs and practical clothes. Heads north 15 blocks to Akhil's building. Streets chaotic but surface-level threats minimal — surge confined to underground.",
+      "significance": "moderate",
+      "tags": ["travel", "find_akhil", "gear_up"]
     }
   ],
   "clock_log": [
