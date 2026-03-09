@@ -21,6 +21,7 @@ Commands:
     generate-npc     Generate an NPC with voice card
     reaction-roll    Roll NPC reaction (2d6)
     faction-turn     Run a faction turn
+    check-triggers   Evaluate all pending trigger conditions
     initialize-game  Initialize a new game (character + world state)
 """
 
@@ -303,6 +304,29 @@ def cmd_generate_dungeon(args):
     print(json.dumps(result, indent=2, default=str))
 
 
+def cmd_check_triggers(args):
+    """Check all trigger conditions against current state."""
+    from triggers import check_all_triggers
+
+    # Load current state
+    state_path = args.state_path
+    if not os.path.isabs(state_path):
+        state_path = os.path.join(_parent_dir, state_path)
+
+    state = {}
+    if os.path.exists(state_path):
+        with open(state_path) as f:
+            state = json.load(f)
+
+    # Optional day override for hypothetical checks
+    if args.current_day is not None:
+        state["current_day"] = args.current_day
+
+    result = check_all_triggers(state)
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
 def cmd_initialize_game(args):
     """Initialize a new game — create character and seed world state."""
     from initialize_game import initialize_game
@@ -448,6 +472,14 @@ def main():
     p_tick = subparsers.add_parser("world-tick", parents=[seed_parent], help="Advance world state")
     p_tick.add_argument("--days", type=int, required=True)
 
+    # check-triggers
+    p_triggers = subparsers.add_parser("check-triggers", parents=[seed_parent],
+                                       help="Evaluate all pending trigger conditions")
+    p_triggers.add_argument("--state-path", type=str, default="state.json",
+                            help="Path to state.json (default: runtime/state.json)")
+    p_triggers.add_argument("--current-day", type=int, default=None,
+                            help="Override current_day for hypothetical checks")
+
     # ── Phase D commands ──────────────────────────────────────────────────────
 
     # generate-npc
@@ -527,6 +559,7 @@ def main():
         "generate-npc": cmd_generate_npc,
         "reaction-roll": cmd_reaction_roll,
         "faction-turn": cmd_faction_turn,
+        "check-triggers": cmd_check_triggers,
         "level-up": cmd_level_up,
         "generate-dungeon": cmd_generate_dungeon,
         "initialize-game": cmd_initialize_game,

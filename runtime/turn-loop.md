@@ -10,6 +10,12 @@ This document defines the strict turn protocol for runtime play.
 
 ## Mandatory sequence
 
+0. **World preamble — check trigger conditions**
+   - Run `check-triggers` against canonical state.
+   - Review `commands_to_fire` in the output.
+   - Execute any `priority: "high"` commands (missed portents, expired consequences, met arc beats) before capturing player input.
+   - Log `priority: "medium"` suggestions for potential use during this turn.
+   - This step is GM-initiated and does not require player action.
 1. **Capture turn input and route via master router**
    - Record player intent verbatim.
    - If player message starts with `DEVELOPMENT:`, skip to development mode — no CLI required.
@@ -39,7 +45,7 @@ This document defines the strict turn protocol for runtime play.
 
 ## Acceptance rule
 
-A turn is accepted only if all eight steps complete successfully in order.
+A turn is accepted only if all nine steps (0 through 8) complete successfully in order.
 
 ## Halt conditions
 

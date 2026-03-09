@@ -49,7 +49,7 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - combat: attack resolution, morale, bestiary, zone-based positioning, behavior AI, encounter generation
   - exploration: travel, scene generation, treasure
   - social: NPC generation, reaction rolls, faction turns, diplomacy, consequences
-  - world-building: world tick, clock advancement, world pulse, government/society/religion tables
+  - world-building: world tick, clock advancement, world pulse, trigger evaluation, government/society/religion tables
   - downtime: (placeholder — Phase G)
 - cli_commands:
   - `roll <expression>` — dice roll with arithmetic trace
@@ -63,6 +63,7 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `generate-scene --scene-type [--tag-count] [--threat-level]` — tag-based scene generation
   - `treasure --tier` — treasure roll by tier (1-5)
   - `world-tick --days` — advance world clocks and generate world pulse
+  - `check-triggers [--state-path] [--current-day]` — evaluate all pending triggers (clocks, consequences, arcs)
   - `generate-npc [--importance] [--region] [--tags]` — NPC with voice card
   - `reaction-roll [--modifier]` — 2d6 NPC reaction
   - `faction-turn` — process faction actions from state
@@ -105,6 +106,7 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `skills/social/scripts/diplomacy.py` — persuasion, negotiation, favor tracking
   - `skills/social/scripts/consequence.py` — consequence tracker, timer checking
   - `skills/world-building/scripts/world_tick.py` — world state advancement
+  - `skills/world-building/scripts/triggers.py` — trigger condition evaluator (clocks, consequences, arcs, proactive suggestions)
 
 ## PHASE 4: NARRATIVE_TRANSLATION
 - directory: 4-narrative/

@@ -16,7 +16,7 @@ Entry point scripts for CLI execution and validation. Domain modules (the actual
 
 | Script | Purpose | Runtime-safe |
 |---|---|---|
-| `emergence_cli.py` | Unified CLI dispatcher — 17 commands registered (Phases A–E) | Yes |
+| `emergence_cli.py` | Unified CLI dispatcher — 18 commands registered (Phases A–E) | Yes |
 | `initialize_game.py` | Game initialization — generate complete starting state | Yes |
 | `validate_state.py` | State JSON schema validation | Yes |
 | `validate_turn_input.py` | Player action provenance validation | Yes |
@@ -42,6 +42,7 @@ Entry point scripts for CLI execution and validation. Domain modules (the actual
 | `generate-scene` | Generate scene from tags | exploration |
 | `treasure` | Roll treasure by tier | exploration |
 | `world-tick` | Advance world state between sessions | world-building |
+| `check-triggers` | Evaluate all pending triggers (clocks, consequences, arcs) | world-building |
 | `generate-npc` | Generate NPC with voice card | social |
 | `reaction-roll` | Roll NPC reaction (2d6) | social |
 | `faction-turn` | Run faction turn for all factions | social |
@@ -59,7 +60,7 @@ Domain scripts are physically co-located with their skills in Phase 3:
 - `phases/3-resolution/skills/exploration/scripts/` — travel.py, scene.py, treasure.py, dungeon.py
 - `phases/3-resolution/skills/social/scripts/` — npc.py, faction.py, diplomacy.py, consequence.py
 - `phases/3-resolution/skills/social/tables/` — character_tags.py, court_tags.py, faction_actions.py
-- `phases/3-resolution/skills/world-building/scripts/` — world_tick.py
+- `phases/3-resolution/skills/world-building/scripts/` — world_tick.py, triggers.py
 - `phases/3-resolution/skills/world-building/tables/` — government_tables.py, society_tables.py, religion_tables.py
 
 emergence_cli.py's sys.path includes all domain directories automatically.
