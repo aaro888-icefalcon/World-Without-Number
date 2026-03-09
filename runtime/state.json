@@ -34,7 +34,7 @@
     "system_strain": { "current": 0, "max": 11 },
     "effort": { "current": 1, "max": 2 },
     "equipment": {
-      "readied": ["Accursed Blade (1d8, magical, unstable — first manifestation)"],
+      "readied": ["Accursed Blade — two-handed form (1d10, magical, stable manifestation)"],
       "stowed": [
         "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs, looted water bottles x4, energy bars x6)",
         "Duffel bag (chilled meal-prep containers x6, ice packs, scavenged water bottles x3, canned tuna x2, box of crackers)"
@@ -316,6 +316,13 @@
       "event": "Shake treks 2 miles east from 8th Ave to apartment near Bellevue through panicking Manhattan streets. Scavenges supplies from abandoned bodega (Notice SUCCESS, 8 vs DC 7, margin +1): water bottles x3, canned tuna x2, box of crackers. Penn Station group dispersed during trek — each heading to their own people. Witnesses chaos: subway entrances with screaming from below, thousands on streets, no working technology, blue-green cavern light. Arrives at apartment building.",
       "significance": "moderate",
       "tags": ["travel", "scavenge", "apartment", "bellevue"]
+    },
+    {
+      "day": 1,
+      "time": "19:25",
+      "event": "Shake re-manifests Accursed Blade in two-handed form (Magic/INT SUCCESS, 12 vs DC 8, margin +4). Blade is stable, responsive — no pain, no flicker. Effort recommitted (1/2). Weapon upgraded to 1d10 two-handed.",
+      "significance": "moderate",
+      "tags": ["accursed", "accursed_blade", "stable_manifestation"]
     }
   ],
   "clock_log": [
