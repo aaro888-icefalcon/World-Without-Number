@@ -25,6 +25,7 @@ if os.path.isdir(_skills_dir):
 # Core test modules (always run)
 TEST_MODULES = [
     ("S1: State Schema Validation", "test_state_schema"),
+    ("S2: Game Initialization", "test_game_initialization"),
 ]
 
 # Optional game-specific tests (only run if they exist)

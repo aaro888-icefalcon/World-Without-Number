@@ -18,6 +18,23 @@ This file governs high-fidelity game runtime execution. It is operational by des
 4. Game-specific GM protocol — define in `phases/1-context-loading/references/gm-protocol.md`
 5. This file — operational governance
 
+## Game Initialization (Pre-Turn-Loop)
+
+Before the turn loop begins, check whether the game needs initialization:
+
+1. Read `state.json` and check `meta.session_number` and `character.name`
+2. If `session_number == 0` OR `character.name == "Unnamed Hero"` → **New game**:
+   - Follow the interactive protocol in `phases/1-context-loading/skills/game-initialization.md`
+   - Run `initialize-game` CLI command to generate starting state
+   - Validate with `validate-state`
+   - Render opening scene and character sheet
+3. If `session_number >= 1` AND character is valid → **Returning session**:
+   - Increment `meta.session_number`
+   - Reset `session.drama_budget` to 3, clear `session.drama_events`
+   - Load context per Phase 1 lore-loading rules
+   - Render scene and character sheet as session recap
+4. Proceed to the turn loop
+
 ## GM Turn Pipeline
 
 Every turn follows this 6-phase pipeline in strict order:
@@ -63,6 +80,7 @@ Define your game's narrative tone. Examples:
 | Script | Purpose |
 |---|---|
 | `scripts/emergence_cli.py` | CLI dispatcher — all mechanics flow through this |
+| `scripts/initialize_game.py` | Game initialization — character creation + world seeding |
 | `scripts/validate_state.py` | Canonical state validation (against `schemas/state.schema.json`) |
 
 Domain scripts and tables live inside `phases/3-resolution/skills/<domain>/scripts/` and `tables/`.

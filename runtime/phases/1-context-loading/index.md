@@ -20,4 +20,5 @@
 ## Skills
 | File | Purpose |
 |---|---|
+| `skills/game-initialization.md` | New game startup — interactive character creation and world seeding protocol |
 | `skills/lore-loading.md` | Context selection — which lore to load based on current region |
