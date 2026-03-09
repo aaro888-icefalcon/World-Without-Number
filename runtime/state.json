@@ -52,8 +52,8 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_007",
-    "location": "Akhil's building, East Side, Manhattan surface",
+    "scene_id": "scene_008",
+    "location": "Mount Sinai Hospital, Upper East Side, Manhattan",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
     "threat_level": 1,
@@ -63,11 +63,11 @@
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "19:50",
-    "current_location": "Akhil's building, 15 blocks north of Bellevue"
+    "current_time": "20:55",
+    "current_location": "Mount Sinai Hospital, Upper East Side, Manhattan"
   },
   "current_day": 1,
-  "current_time": "19:50",
+  "current_time": "20:55",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -199,7 +199,7 @@
       "role": "Younger brother, medical student at Mount Sinai",
       "disposition": "loyal",
       "status": "active",
-      "last_seen": "Presumed at apartment or hospital, Manhattan",
+      "last_seen": "Mount Sinai Hospital, working triage in ER annex, Day 1 ~21:00",
       "trust": 9,
       "motivation": "Survive, protect family, succeed in medicine",
       "secret": null,
@@ -207,7 +207,7 @@
       "personality_traits": "cynical, pragmatic, loyal",
       "speech_patterns": "Clipped, dry wit, rhetorical questions that are actually statements",
       "key_phrases": ["Sure, that'll work.", "You're not seriously—", "Fine. What do you need."],
-      "last_interaction_summary": null,
+      "last_interaction_summary": "Reunited at Mount Sinai during surge crisis. Akhil working triage. Shake arrived after trekking from Bellevue.",
       "relationship_arc": null,
       "importance": "major",
       "character_tags": ["family", "medical_student", "mount_sinai"]
@@ -237,6 +237,22 @@
       "threat_level": 0,
       "discovered_day": 1,
       "notes": "Shake's workplace and adjacent apartment. Major medical facility — will become critical resource."
+    },
+    {
+      "id": "loc_004",
+      "name": "Akhil's apartment building",
+      "region": "manhattan",
+      "threat_level": 0,
+      "discovered_day": 1,
+      "notes": "Walk-up on East Side, ~15 blocks north of Bellevue. Akhil's roommates (Derek et al.) sheltering inside. Akhil not present — was at Mount Sinai for shift."
+    },
+    {
+      "id": "loc_005",
+      "name": "Mount Sinai Hospital",
+      "region": "manhattan",
+      "threat_level": 1,
+      "discovered_day": 1,
+      "notes": "Major hospital, Upper East Side. Operating by candlelight and improvised lighting. Overwhelmed with surge casualties — crush injuries, lacerations, smoke inhalation from underground. Akhil working triage in ER annex."
     }
   ],
   "campaign_arcs": [
@@ -247,7 +263,7 @@
       "description": "NYC is transported to the Latter Earth. Survive the immediate chaos and find your people.",
       "beats": [
         { "beat_name": "The Lights Go Out", "trigger_condition": "Transport occurs", "status": "completed", "payoff_description": "All technology fails. The train stops. Darkness." },
-        { "beat_name": "Find Akhil", "trigger_condition": "Player decides to locate brother", "status": "in_progress", "payoff_description": "Akhil location and status revealed" },
+        { "beat_name": "Find Akhil", "trigger_condition": "Player decides to locate brother", "status": "completed", "payoff_description": "Akhil found alive at Mount Sinai, working triage in ER annex" },
         { "beat_name": "The First Surge", "trigger_condition": "Gallery Seal Degradation clock hits 1", "status": "completed", "payoff_description": "Servitors breach the galleries. Mass casualties." }
       ]
     }
@@ -330,6 +346,13 @@
       "event": "Shake corrects blade understanding (no Effort needed, 2d6+Magic two-handed, Shock 2/15). Dismisses blade, gears up at apartment, changes into scrubs and practical clothes. Heads north 15 blocks to Akhil's building. Streets chaotic but surface-level threats minimal — surge confined to underground.",
       "significance": "moderate",
       "tags": ["travel", "find_akhil", "gear_up"]
+    },
+    {
+      "day": 1,
+      "time": "20:55",
+      "event": "Shake treks ~50 blocks north from Akhil's apartment to Mount Sinai Hospital. Streets increasingly chaotic — pharmacy looting, NYPD without working radios, subway grates breathing copper-smelling air. Darkvision gives significant navigational advantage. Arrives at Mount Sinai to find hospital operating by candlelight, overwhelmed with surge casualties from underground. Finds Akhil alive, working triage in ER annex. Reunion. Beat COMPLETED: Find Akhil.",
+      "significance": "major",
+      "tags": ["travel", "find_akhil", "mount_sinai", "akhil_reunion", "beat_completed"]
     }
   ],
   "clock_log": [
