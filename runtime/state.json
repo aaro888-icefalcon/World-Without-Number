@@ -51,22 +51,22 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_001",
-    "location": "Penn Station, Amtrak platform, arriving train",
+    "scene_id": "scene_002",
+    "location": "Penn Station, Amtrak tunnel near platform",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
-    "threat_level": 0,
+    "threat_level": 1,
     "scene_type": "exploration"
   },
   "campaign": {
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "18:00",
+    "current_time": "18:05",
     "current_location": "Penn Station, Manhattan"
   },
   "current_day": 1,
-  "current_time": "18:00",
+  "current_time": "18:05",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -237,7 +237,7 @@
       "status": "active",
       "description": "NYC is transported to the Latter Earth. Survive the immediate chaos and find your people.",
       "beats": [
-        { "beat_name": "The Lights Go Out", "trigger_condition": "Transport occurs", "status": "pending", "payoff_description": "All technology fails. The train stops. Darkness." },
+        { "beat_name": "The Lights Go Out", "trigger_condition": "Transport occurs", "status": "completed", "payoff_description": "All technology fails. The train stops. Darkness." },
         { "beat_name": "Find Akhil", "trigger_condition": "Player decides to locate brother", "status": "pending", "payoff_description": "Akhil location and status revealed" },
         { "beat_name": "The First Surge", "trigger_condition": "Gallery Seal Degradation clock hits 1", "status": "pending", "payoff_description": "Servitors breach the galleries. Mass casualties." }
       ]
@@ -251,6 +251,20 @@
       "event": "Shake Rao arrives at Penn Station aboard Amtrak from Delaware. The Transport occurs.",
       "significance": "critical",
       "tags": ["transport", "session_start", "penn_station"]
+    },
+    {
+      "day": 1,
+      "time": "18:03",
+      "event": "Night Black Eyes art activates spontaneously. Shake gains darkvision. Removes contacts — vision is clearer without them.",
+      "significance": "major",
+      "tags": ["accursed", "night_black_eyes", "awakening"]
+    },
+    {
+      "day": 1,
+      "time": "18:05",
+      "event": "Shake opens train emergency door release and leads 12 passengers out of darkened Amtrak car into Penn Station tunnel.",
+      "significance": "moderate",
+      "tags": ["penn_station", "leadership", "evacuation"]
     }
   ],
   "clock_log": [],
