@@ -52,22 +52,22 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_003",
-    "location": "Penn Station, main concourse (dark)",
+    "scene_id": "scene_004",
+    "location": "Penn Station, 8th Ave corridor (dark)",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
-    "threat_level": 2,
+    "threat_level": 3,
     "scene_type": "exploration"
   },
   "campaign": {
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "18:25",
+    "current_time": "18:30",
     "current_location": "Penn Station, Manhattan"
   },
   "current_day": 1,
-  "current_time": "18:25",
+  "current_time": "18:30",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -287,6 +287,13 @@
       "event": "Shake loots Penn Station shop for water and energy bars (Notice SUCCESS, 7 vs DC 6), leaves cash. Fails to identify safer exit (Know FAILED, 7 vs DC 8) — heads directly toward 7th Ave central stairwell where tracery shimmer is thickest. Approaching breach point with 7 civilians.",
       "significance": "major",
       "tags": ["penn_station", "scavenge", "failed_check", "gallery_approach"]
+    },
+    {
+      "day": 1,
+      "time": "18:30",
+      "event": "Shake spots servitors (3 stone-insect constructs) behind thinning shimmer at 7th Ave stairwell. Quietly retreats group (DEX SUCCESS, 8 vs DC 8). Rallies concourse crowd toward 8th Ave exits (Connect SUCCESS, 11 vs DC 9, margin +2). Significant portion of crowd redirected. Shimmer still thinning — breach imminent.",
+      "significance": "major",
+      "tags": ["penn_station", "servitors", "gallery_precursor", "leadership", "evacuation"]
     }
   ],
   "clock_log": [],
