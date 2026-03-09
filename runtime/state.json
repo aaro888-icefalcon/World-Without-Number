@@ -63,11 +63,11 @@
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "19:20",
-    "current_location": "Shake's apartment, near NYU Langone / Bellevue"
+    "current_time": "19:25",
+    "current_location": "Shake's apartment, 16th floor, near NYU Langone / Bellevue"
   },
   "current_day": 1,
-  "current_time": "19:20",
+  "current_time": "19:25",
   "clocks": [
     {
       "id": "clock_food_crisis",
