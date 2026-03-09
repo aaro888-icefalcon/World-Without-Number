@@ -32,9 +32,9 @@
       "connect": 0
     },
     "system_strain": { "current": 0, "max": 11 },
-    "effort": { "current": 0, "max": 2 },
+    "effort": { "current": 1, "max": 2 },
     "equipment": {
-      "readied": [],
+      "readied": ["Accursed Blade (1d8, magical, unstable — first manifestation)"],
       "stowed": [
         "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs)",
         "Duffel bag (chilled meal-prep containers x6, ice packs)"
@@ -62,11 +62,11 @@
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "18:05",
+    "current_time": "18:07",
     "current_location": "Penn Station, Manhattan"
   },
   "current_day": 1,
-  "current_time": "18:05",
+  "current_time": "18:07",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -265,6 +265,13 @@
       "event": "Shake opens train emergency door release and leads 12 passengers out of darkened Amtrak car into Penn Station tunnel.",
       "significance": "moderate",
       "tags": ["penn_station", "leadership", "evacuation"]
+    },
+    {
+      "day": 1,
+      "time": "18:07",
+      "event": "Shake retrieves duffel bag of food from train. Attempts first accursed blade manifestation — Effort committed, blade appears but unstable (Magic/INT check failed, 6 vs DC 8). Blade causes pain on manifestation, flickers.",
+      "significance": "major",
+      "tags": ["accursed", "accursed_blade", "awakening", "failed_check"]
     }
   ],
   "clock_log": [],
