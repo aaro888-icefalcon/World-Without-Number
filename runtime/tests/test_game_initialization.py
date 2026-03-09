@@ -196,6 +196,7 @@ def test_expert_class():
         name="Mira",
         class_name="expert",
         background_id=5,
+        method="standard_array",
         campaign="default",
         seed=99,
     )
@@ -214,6 +215,7 @@ def test_mage_class():
         class_name="mage",
         background_id=3,
         tradition="high_mage",
+        method="standard_array",
         campaign="default",
         seed=77,
     )
@@ -237,6 +239,7 @@ def test_adventurer_class():
         class_name="adventurer",
         background_id=2,
         partial_classes=["expert", "warrior"],
+        method="standard_array",
         campaign="default",
         seed=55,
     )
@@ -249,6 +252,78 @@ def test_adventurer_class():
     return errors
 
 
+def test_boosted_3d6_auto():
+    """Test: Boosted 3d6 method generates valid attributes with floor of 14."""
+    from initialize_game import initialize_game
+    random.seed(42)
+    result = initialize_game(
+        name="Test",
+        class_name="warrior",
+        background_id=1,
+        method="boosted_3d6",
+        campaign="nyc",
+        seed=42,
+    )
+    errors = []
+    char = result["state"]["character"]
+    attrs = char["attributes"]
+    values = list(attrs.values())
+
+    # At least one attribute should be >= 14 (the boosted floor)
+    if max(values) < 14:
+        errors.append(f"No attribute >= 14 after boosted_3d6. Values: {attrs}")
+
+    # All should be in valid range
+    for name, val in attrs.items():
+        if not (3 <= val <= 18):
+            errors.append(f"Attribute {name}={val} out of range [3,18]")
+
+    return errors
+
+
+def test_boosted_3d6_with_assignments_and_boosts():
+    """Test: Boosted 3d6 with GM-assigned attributes and background boosts."""
+    from initialize_game import initialize_game
+    random.seed(42)
+    result = initialize_game(
+        name="Shake Rao",
+        class_name="adventurer",
+        background_id=13,
+        method="boosted_3d6",
+        campaign="nyc",
+        partial_classes=["warrior", "accursed"],
+        foci=["all_directions_edge_style", "gifted_chirurgeon"],
+        free_skill="notice",
+        attribute_assignments={
+            "strength": 9, "dexterity": 14, "constitution": 11,
+            "intelligence": 14, "wisdom": 12, "charisma": 10,
+        },
+        background_skills=["heal", "know"],
+        physical_boost="dexterity",
+        mental_boost="intelligence",
+        seed=42,
+    )
+    errors = []
+    char = result["state"]["character"]
+
+    if char["attributes"]["dexterity"] != 16:
+        errors.append(f"Dex should be 16 (14+2), got {char['attributes']['dexterity']}")
+    if char["attributes"]["intelligence"] != 16:
+        errors.append(f"Int should be 16 (14+2), got {char['attributes']['intelligence']}")
+    if char["attributes"]["strength"] != 9:
+        errors.append(f"Str should be 9 (unboosted), got {char['attributes']['strength']}")
+    if char["skills"].get("heal", -1) < 0:
+        errors.append("Heal should be at least 0 from background")
+    if char["skills"].get("know", -1) < 0:
+        errors.append("Know should be at least 0 from background")
+    if char["skills"].get("notice", -1) < 0:
+        errors.append("Notice should be at least 0 from free skill")
+    if len(char.get("foci", [])) != 2:
+        errors.append(f"Should have 2 foci, got {len(char.get('foci', []))}")
+
+    return errors
+
+
 def test_determinism():
     """Test: Same seed produces identical output."""
     from initialize_game import initialize_game
@@ -256,12 +331,14 @@ def test_determinism():
     random.seed(42)
     result1 = initialize_game(
         name="Kael", class_name="warrior", background_id=1,
+        method="standard_array",
         campaign="nyc", seed=42,
     )
 
     random.seed(42)
     result2 = initialize_game(
         name="Kael", class_name="warrior", background_id=1,
+        method="standard_array",
         campaign="nyc", seed=42,
     )
 
@@ -285,6 +362,7 @@ def test_schema_validation():
     random.seed(42)
     result = initialize_game(
         name="Kael", class_name="warrior", background_id=1,
+        method="standard_array",
         campaign="nyc", seed=42,
     )
 
@@ -315,6 +393,8 @@ ALL_TESTS = [
     ("Expert class", test_expert_class),
     ("Mage class with tradition", test_mage_class),
     ("Adventurer with partial classes", test_adventurer_class),
+    ("Boosted 3d6 auto-generation", test_boosted_3d6_auto),
+    ("Boosted 3d6 with assignments and boosts", test_boosted_3d6_with_assignments_and_boosts),
     ("Determinism (same seed = same output)", test_determinism),
     ("Schema validation", test_schema_validation),
 ]

@@ -282,10 +282,12 @@ def generate_initial_state(character_data, campaign="default", seed=None):
     return state
 
 
-def initialize_game(name, class_name, background_id, method="standard_array",
-                     campaign="default", partial_classes=None, tradition=None,
+def initialize_game(name, class_name, background_id, method="boosted_3d6",
+                     campaign="nyc", partial_classes=None, tradition=None,
                      foci=None, spells=None, equipment_package=None,
-                     skill_method=None, free_skill=None, seed=None):
+                     skill_method=None, free_skill=None, seed=None,
+                     attribute_assignments=None, background_skills=None,
+                     physical_boost=None, mental_boost=None):
     """Full game initialization: create character + generate world state.
 
     Returns:
@@ -306,6 +308,10 @@ def initialize_game(name, class_name, background_id, method="standard_array",
         equipment_package=equipment_package,
         skill_method=skill_method,
         free_skill=free_skill,
+        attribute_assignments=attribute_assignments,
+        background_skills=background_skills,
+        physical_boost=physical_boost,
+        mental_boost=mental_boost,
     )
 
     # Build the complete state
@@ -357,11 +363,11 @@ def main():
     parser.add_argument("--class", dest="class_name", required=True,
                         choices=["warrior", "expert", "mage", "adventurer"])
     parser.add_argument("--background", type=int, required=True, help="Background ID (1-20)")
-    parser.add_argument("--method", default="standard_array",
-                        choices=["standard_array", "roll_3d6"])
-    parser.add_argument("--campaign", default="default",
+    parser.add_argument("--method", default="boosted_3d6",
+                        choices=["boosted_3d6", "standard_array", "roll_3d6"])
+    parser.add_argument("--campaign", default="nyc",
                         choices=["default", "nyc"],
-                        help="Campaign to initialize (default: generic Latter Earth)")
+                        help="Campaign to initialize (default: nyc)")
     parser.add_argument("--partial-classes", default=None,
                         help="Comma-separated partial classes for adventurer")
     parser.add_argument("--tradition", default=None,
@@ -372,6 +378,16 @@ def main():
     parser.add_argument("--skill-method", default=None, choices=["quick"])
     parser.add_argument("--free-skill", default=None)
     parser.add_argument("--seed", type=int, default=None, help="RNG seed")
+    parser.add_argument("--attribute-assignments", default=None,
+                        help="Comma-separated attr=score pairs, e.g. 'strength=14,dexterity=12,...'")
+    parser.add_argument("--background-skills", default=None,
+                        help="Comma-separated 2 skill names granted by background")
+    parser.add_argument("--physical-boost", default=None,
+                        choices=["strength", "dexterity", "constitution"],
+                        help="Physical attribute to boost +2 from background")
+    parser.add_argument("--mental-boost", default=None,
+                        choices=["intelligence", "wisdom", "charisma"],
+                        help="Mental attribute to boost +2 from background")
 
     args = parser.parse_args()
 
@@ -390,6 +406,17 @@ def main():
     if args.spells:
         spells = [s.strip() for s in args.spells.split(",")]
 
+    attribute_assignments = None
+    if args.attribute_assignments:
+        attribute_assignments = {}
+        for pair in args.attribute_assignments.split(","):
+            attr, val = pair.strip().split("=")
+            attribute_assignments[attr.strip()] = int(val.strip())
+
+    background_skills = None
+    if args.background_skills:
+        background_skills = [s.strip() for s in args.background_skills.split(",")]
+
     result = initialize_game(
         name=args.name,
         class_name=args.class_name,
@@ -404,6 +431,10 @@ def main():
         skill_method=args.skill_method,
         free_skill=args.free_skill,
         seed=args.seed,
+        attribute_assignments=attribute_assignments,
+        background_skills=background_skills,
+        physical_boost=args.physical_boost,
+        mental_boost=args.mental_boost,
     )
 
     result["seed"] = args.seed

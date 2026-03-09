@@ -412,6 +412,15 @@ def cmd_initialize_game(args):
     spells = None
     if args.spells:
         spells = [s.strip() for s in args.spells.split(",")]
+    attribute_assignments = None
+    if args.attribute_assignments:
+        attribute_assignments = {}
+        for pair in args.attribute_assignments.split(","):
+            attr, val = pair.strip().split("=")
+            attribute_assignments[attr.strip()] = int(val.strip())
+    background_skills = None
+    if args.background_skills:
+        background_skills = [s.strip() for s in args.background_skills.split(",")]
     result = initialize_game(
         name=args.name,
         class_name=getattr(args, 'class'),
@@ -426,6 +435,10 @@ def cmd_initialize_game(args):
         skill_method=args.skill_method,
         free_skill=args.free_skill,
         seed=args.seed,
+        attribute_assignments=attribute_assignments,
+        background_skills=background_skills,
+        physical_boost=args.physical_boost,
+        mental_boost=args.mental_boost,
     )
     result["seed"] = args.seed
     print(json.dumps(result, indent=2, default=str))
@@ -619,9 +632,10 @@ def main():
     p_init.add_argument("--name", type=str, required=True, help="Character name")
     p_init.add_argument("--class", type=str, required=True, choices=["warrior", "expert", "mage", "adventurer"])
     p_init.add_argument("--background", type=int, required=True, help="Background ID (1-20)")
-    p_init.add_argument("--method", type=str, default="standard_array", choices=["standard_array", "roll_3d6"])
-    p_init.add_argument("--campaign", type=str, default="default", choices=["default", "nyc"],
-                         help="Campaign to initialize")
+    p_init.add_argument("--method", type=str, default="boosted_3d6",
+                         choices=["boosted_3d6", "standard_array", "roll_3d6"])
+    p_init.add_argument("--campaign", type=str, default="nyc", choices=["default", "nyc"],
+                         help="Campaign to initialize (default: nyc)")
     p_init.add_argument("--partial-classes", type=str, default=None,
                          help="Comma-separated partial classes for adventurer")
     p_init.add_argument("--tradition", type=str, default=None,
@@ -631,6 +645,16 @@ def main():
     p_init.add_argument("--equipment-package", type=str, default=None)
     p_init.add_argument("--skill-method", type=str, default=None, choices=["quick"])
     p_init.add_argument("--free-skill", type=str, default=None)
+    p_init.add_argument("--attribute-assignments", type=str, default=None,
+                         help="Comma-separated attr=score pairs, e.g. 'strength=14,dexterity=12,...'")
+    p_init.add_argument("--background-skills", type=str, default=None,
+                         help="Comma-separated 2 skill names granted by background")
+    p_init.add_argument("--physical-boost", type=str, default=None,
+                         choices=["strength", "dexterity", "constitution"],
+                         help="Physical attribute to boost +2 from background")
+    p_init.add_argument("--mental-boost", type=str, default=None,
+                         choices=["intelligence", "wisdom", "charisma"],
+                         help="Mental attribute to boost +2 from background")
 
     # ── Parse and dispatch ────────────────────────────────────────────────────
 

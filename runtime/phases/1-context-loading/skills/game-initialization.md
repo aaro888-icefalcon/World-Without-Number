@@ -16,31 +16,53 @@ Check these conditions in order:
 2. `character.name == "Unnamed Hero"` → **New game** — run full initialization
 3. `meta.session_number >= 1` AND valid character → **Returning session** — skip to session resume (increment session_number, reset drama budget, load context per lore-loading.md)
 
-## Interactive Initialization Protocol (7 Steps)
+## Campaign
 
-### Step 1: Welcome and Campaign Selection
+All games use the **NYC — Carven Peaks Campaign**. No campaign selection step.
 
-Present the player with a welcome and ask which campaign they want to play:
+## Interactive Initialization Protocol (6 Steps)
 
-```
-Available campaigns:
-  1. NYC — Carven Peaks Campaign (modern city transported to the Latter Earth)
-  2. Custom — Generic Latter Earth (starting at a crossroads inn)
-```
+### Step 1: Welcome and Character Description
 
-Wait for player choice. Do not proceed without explicit selection.
+Welcome the player. Ask them to describe their character:
 
-### Step 2: Character Concept
+- "Who are you? Describe your character in a few sentences — name, who they are, what they're good at, what matters to them."
 
-Ask the player for their character concept in natural language:
-- "Describe who your character is in a sentence or two."
-- "What's their name?"
+Use their response to determine:
+- Character name
+- Attribute assignment priorities (which stats should be highest)
+- Background selection (which of the 20 backgrounds best fits)
+- Recommended class, foci, and skills
 
-Use their response to inform class, background, and focus recommendations in the next steps.
+Do not proceed without a player response.
 
-### Step 3: Class Selection
+### Step 2: Attributes and Background (Auto-Generated)
 
-Present the four WWN classes with brief descriptions:
+Based on the player's description, the GM:
+
+1. **Rolls attributes** using `boosted_3d6` method:
+   - Roll 3d6 for each of the six attributes
+   - Replace the lowest rolled score with 14 (guaranteeing at least one strong stat)
+   - GM assigns the rolled scores to attributes based on the character concept
+   - Present the rolls and assignment to the player for confirmation
+
+2. **Selects background** (from the 20 WWN backgrounds) that best fits the description. The background provides:
+   - **2 skills at level 0** — chosen by GM from the background's skill list to match the concept
+   - **+2 to one physical attribute** (Strength, Dexterity, or Constitution)
+   - **+2 to one mental attribute** (Intelligence, Wisdom, or Charisma)
+   - Choose boost targets that reinforce the character concept
+
+Present the background, skills, and boosts to the player. Show final attribute scores after boosts (capped at 18).
+
+### Step 3: Background Focus
+
+Present available foci and recommend 1-2 that complement the character concept and background. This is the character's first focus pick.
+
+Wait for player choice.
+
+### Step 4: Class Selection
+
+Present the four WWN classes:
 
 ```
 Classes:
@@ -50,7 +72,7 @@ Classes:
   Adventurer — Dual-class. Pick two partial classes for hybrid abilities.
 ```
 
-If Adventurer is chosen, also ask for two partial classes. Present the available options:
+If **Adventurer** is chosen, ask which two partial classes:
 - Core: warrior, expert, mage
 - Extended: accursed, bard, mageslayer, wise, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble
 
@@ -58,29 +80,15 @@ If a partial class includes mage (or is a magic tradition), prompt for tradition
 
 Wait for player choice.
 
-### Step 4: Background Selection
+### Step 5: Second Focus and Free Skill
 
-Present the 20 WWN backgrounds (by ID) with their names and free skills. Recommend 2-3 that fit the character concept from Step 2.
+Present available foci (filtered by class restrictions from Step 4). This is the character's second focus pick.
 
-Wait for player choice.
-
-### Step 5: Focus Selection
-
-Present available foci filtered by class restrictions. Recommend 1-2 that complement the character concept and class. At level 1, characters typically pick 1 focus (warriors get a bonus combat focus).
-
-Wait for player choice.
-
-### Step 6: Final Options
-
-Present remaining choices:
-- **Attribute method**: Standard Array (recommended for balanced play) or Roll 3d6 (random, may produce extreme values)
-- **Skill method**: Quick (background-based preset) or Manual (choose individually — defer to play)
-- **Equipment package**: List available packages, or "roll coins" for random starting wealth
-- **Free skill pick**: One skill at level 0 of the player's choice
+Then ask for one free skill pick (any skill set to level 0).
 
 Wait for player choices.
 
-### Step 7: Execute and Confirm
+### Step 6: Execute and Confirm
 
 Run the initialization:
 
@@ -89,15 +97,17 @@ python runtime/scripts/emergence_cli.py initialize-game \
   --name "<name>" \
   --class <class> \
   --background <id> \
-  --campaign <campaign> \
-  --method <method> \
-  --seed <seed> \
+  --method boosted_3d6 \
+  --attribute-assignments "strength=X,dexterity=X,constitution=X,intelligence=X,wisdom=X,charisma=X" \
+  --background-skills "skill1,skill2" \
+  --physical-boost <str|dex|con> \
+  --mental-boost <int|wis|cha> \
+  --foci "focus1,focus2" \
+  --free-skill <skill> \
   [--partial-classes "cls1,cls2"] \
   [--tradition <tradition>] \
-  [--foci "focus1,focus2"] \
   [--equipment-package <package>] \
-  [--skill-method quick] \
-  [--free-skill <skill>]
+  --seed <seed>
 ```
 
 After execution:
@@ -108,13 +118,52 @@ After execution:
 5. Render the opening scene using the scene-template
 6. Present the opening narrative (see Opening Scene Protocol below)
 
+## Attribute Generation Reference
+
+The **boosted_3d6** method:
+1. Roll 3d6 for each of the six attributes (range: 3–18 each)
+2. Replace the lowest rolled score with 14
+3. GM assigns scores to attributes based on character concept
+
+After background boosts (+2 physical, +2 mental), typical final ranges:
+- Boosted stat: 14 + 2 = 16 (modifier +1)
+- Good rolls: 10–13 (modifier 0), or 14+ (modifier +1)
+- Low rolls: 3–7 (modifier -1 to -2) — the lowest is replaced, but second-lowest may still be weak
+- Cap: 18 (modifier +2)
+
+## Background Quick Reference
+
+| ID | Name | Free Skill | Skill Pool |
+|---|---|---|---|
+| 1 | Artisan | Craft | Connect, Exert, Know, Notice, Trade |
+| 2 | Barbarian | Survive | Exert, Notice, Punch, Sneak, Survive |
+| 3 | Carter | Ride | Connect, Craft, Exert, Notice, Trade |
+| 4 | Courtesan | Perform | Connect, Convince, Notice, Perform, Sneak |
+| 5 | Criminal | Sneak | Connect, Convince, Notice, Sneak, Trade |
+| 6 | Hunter | Shoot | Exert, Notice, Sneak, Survive, Shoot |
+| 7 | Laborer | Exert | Connect, Craft, Exert, Notice, Survive |
+| 8 | Merchant | Trade | Connect, Convince, Know, Notice, Trade |
+| 9 | Noble | Lead | Administer, Connect, Convince, Know, Lead |
+| 10 | Nomad | Ride | Exert, Notice, Ride, Survive, Shoot |
+| 11 | Peasant | Exert | Connect, Craft, Exert, Notice, Survive |
+| 12 | Performer | Perform | Connect, Convince, Notice, Perform, Sneak |
+| 13 | Physician | Heal | Convince, Heal, Know, Notice, Trade |
+| 14 | Priest | Pray | Administer, Convince, Know, Lead, Pray |
+| 15 | Sailor | Sail | Connect, Exert, Notice, Sail, Survive |
+| 16 | Scholar | Know | Administer, Connect, Convince, Know, Notice |
+| 17 | Slave | Exert | Craft, Exert, Notice, Sneak, Survive |
+| 18 | Soldier | Stab | Exert, Lead, Notice, Ride, Stab |
+| 19 | Thug | Punch | Connect, Convince, Exert, Notice, Punch |
+| 20 | Wanderer | Survive | Connect, Notice, Ride, Sneak, Survive |
+
+The GM picks 2 skills from the background's pool (free skill + quick skills combined) that best fit the player's description.
+
 ## Opening Scene Protocol
 
 After character creation, render the first scene:
 
-### For NYC Campaign
 Load `lore/nyc-situation.md` §Initial Material State and §Immediate Pressures.
-Set the scene on Day 1, Hour 8 — the morning after the Transport:
+Set the scene on Day 1 — the moment of or morning after the Transport:
 
 > The world changed overnight. Yesterday this was Manhattan. Today the skyline
 > ends where it shouldn't — beyond the bridges, green wilderness stretches to
@@ -125,19 +174,6 @@ Present 2-3 immediate options drawn from the NYC situation:
 - Investigate the changed surroundings
 - Seek information from other people
 - Secure supplies and shelter
-
-### For Default Campaign
-Set the scene at the Crossroads Inn on a morning:
-
-> The inn stands where three roads meet, a weathered stone building older than
-> anyone can remember. The innkeeper serves watered ale and hard bread. Through
-> the window, the land stretches away in all directions — forest to the north,
-> plains to the east, and something that might be ruins on the western horizon.
-
-Present 2-3 immediate options:
-- Talk to the innkeeper about the area
-- Examine the road signs at the crossroads
-- Investigate the ruins visible to the west
 
 ## Canonical References
 
@@ -182,3 +218,4 @@ The `initialize-game` command outputs JSON:
 | Schema validation fails | Generated state missing required field | Bug — halt and report |
 | Partial class validation fails | Invalid adventurer combo | Re-prompt with valid partial class pairs |
 | Focus validation fails | Class-restricted focus selected | Re-prompt with class-appropriate foci |
+| Attribute assignment mismatch | No score >= 14 in assignments | At least one assigned score must be >= 14 |
