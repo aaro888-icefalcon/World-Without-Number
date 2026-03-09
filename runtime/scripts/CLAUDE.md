@@ -16,7 +16,7 @@ Entry point scripts for CLI execution and validation. Domain modules (the actual
 
 | Script | Purpose | Runtime-safe |
 |---|---|---|
-| `emergence_cli.py` | Unified CLI dispatcher — 14 commands registered (Phases A–D) | Yes |
+| `emergence_cli.py` | Unified CLI dispatcher — 16 commands registered (Phases A–D) | Yes |
 | `validate_state.py` | State JSON schema validation | Yes |
 | `validate_turn_input.py` | Player action provenance validation | Yes |
 | `validate_turn_receipt.py` | Turn receipt schema validation | Yes |
@@ -44,15 +44,17 @@ Entry point scripts for CLI execution and validation. Domain modules (the actual
 | `generate-npc` | Generate NPC with voice card | social |
 | `reaction-roll` | Roll NPC reaction (2d6) | social |
 | `faction-turn` | Run faction turn for all factions | social |
+| `level-up` | Advance character to target level | core |
+| `generate-dungeon` | Generate procedural dungeon | exploration |
 
 ## Domain Module Locations
 
 Domain scripts are physically co-located with their skills in Phase 3:
 - `phases/3-resolution/skills/core/scripts/` — dice.py, character.py, conditions.py, magic.py
-- `phases/3-resolution/skills/core/tables/` — attributes.py, skills.py, equipment.py, classes.py, backgrounds.py, foci.py
+- `phases/3-resolution/skills/core/tables/` — attributes.py, skills.py, equipment.py, classes.py, backgrounds.py, foci.py, magic_items.py
 - `phases/3-resolution/skills/combat/scripts/` — combat.py, behavior.py, encounter.py
-- `phases/3-resolution/skills/combat/tables/` — bestiary.py
-- `phases/3-resolution/skills/exploration/scripts/` — travel.py, scene.py, treasure.py
+- `phases/3-resolution/skills/combat/tables/` — bestiary.py, encounter_tables.py
+- `phases/3-resolution/skills/exploration/scripts/` — travel.py, scene.py, treasure.py, dungeon.py
 - `phases/3-resolution/skills/social/scripts/` — npc.py, faction.py, diplomacy.py, consequence.py
 - `phases/3-resolution/skills/social/tables/` — character_tags.py, court_tags.py, faction_actions.py
 - `phases/3-resolution/skills/world-building/scripts/` — world_tick.py

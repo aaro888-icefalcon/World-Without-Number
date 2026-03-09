@@ -15,6 +15,20 @@ if _core_scripts not in sys.path:
 
 from dice import roll, roll_dice
 
+# Magic items (loaded from core tables)
+_core_tables = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(_this_dir))),
+                            "core", "tables")
+if _core_tables not in sys.path:
+    sys.path.insert(0, _core_tables)
+
+try:
+    from magic_items import MAGIC_ITEMS
+except ImportError:
+    MAGIC_ITEMS = []
+
+# Magic item chance by tier (tier 3+)
+MAGIC_ITEM_CHANCE = {3: 0.20, 4: 0.40, 5: 0.60}
+
 
 # Treasure tables by tier (simplified from WWN 3)
 COIN_TABLES = {
@@ -125,6 +139,16 @@ def roll_treasure(tier, context="dungeon"):
         if major_count > 0:
             items.extend(random.sample(MAJOR_TREASURES, min(major_count, len(MAJOR_TREASURES))))
 
+    # Magic items (tier 3+)
+    magic_items_found = []
+    if tier >= 3 and MAGIC_ITEMS:
+        chance = MAGIC_ITEM_CHANCE.get(tier, 0)
+        if random.random() < chance:
+            eligible = [m for m in MAGIC_ITEMS if m["tier"] <= tier]
+            if eligible:
+                magic_item = random.choice(eligible)
+                magic_items_found.append(magic_item)
+
     total_value = coins["silver"] + coins["gold"] * 10
 
     return {
@@ -132,6 +156,7 @@ def roll_treasure(tier, context="dungeon"):
         "context": context,
         "coins": coins,
         "items": items,
+        "magic_items": magic_items_found,
         "estimated_value_sp": total_value,
-        "arithmetic_trace": f"Treasure (tier {tier}): {coins['silver']}sp + {coins['gold']}gp + {len(items)} items = ~{total_value}sp total",
+        "arithmetic_trace": f"Treasure (tier {tier}): {coins['silver']}sp + {coins['gold']}gp + {len(items)} items + {len(magic_items_found)} magic = ~{total_value}sp total",
     }

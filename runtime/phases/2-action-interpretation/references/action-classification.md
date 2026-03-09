@@ -33,6 +33,8 @@ This prevents misinterpretation (AI Limitation L2) and preserves player agency.
 | "What are the factions doing / between-session time" | Faction Turn | `faction-turn` | `faction-turn` |
 | "What's in this area / describe the scene" | Scene Generation | `generate-scene` | `generate-scene --scene-type wilderness --tag-count 2 --threat-level 3` |
 | "Generate an encounter / what do we find" | Encounter | `encounter` | `encounter --terrain forest --threat-level 4` |
+| "I level up / I gain a level / advance to level X" | Level Up | `level-up` | `level-up --name Kira --class warrior --current-level 1 --target-level 2 --attributes '{"strength":14,...}' --hp-max 8 --attack-bonus 1` |
+| "Explore the dungeon / what's in this dungeon" | Dungeon Gen | `generate-dungeon` | `generate-dungeon --depth 2 --theme tomb` |
 | Pure narrative / dialogue / observation | No Mechanic | (none) | Resolve in Phase 4 narratively — no CLI needed |
 
 ## Attribute/Skill Selection Guide

@@ -446,3 +446,112 @@ def create_character(name, class_name, background_id, method="standard_array",
     character["spells_known"] = spells_known
 
     return character
+
+
+def level_up(character, target_level):
+    """Advance a character to target_level.
+
+    Handles: HP roll, attack bonus, saving throws, focus eligibility,
+    spell slot advancement for mages. Does NOT auto-pick foci or spells —
+    returns eligibility info so the caller can prompt the player.
+
+    Args:
+        character: character dict (from create_character or state.json)
+        target_level: int, the level to advance to
+
+    Returns:
+        dict with "character" (updated), "changes" (summary), and optionally
+        "focus_pick" or "spell_advancement" if the player needs to make choices.
+    """
+    current_level = character.get("level", 1)
+    if target_level <= current_level:
+        return {"error": f"Target level {target_level} must be higher than current {current_level}",
+                "character": character}
+    if target_level > 10:
+        return {"error": "Maximum level is 10", "character": character}
+
+    class_name = character["class"]
+    partial_classes = character.get("partial_classes")
+    changes = []
+
+    # Get progression table
+    if class_name == "adventurer" and partial_classes:
+        combo_key = _get_adventurer_combo_key(partial_classes)
+        prog = ADVENTURER_PROGRESSION.get(combo_key)
+        if not prog:
+            return {"error": f"Unknown adventurer combo: {combo_key}", "character": character}
+    elif class_name in CLASSES and CLASSES[class_name].get("progression"):
+        prog = CLASSES[class_name]["progression"]
+    else:
+        return {"error": f"No progression table for class: {class_name}", "character": character}
+
+    # Advance one level at a time
+    for lvl in range(current_level + 1, target_level + 1):
+        if lvl not in prog:
+            return {"error": f"No progression entry for level {lvl}", "character": character}
+
+        entry = prog[lvl]
+
+        # 1. Roll new HP
+        hd_str = entry["hd"]
+        con_mod = get_modifier(character["attributes"]["constitution"])
+        hp_result = calculate_hp(hd_str, con_mod)
+        old_hp_max = character["hp"]["max"]
+        new_hp_max = max(old_hp_max + 1, hp_result["max"])  # guarantee at least +1
+        hp_gained = new_hp_max - old_hp_max
+        character["hp"]["max"] = new_hp_max
+        character["hp"]["current"] += hp_gained  # heal the gained amount
+        changes.append(f"L{lvl}: HP +{hp_gained} (max {new_hp_max})")
+
+        # 2. Update attack bonus
+        old_ab = character.get("attack_bonus", 0)
+        new_ab = entry["ab"]
+        character["attack_bonus"] = new_ab
+        if new_ab != old_ab:
+            changes.append(f"L{lvl}: AB {old_ab} → {new_ab}")
+
+        # 3. Update level
+        character["level"] = lvl
+
+        # 4. Recalculate saving throws
+        character["saving_throws"] = calculate_saving_throws(lvl, character["attributes"])
+        changes.append(f"L{lvl}: Saves recalculated")
+
+    # Build result
+    result = {
+        "character": character,
+        "changes": changes,
+        "old_level": current_level,
+        "new_level": target_level,
+        "arithmetic_trace": f"Level-up: {class_name} {current_level} → {target_level}",
+    }
+
+    # Check for focus pick eligibility
+    final_entry = prog[target_level]
+    if final_entry.get("focus"):
+        result["focus_pick"] = final_entry["focus"]
+        changes.append(f"L{target_level}: Focus pick available: {final_entry['focus']}")
+
+    # Spell advancement for mages
+    tradition = character.get("tradition")
+    if tradition:
+        from classes import FULL_MAGE_CASTING, PARTIAL_MAGE_CASTING
+        is_full_mage = class_name == "mage"
+        is_partial_mage = (class_name == "adventurer" and partial_classes and
+                           "mage" in partial_classes)
+        casting_table = None
+        if is_full_mage:
+            casting_table = FULL_MAGE_CASTING
+        elif is_partial_mage:
+            casting_table = PARTIAL_MAGE_CASTING
+
+        if casting_table and target_level in casting_table:
+            spell_info = casting_table[target_level]
+            result["spell_advancement"] = spell_info
+            changes.append(
+                f"L{target_level}: Spells — max level {spell_info['max_level']}, "
+                f"cast {spell_info['spells_cast']}/day, "
+                f"prepared {spell_info['spells_prepared']}"
+            )
+
+    return result

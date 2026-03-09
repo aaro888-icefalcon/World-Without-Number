@@ -271,6 +271,37 @@ def cmd_faction_turn(args):
     print(json.dumps(result, indent=2, default=str))
 
 
+def cmd_level_up(args):
+    """Handle level-up command."""
+    from character import level_up, calculate_saving_throws
+    attributes = json.loads(args.attributes)
+    character = {
+        "name": args.name,
+        "class": args.class_name,
+        "level": args.current_level,
+        "attributes": attributes,
+        "hp": {"current": args.hp_max, "max": args.hp_max},
+        "attack_bonus": args.attack_bonus,
+        "saving_throws": calculate_saving_throws(args.current_level, attributes),
+        "foci": [],
+    }
+    if args.tradition:
+        character["tradition"] = args.tradition
+    if args.partial_classes:
+        character["partial_classes"] = sorted(args.partial_classes)
+    result = level_up(character, args.target_level)
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
+def cmd_generate_dungeon(args):
+    """Handle generate-dungeon command."""
+    from dungeon import generate_dungeon
+    result = generate_dungeon(depth=args.depth, theme=args.theme)
+    result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # MAIN — ARGUMENT PARSER
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -401,6 +432,23 @@ def main():
     # faction-turn
     p_faction = subparsers.add_parser("faction-turn", parents=[seed_parent], help="Run faction turn")
 
+    # level-up
+    p_levelup = subparsers.add_parser("level-up", parents=[seed_parent], help="Level up a character")
+    p_levelup.add_argument("--name", required=True, help="Character name")
+    p_levelup.add_argument("--class-name", required=True, help="Character class")
+    p_levelup.add_argument("--current-level", type=int, required=True, help="Current level")
+    p_levelup.add_argument("--target-level", type=int, required=True, help="Target level")
+    p_levelup.add_argument("--attributes", type=str, required=True, help="JSON attributes dict")
+    p_levelup.add_argument("--hp-max", type=int, required=True, help="Current max HP")
+    p_levelup.add_argument("--attack-bonus", type=int, default=0, help="Current attack bonus")
+    p_levelup.add_argument("--tradition", type=str, default=None, help="Magic tradition (if mage)")
+    p_levelup.add_argument("--partial-classes", nargs="*", default=None, help="Partial classes (adventurer)")
+
+    # generate-dungeon
+    p_dungeon = subparsers.add_parser("generate-dungeon", parents=[seed_parent], help="Generate a procedural dungeon")
+    p_dungeon.add_argument("--depth", type=int, required=True, help="Dungeon depth (affects rooms and threat)")
+    p_dungeon.add_argument("--theme", type=str, default=None, help="Dungeon theme (or random)")
+
     # ── Parse and dispatch ────────────────────────────────────────────────────
 
     args = parser.parse_args()
@@ -427,6 +475,8 @@ def main():
         "generate-npc": cmd_generate_npc,
         "reaction-roll": cmd_reaction_roll,
         "faction-turn": cmd_faction_turn,
+        "level-up": cmd_level_up,
+        "generate-dungeon": cmd_generate_dungeon,
     }
 
     if args.command not in commands:

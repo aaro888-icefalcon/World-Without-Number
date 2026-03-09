@@ -64,6 +64,8 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `generate-npc [--importance] [--region] [--tags]` — NPC with voice card
   - `reaction-roll [--modifier]` — 2d6 NPC reaction
   - `faction-turn` — process faction actions from state
+  - `level-up --name --class --current-level --target-level --attributes --hp-max --attack-bonus [--tradition] [--partial-classes]` — character level advancement
+  - `generate-dungeon --depth [--theme]` — procedural dungeon generation
 - references:
   - `skills/combat/references/combat-rules.md` — WWN combat procedures
   - `skills/social/references/npc-reactions.md` — NPC reaction table and modifiers
@@ -83,6 +85,11 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `skills/world-building/tables/government_tables.py` — government types
   - `skills/world-building/tables/society_tables.py` — society types and features
   - `skills/world-building/tables/religion_tables.py` — religion types and practices
+  - `skills/exploration/tables/wilderness_tags.py` — 52+ wilderness environment tags for scene generation
+  - `skills/exploration/tables/ruin_tags.py` — 50+ ruin/dungeon environment tags for scene generation
+  - `skills/exploration/tables/community_tags.py` — 50+ community/settlement tags for scene generation
+  - `skills/core/tables/magic_items.py` — 36 tiered magic items (tier 1-5) for treasure generation
+  - `skills/combat/tables/encounter_tables.py` — terrain-based encounter tables with creature ID cross-references
 - scripts:
   - `skills/core/scripts/magic.py` — spell casting, Effort, arts, tradition management
   - `skills/combat/scripts/behavior.py` — creature combat AI, behavior trees
@@ -90,6 +97,7 @@ Machine-readable mapping of the 6-phase GM pipeline. Schema version 7.5.0.
   - `skills/exploration/scripts/travel.py` — overland travel, foraging, privation
   - `skills/exploration/scripts/scene.py` — tag-based scene generation
   - `skills/exploration/scripts/treasure.py` — treasure rolls by tier
+  - `skills/exploration/scripts/dungeon.py` — procedural dungeon generation
   - `skills/social/scripts/npc.py` — NPC generation with voice cards
   - `skills/social/scripts/faction.py` — faction turn processing
   - `skills/social/scripts/diplomacy.py` — persuasion, negotiation, favor tracking

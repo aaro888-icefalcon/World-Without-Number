@@ -165,3 +165,29 @@ Every turn ends with:
 1. Narrative resolution of the action
 2. Brief environmental/situational update if relevant
 3. An open prompt: "What do you do?" or equivalent
+
+### §level-up — Character Advancement
+
+Narrate growth and earned power:
+- Describe the moment of realization: a fight where old limits no longer hold, a morning when the world feels different
+- Reference specific improvements narratively: "Your sword arm moves with new certainty" (AB increase), "You feel stronger, more resilient" (HP gain)
+- For spell advancement: "New patterns of power unfold in your mind's eye"
+- Focus picks: "A lifetime of practice crystallizes into instinctive mastery"
+
+### §dungeon — Dungeon Exploration
+
+Layer the underground environment:
+- **Theme first**: The overall atmosphere (tomb silence, mine dust, temple echoes, sewer stench)
+- **Room by room**: Describe transitions between rooms with environmental sensory shifts
+- **Encounters**: Use the confined space to heighten tension — echoes, limited visibility, no retreat
+- **Hazards**: Describe the physical danger before the mechanical resolution
+- **Boss rooms**: Full dramatic treatment — slow the pace, describe the lair's character
+
+### §treasure-magic — Magic Item Discovery
+
+Magic items are significant finds in a low-magic world:
+- Describe the item's physical presence before revealing its properties
+- Note any aura, warmth, cold, hum, or other sensory indicator of enchantment
+- Tier 1-2: Subtle magic, easily overlooked. "The pendant glows faintly when you lift it."
+- Tier 3-4: Obvious power. "The blade hums with barely contained energy."
+- Tier 5: Legendary weight. "The air itself seems to bow before this artifact."

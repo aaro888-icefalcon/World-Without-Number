@@ -137,6 +137,26 @@ SPELLS = [
      "description": "Poisonous wind in a 40-foot cone. 4d6 necrotic damage and poisoned for 1 day. Physical save for half and no poison."},
     {"name": "Reign of the Unliving", "level": 3, "tradition": "necromancer",
      "description": "Raise all corpses within 100 feet as undead servants. Total HD cannot exceed your level x 3. Lasts one scene."},
+
+    # ── Elementalist Level 4 ─────────────────────────────────────────────────
+    {"name": "Cataclysm of the Shattered Peak", "level": 4, "tradition": "elementalist",
+     "description": "Cause a massive rockslide or avalanche in a 60-foot area. 6d6 bludgeoning damage and the terrain becomes impassable rubble. Physical save for half damage."},
+    {"name": "Maelstrom of the Four Winds", "level": 4, "tradition": "elementalist",
+     "description": "Summon a howling vortex of all four elements in a 30-foot radius. 5d6 damage of mixed types each round for 3 rounds. Physical save each round for half."},
+
+    # ── Elementalist Level 5 ─────────────────────────────────────────────────
+    {"name": "Wrath of the World's Heart", "level": 5, "tradition": "elementalist",
+     "description": "Channel the planet's elemental fury. 40-foot radius eruption deals 8d6 fire and earth damage. Terrain permanently altered. Physical save for half."},
+
+    # ── Necromancer Level 4 ──────────────────────────────────────────────────
+    {"name": "Legion of the Restless Dead", "level": 4, "tradition": "necromancer",
+     "description": "Raise up to 20 HD of undead from available corpses. They serve until destroyed or dismissed. Maximum 3 days duration."},
+    {"name": "Soul Harvest", "level": 4, "tradition": "necromancer",
+     "description": "When a creature dies within 100 feet, capture its soul energy. Heal 2d8 HP and recover one committed Effort. Lasts one scene."},
+
+    # ── Necromancer Level 5 ──────────────────────────────────────────────────
+    {"name": "Dominion of the Grave", "level": 5, "tradition": "necromancer",
+     "description": "All undead within 200 feet fall under your absolute control. Living creatures in the area must Mental save or be paralyzed with dread for 1 round. Control lasts one scene."},
 ]
 
 # Arts are already defined in traditions.py — ARTS list here for import compatibility
