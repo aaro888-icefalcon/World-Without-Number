@@ -51,22 +51,22 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_002",
-    "location": "Penn Station, Amtrak tunnel near platform",
+    "scene_id": "scene_003",
+    "location": "Penn Station, main concourse (dark)",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
-    "threat_level": 1,
+    "threat_level": 2,
     "scene_type": "exploration"
   },
   "campaign": {
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "18:07",
+    "current_time": "18:20",
     "current_location": "Penn Station, Manhattan"
   },
   "current_day": 1,
-  "current_time": "18:07",
+  "current_time": "18:20",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -217,9 +217,9 @@
       "id": "loc_001",
       "name": "Penn Station",
       "region": "manhattan",
-      "threat_level": 0,
+      "threat_level": 2,
       "discovered_day": 1,
-      "notes": "Major transit hub, underground. Dangerous when power fails — no emergency lighting without electronics."
+      "notes": "Major transit hub, underground. Total blackout. Strange luminous tracery on walls, pulsing, concentrated in concourse. Warm air and rhythmic pulse from deeper tunnels. Crowds panicking."
     },
     {
       "id": "loc_002",
@@ -272,6 +272,13 @@
       "event": "Shake retrieves duffel bag of food from train. Attempts first accursed blade manifestation — Effort committed, blade appears but unstable (Magic/INT check failed, 6 vs DC 8). Blade causes pain on manifestation, flickers.",
       "significance": "major",
       "tags": ["accursed", "accursed_blade", "awakening", "failed_check"]
+    },
+    {
+      "day": 1,
+      "time": "18:20",
+      "event": "Group moves toward platform. Notice/scavenge FAILED (3 vs DC 6) — nothing useful found. Connect/leadership FAILED (4 vs DC 8) — group fragments, 5 passengers split off. Notice/threats FAILED (6 vs DC 8) — Shake misses the tracery pattern converging on the concourse until too late. Arrives at main concourse with 7 of 12 passengers.",
+      "significance": "moderate",
+      "tags": ["penn_station", "failed_check", "group_fragmented", "tunnel_traverse"]
     }
   ],
   "clock_log": [],
