@@ -37,7 +37,8 @@
       "readied": ["Accursed Blade — two-handed (2d6+1 magic dmg, Shock 2/15, atk w/ Magic skill, no Effort)"],
       "stowed": [
         "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs, looted water bottles x4, energy bars x6)",
-        "Duffel bag (chilled meal-prep containers x6, ice packs, scavenged water bottles x3, canned tuna x2, box of crackers)"
+        "Duffel bag (chilled meal-prep containers x6, ice packs, scavenged water bottles x3, canned tuna x2, box of crackers)",
+        "Akhil's backpack (scavenged water bottles x6, canned goods x4, box of matches, first aid supplies from Mount Sinai)"
       ],
       "coins": { "copper": 0, "silver": 0, "gold": 0 },
       "notes": "Left $40 cash on counter of Penn Station shop for looted supplies"
@@ -52,8 +53,8 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_008",
-    "location": "Mount Sinai Hospital, Upper East Side, Manhattan",
+    "scene_id": "scene_009",
+    "location": "Shake's apartment, near Bellevue, Manhattan",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
     "threat_level": 1,
@@ -63,11 +64,11 @@
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "20:55",
-    "current_location": "Mount Sinai Hospital, Upper East Side, Manhattan"
+    "current_time": "22:10",
+    "current_location": "Shake's apartment, near Bellevue, Manhattan"
   },
   "current_day": 1,
-  "current_time": "20:55",
+  "current_time": "22:10",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -199,7 +200,7 @@
       "role": "Younger brother, medical student at Mount Sinai",
       "disposition": "loyal",
       "status": "active",
-      "last_seen": "Mount Sinai Hospital, working triage in ER annex, Day 1 ~21:00",
+      "last_seen": "Shake's apartment near Bellevue, Day 1 ~22:10",
       "trust": 9,
       "motivation": "Survive, protect family, succeed in medicine",
       "secret": null,
@@ -207,7 +208,7 @@
       "personality_traits": "cynical, pragmatic, loyal",
       "speech_patterns": "Clipped, dry wit, rhetorical questions that are actually statements",
       "key_phrases": ["Sure, that'll work.", "You're not seriously—", "Fine. What do you need."],
-      "last_interaction_summary": "Reunited at Mount Sinai during surge crisis. Akhil working triage. Shake arrived after trekking from Bellevue.",
+      "last_interaction_summary": "Shake pulled Akhil out of Mount Sinai triage. Trekked 65 blocks south together back to Shake's apartment. Scavenged supplies en route (Notice SUCCESS, 11 vs DC 8). Holed up at apartment.",
       "relationship_arc": null,
       "importance": "major",
       "character_tags": ["family", "medical_student", "mount_sinai"]
@@ -353,6 +354,13 @@
       "event": "Shake treks ~50 blocks north from Akhil's apartment to Mount Sinai Hospital. Streets increasingly chaotic — pharmacy looting, NYPD without working radios, subway grates breathing copper-smelling air. Darkvision gives significant navigational advantage. Arrives at Mount Sinai to find hospital operating by candlelight, overwhelmed with surge casualties from underground. Finds Akhil alive, working triage in ER annex. Reunion. Beat COMPLETED: Find Akhil.",
       "significance": "major",
       "tags": ["travel", "find_akhil", "mount_sinai", "akhil_reunion", "beat_completed"]
+    },
+    {
+      "day": 1,
+      "time": "22:10",
+      "event": "Shake pulls Akhil out of Mount Sinai triage over protest. They trek ~65 blocks south back to Shake's apartment near Bellevue. Scavenge en route (Notice SUCCESS, 11 vs DC 8, margin +3): water bottles x6, canned goods x4, box of matches, first aid supplies Akhil grabbed from Mount Sinai stockroom. Akhil carries second backpack. Streets quieter now — people retreating indoors. Arrive at apartment, hole up.",
+      "significance": "moderate",
+      "tags": ["travel", "scavenge", "akhil", "apartment", "regroup"]
     }
   ],
   "clock_log": [
