@@ -25,14 +25,14 @@
     "attack_bonus": 1,
     "saving_throws": { "physical": 15, "evasion": 14, "mental": 15, "luck": 15 },
     "skills": {
-      "heal": 0,
+      "heal": 1,
       "know": 0,
-      "notice": 1,
-      "magic": 0,
+      "notice": 0,
+      "magic": 1,
       "connect": 0
     },
     "system_strain": { "current": 0, "max": 11 },
-    "effort": { "current": 0, "max": 1 },
+    "effort": { "current": 0, "max": 2 },
     "equipment": {
       "readied": [],
       "stowed": [
