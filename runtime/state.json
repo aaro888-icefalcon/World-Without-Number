@@ -38,7 +38,8 @@
       "stowed": [
         "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs, looted water bottles x4, energy bars x6)",
         "Duffel bag (chilled meal-prep containers x6, ice packs, scavenged water bottles x3, canned tuna x2, box of crackers)",
-        "Akhil's backpack (scavenged water bottles x6, canned goods x4, box of matches, first aid supplies from Mount Sinai)"
+        "Akhil's backpack (scavenged water bottles x6, canned goods x4, box of matches, first aid supplies from Mount Sinai)",
+        "Bellevue haul (water jugs x8 from cafeteria storage)"
       ],
       "coins": { "copper": 0, "silver": 0, "gold": 0 },
       "notes": "Left $40 cash on counter of Penn Station shop for looted supplies"
@@ -64,11 +65,11 @@
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "22:10",
+    "current_time": "23:30",
     "current_location": "Shake's apartment, near Bellevue, Manhattan"
   },
   "current_day": 1,
-  "current_time": "22:10",
+  "current_time": "23:30",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -180,7 +181,7 @@
     "jda_formed": false,
     "five_revelations": {
       "world_outside": true,
-      "magic_real": false,
+      "magic_real": true,
       "food_clock": false,
       "government_cannot_help": false,
       "dead_still_here": false
@@ -237,7 +238,7 @@
       "region": "manhattan",
       "threat_level": 0,
       "discovered_day": 1,
-      "notes": "Shake's workplace and adjacent apartment. Major medical facility — will become critical resource."
+      "notes": "Shake's workplace and adjacent apartment. Major medical facility. Scouted Night 1 ~23:00 (Notice SUCCESS, 9 vs DC 9): pharmacy partially looted but back stock intact, water jugs x8 recovered from cafeteria storage, surgical supplies available. Staff skeleton crew — some nurses and a few residents still on site. Building structurally sound."
     },
     {
       "id": "loc_004",
@@ -361,6 +362,20 @@
       "event": "Shake pulls Akhil out of Mount Sinai triage over protest. They trek ~65 blocks south back to Shake's apartment near Bellevue. Scavenge en route (Notice SUCCESS, 11 vs DC 8, margin +3): water bottles x6, canned goods x4, box of matches, first aid supplies Akhil grabbed from Mount Sinai stockroom. Akhil carries second backpack. Streets quieter now — people retreating indoors. Arrive at apartment, hole up.",
       "significance": "moderate",
       "tags": ["travel", "scavenge", "akhil", "apartment", "regroup"]
+    },
+    {
+      "day": 1,
+      "time": "22:30",
+      "event": "Shake tells Akhil everything. Demonstrates Night Black Eyes (darkvision), manifests Accursed Blade in the apartment kitchen. Explains the isekai — NYC transported to another world, the cavern ceiling, the gallery breaches, the servitors. Akhil processes with characteristic pragmatism. SECOND REVELATION (personal): magic_real — Akhil witnesses sorcery firsthand. They eat meal-prep containers (wet curries, will spoil first) for dinner and hydration. Shake barricades Akhil in the apartment.",
+      "significance": "major",
+      "tags": ["revelation_magic_real", "akhil", "accursed_blade", "night_black_eyes", "rest", "apartment"]
+    },
+    {
+      "day": 1,
+      "time": "23:00",
+      "event": "Shake scouts Bellevue Hospital complex solo. Darkvision advantage. Notice SUCCESS (9 vs DC 9, margin 0) — barely finds what he's looking for. Pharmacy partially looted but back stock intact. Recovers 8 water jugs from cafeteria storage room. Skeleton crew still operating: a few nurses, couple of residents. Building structurally sound. Returns to apartment with water haul.",
+      "significance": "moderate",
+      "tags": ["scout", "bellevue", "scavenge", "water", "solo"]
     }
   ],
   "clock_log": [
