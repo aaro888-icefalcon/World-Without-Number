@@ -52,22 +52,22 @@
     "technology": "All electronics and engines failing simultaneously"
   },
   "current_scene": {
-    "scene_id": "scene_004",
-    "location": "Penn Station, 8th Ave corridor (dark)",
+    "scene_id": "scene_005",
+    "location": "8th Avenue and 31st Street, Manhattan surface — first emergence",
     "region": "manhattan",
     "region_id": "carven-peaks-manhattan",
-    "threat_level": 3,
+    "threat_level": 2,
     "scene_type": "exploration"
   },
   "campaign": {
     "name": "World Without Number — NYC",
     "start_date": "2026-03-09",
     "current_day": 1,
-    "current_time": "18:30",
-    "current_location": "Penn Station, Manhattan"
+    "current_time": "18:35",
+    "current_location": "8th Avenue and 31st Street, Manhattan surface"
   },
   "current_day": 1,
-  "current_time": "18:30",
+  "current_time": "18:35",
   "clocks": [
     {
       "id": "clock_food_crisis",
@@ -123,7 +123,7 @@
     {
       "id": "clock_gallery_seals",
       "name": "Gallery Seal Degradation",
-      "current": 0,
+      "current": 1,
       "max": 8,
       "owner": "Imperator",
       "goal": "Seal degradation unleashes deeper servitors",
@@ -132,7 +132,7 @@
       "status": "active",
       "history": [],
       "portents": [
-        { "at": 1, "event": "Initial surge — servitors breach galleries within hours of transport", "mechanical": "400-1000 casualties, galleries established as active threat", "fired": false },
+        { "at": 1, "event": "Initial surge — servitors breach galleries within hours of transport", "mechanical": "400-1000 casualties, galleries established as active threat", "fired": true },
         { "at": 4, "event": "Surge frequency increases, deeper servitor types appear", "mechanical": "Gallery threat level increases", "fired": false },
         { "at": 7, "event": "Major seal failure imminent", "mechanical": "Level 1 at risk of overrun", "fired": false }
       ]
@@ -172,13 +172,13 @@
   ],
   "world_situation": {
     "transport_hour": 0,
-    "population_state": "pre-transport normalcy transitioning to shock",
+    "population_state": "mass panic and confusion — initial surge underway",
     "infrastructure": "All electronics and engines failing simultaneously",
-    "gallery_status": "Surge imminent within hours",
+    "gallery_status": "Initial surge underway — servitors breaching across Manhattan subway galleries",
     "food_reserves_days": 10,
     "jda_formed": false,
     "five_revelations": {
-      "world_outside": false,
+      "world_outside": true,
       "magic_real": false,
       "food_clock": false,
       "government_cannot_help": false,
@@ -220,7 +220,15 @@
       "region": "manhattan",
       "threat_level": 2,
       "discovered_day": 1,
-      "notes": "Major transit hub, underground. Total blackout. Strange luminous tracery on walls, pulsing, concentrated in concourse. Warm air and rhythmic pulse from deeper tunnels. Crowds panicking."
+      "notes": "Major transit hub, underground. Total blackout. Luminous tracery on walls. Gallery breach occurring at 7th Ave stairwell — servitors emerging. EXTREMELY DANGEROUS. Not all civilians evacuated."
+    },
+    {
+      "id": "loc_003",
+      "name": "8th Avenue and 31st Street (surface)",
+      "region": "manhattan",
+      "threat_level": 1,
+      "discovered_day": 1,
+      "notes": "Street-level Manhattan. Inside colossal cavern — ceiling 200ft up, bioluminescent blue-green minerals provide perpetual dim twilight. No sky visible. Underground lake surrounds island. Gallery mouths visible in distant cavern walls."
     },
     {
       "id": "loc_002",
@@ -240,7 +248,7 @@
       "beats": [
         { "beat_name": "The Lights Go Out", "trigger_condition": "Transport occurs", "status": "completed", "payoff_description": "All technology fails. The train stops. Darkness." },
         { "beat_name": "Find Akhil", "trigger_condition": "Player decides to locate brother", "status": "pending", "payoff_description": "Akhil location and status revealed" },
-        { "beat_name": "The First Surge", "trigger_condition": "Gallery Seal Degradation clock hits 1", "status": "pending", "payoff_description": "Servitors breach the galleries. Mass casualties." }
+        { "beat_name": "The First Surge", "trigger_condition": "Gallery Seal Degradation clock hits 1", "status": "completed", "payoff_description": "Servitors breach the galleries. Mass casualties." }
       ]
     }
   ],
@@ -294,9 +302,25 @@
       "event": "Shake spots servitors (3 stone-insect constructs) behind thinning shimmer at 7th Ave stairwell. Quietly retreats group (DEX SUCCESS, 8 vs DC 8). Rallies concourse crowd toward 8th Ave exits (Connect SUCCESS, 11 vs DC 9, margin +2). Significant portion of crowd redirected. Shimmer still thinning — breach imminent.",
       "significance": "major",
       "tags": ["penn_station", "servitors", "gallery_precursor", "leadership", "evacuation"]
+    },
+    {
+      "day": 1,
+      "time": "18:35",
+      "event": "Shake emerges from 8th Ave exit with ~47 survivors. FIRST REVELATION: world_outside — Manhattan is inside a colossal cavern. No sky. Bioluminescent blue-green ceiling ~200ft up. Underground lake surrounds the island. Gallery mouths visible in distant cavern walls. Behind them, gallery seal breach begins (clock_gallery_seals → 1, portent fired). Screaming from below.",
+      "significance": "critical",
+      "tags": ["surface_emergence", "revelation_world_outside", "gallery_breach", "clock_tick"]
     }
   ],
-  "clock_log": [],
+  "clock_log": [
+    {
+      "clock": "clock_gallery_seals",
+      "change": "+1",
+      "new_value": "1",
+      "reason": "Servitor shimmer collapse at Penn Station 7th Ave stairwell. Breach begins across Manhattan subway galleries.",
+      "day": 1,
+      "time": "18:35"
+    }
+  ],
   "combat_state": {
     "active": false
   },
