@@ -2,417 +2,72 @@
   "schema_version": "7.6.0",
   "content_version": "1.0.0",
   "meta": {
-    "last_played": "2026-03-09T18:00:00Z",
-    "session_number": 1
+    "last_played": "2026-03-09T00:00:00Z",
+    "session_number": 0
   },
   "character": {
-    "name": "Abhishek 'Shake' Rao",
-    "class": "adventurer",
-    "partial_classes": ["warrior", "accursed"],
+    "name": "Unnamed Hero",
+    "class": "warrior",
     "level": 1,
     "xp": 0,
-    "background": "Physician",
+    "background": "Wanderer",
     "attributes": {
-      "strength": 9,
-      "dexterity": 15,
-      "constitution": 11,
-      "intelligence": 16,
-      "wisdom": 12,
+      "strength": 10,
+      "dexterity": 10,
+      "constitution": 10,
+      "intelligence": 10,
+      "wisdom": 10,
       "charisma": 10
     },
-    "hp": { "current": 3, "max": 3 },
-    "armor_class": 11,
-    "attack_bonus": 1,
-    "saving_throws": { "physical": 15, "evasion": 14, "mental": 15, "luck": 15 },
-    "skills": {
-      "heal": 1,
-      "know": 0,
-      "notice": 0,
-      "magic": 1,
-      "connect": 0
-    },
-    "system_strain": { "current": 0, "max": 11 },
-    "effort": { "current": 0, "max": 2 },
+    "hp": { "current": 1, "max": 1 },
+    "attack_bonus": 0,
+    "armor_class": 10,
+    "saving_throws": { "physical": 15, "evasion": 15, "mental": 15, "luck": 15 },
+    "skills": {},
+    "system_strain": { "current": 0, "max": 10 },
+    "effort": { "current": 0, "max": 0 },
     "equipment": {
-      "readied": ["Accursed Blade — two-handed (2d6+1 magic dmg, Shock 2/15, atk w/ Magic skill, no Effort)"],
-      "stowed": [
-        "Backpack (textbooks, phone [inoperative], charger [useless], wallet, keys, water bottle, granola bars x3, change of scrubs, looted water bottles x4, energy bars x6)",
-        "Duffel bag (ice packs [thawed], scavenged water bottles x3, canned tuna x2, box of crackers)",
-        "Akhil's backpack (scavenged water bottles x6, canned goods x4, box of matches, first aid supplies from Mount Sinai)",
-        "Bellevue haul (water jugs x8 from cafeteria storage)"
-      ],
-      "coins": { "copper": 0, "silver": 0, "gold": 0 },
-      "notes": "Left $40 cash on counter of Penn Station shop for looted supplies"
+      "readied": [],
+      "stowed": [],
+      "coins": { "copper": 0, "silver": 0, "gold": 0 }
     },
-    "foci": ["all_directions_edge_style", "healer"],
-    "class_abilities": ["veteran_luck_limited"],
-    "known_arts": ["accursed_blade", "night_black_eyes"]
+    "foci": [],
+    "class_abilities": [],
+    "spells_known": []
   },
-  "world": {
-    "setting": "NYC transported to Latter Earth, Carven Peaks region",
-    "transport_status": "T=0, moment of transport",
-    "technology": "All electronics and engines failing simultaneously"
-  },
+  "world": {},
   "current_scene": {
-    "scene_id": "scene_011",
-    "location": "NYU Langone Medical Center, Manhattan",
-    "region": "manhattan",
-    "region_id": "carven-peaks-manhattan",
-    "threat_level": 1,
-    "scene_type": "exploration",
+    "scene_id": "scene_000",
+    "location": "Uninitialized",
+    "region": "none",
+    "threat_level": 0,
+    "scene_type": "social",
     "telegraphed_threats": []
   },
   "campaign": {
-    "name": "World Without Number — NYC",
+    "name": "Uninitialized",
     "start_date": "2026-03-09",
-    "current_day": 2,
-    "current_time": "11:30",
-    "current_location": "NYU Langone Medical Center, Manhattan"
+    "current_day": 1,
+    "current_time": "08:00",
+    "current_location": "Uninitialized"
   },
-  "current_day": 2,
-  "current_time": "11:30",
-  "clocks": [
-    {
-      "id": "clock_food_crisis",
-      "name": "Food Crisis",
-      "current": 0,
-      "max": 6,
-      "owner": "NYC",
-      "goal": "Secure sustainable food supply before reserves collapse",
-      "completion_effect": "Mass starvation, total social collapse",
-      "hidden": false,
-      "status": "active",
-      "history": [],
-      "portents": [
-        { "at": 2, "event": "Rationing begins, moral economy supersedes market economy", "mechanical": "Food becomes scarce resource, social disorder +1", "fired": false },
-        { "at": 4, "event": "First food riots break out in densely populated neighborhoods", "mechanical": "Social disorder +2, armed confrontations over supplies", "fired": false },
-        { "at": 6, "event": "Mass starvation spiral begins", "mechanical": "Total social collapse unless Amundi trade established", "fired": false }
-      ]
-    },
-    {
-      "id": "clock_verdancy",
-      "name": "Verdancy Western Front",
-      "current": 0,
-      "max": 8,
-      "owner": "Verdancy",
-      "goal": "Verdancy expansion consumes western boroughs",
-      "completion_effect": "Western boroughs overrun, population retreat",
-      "hidden": true,
-      "status": "active",
-      "history": [],
-      "portents": [
-        { "at": 2, "event": "Spore-drifts cross western passes", "mechanical": "Western passes become hazardous", "fired": false },
-        { "at": 4, "event": "Carnivorous Verdancy creatures appear", "mechanical": "Western front combat encounters begin", "fired": false },
-        { "at": 6, "event": "Western valleys lost to Verdancy expansion", "mechanical": "Territory compressed, population density increases", "fired": false }
-      ]
-    },
-    {
-      "id": "clock_pelegrinian",
-      "name": "Pelegrinian Pressure",
-      "current": 0,
-      "max": 10,
-      "owner": "Pelegrinian Empire",
-      "goal": "Assess and control NYC access to Outsider artifacts",
-      "completion_effect": "Military confrontation or forced vassalage",
-      "hidden": true,
-      "status": "active",
-      "history": [],
-      "portents": [
-        { "at": 3, "event": "Pelegrinian assessment missions arrive", "mechanical": "Diplomatic encounters with imperial agents", "fired": false },
-        { "at": 6, "event": "Economic pressure and trade interference begin", "mechanical": "Trade penalties, diplomatic isolation deepens", "fired": false },
-        { "at": 9, "event": "Military buildup on approaches", "mechanical": "Confrontation imminent", "fired": false }
-      ]
-    },
-    {
-      "id": "clock_gallery_seals",
-      "name": "Gallery Seal Degradation",
-      "current": 1,
-      "max": 8,
-      "owner": "Imperator",
-      "goal": "Seal degradation unleashes deeper servitors",
-      "completion_effect": "Major surge event, Level 1 overrun",
-      "hidden": true,
-      "status": "active",
-      "history": [],
-      "portents": [
-        { "at": 1, "event": "Initial surge — servitors breach galleries within hours of transport", "mechanical": "400-1000 casualties, galleries established as active threat", "fired": true },
-        { "at": 4, "event": "Surge frequency increases, deeper servitor types appear", "mechanical": "Gallery threat level increases", "fired": false },
-        { "at": 7, "event": "Major seal failure imminent", "mechanical": "Level 1 at risk of overrun", "fired": false }
-      ]
-    },
-    {
-      "id": "clock_manthva",
-      "name": "Manthva Succession",
-      "current": 0,
-      "max": 6,
-      "owner": "Still Cities",
-      "goal": "Undead house succession resolved",
-      "completion_effect": "Succession resolved (winner depends on NYC actions)",
-      "hidden": true,
-      "status": "active",
-      "history": [],
-      "portents": [
-        { "at": 2, "event": "House tensions escalate, intelligence becomes conditional", "mechanical": "Undead faction diplomacy becomes available", "fired": false },
-        { "at": 4, "event": "Houses actively seek NYC alliance", "mechanical": "Diplomatic opportunities and dangers", "fired": false }
-      ]
-    },
-    {
-      "id": "clock_borough_divergence",
-      "name": "Borough Divergence",
-      "current": 0,
-      "max": 6,
-      "owner": "NYC Internal",
-      "goal": "Boroughs diverge toward functional autonomy",
-      "completion_effect": "Full borough independence, Council dissolution",
-      "hidden": false,
-      "status": "active",
-      "history": [],
-      "portents": [
-        { "at": 2, "event": "Boroughs begin developing distinct priorities", "mechanical": "Borough autonomy increases, Council authority -1", "fired": false },
-        { "at": 4, "event": "Borough-level governance supersedes Council on local matters", "mechanical": "Council authority significantly weakened", "fired": false }
-      ]
-    }
-  ],
-  "world_situation": {
-    "transport_hour": 0,
-    "population_state": "Day 2 — shock settling into grim reality. People sheltering indoors. NYPD/FDNY attempting to organize without technology. Surge casualties visible — bodies being carried up from subway entrances.",
-    "infrastructure": "All electronics and engines dead. Fire hydrants being cracked for water on some blocks. Stores emptied or guarded.",
-    "gallery_status": "Initial surge subsiding — subway entrances being barricaded by civilians. Galleries remain active threat but no new major breach.",
-    "food_reserves_days": 10,
-    "jda_formed": false,
-    "five_revelations": {
-      "world_outside": true,
-      "magic_real": true,
-      "food_clock": false,
-      "government_cannot_help": false,
-      "dead_still_here": false
-    }
-  },
+  "current_day": 1,
+  "current_time": "08:00",
+  "clocks": [],
+  "world_situation": {},
   "inter_group_relations": [],
   "pc_standing": [],
   "human_factions": [],
   "external_threats": [],
   "meta_clocks": [],
   "faction_relationships": [],
-  "known_npcs": [
-    {
-      "id": "npc_001",
-      "name": "Akhil Rao",
-      "faction": "family",
-      "role": "Younger brother, medical student at Mount Sinai",
-      "disposition": "loyal",
-      "status": "active",
-      "last_seen": "Shake's apartment near Bellevue, Day 1 ~22:10",
-      "trust": 9,
-      "motivation": "Survive, protect family, succeed in medicine",
-      "secret": null,
-      "voice_card": "Cynical, pragmatic, loyal. Cuts through sentiment with dry observations but will always show up when it matters. Speaks in short, pointed sentences.",
-      "personality_traits": "cynical, pragmatic, loyal",
-      "speech_patterns": "Clipped, dry wit, rhetorical questions that are actually statements",
-      "key_phrases": ["Sure, that'll work.", "You're not seriously—", "Fine. What do you need."],
-      "last_interaction_summary": "Shake pulled Akhil out of Mount Sinai triage. Trekked 65 blocks south together back to Shake's apartment. Scavenged supplies en route (Notice SUCCESS, 11 vs DC 8). Holed up at apartment.",
-      "relationship_arc": null,
-      "importance": "major",
-      "character_tags": ["family", "medical_student", "mount_sinai"]
-    }
-  ],
-  "known_locations": [
-    {
-      "id": "loc_001",
-      "name": "Penn Station",
-      "region": "manhattan",
-      "threat_level": 2,
-      "discovered_day": 1,
-      "notes": "Major transit hub, underground. Total blackout. Luminous tracery on walls. Gallery breach occurring at 7th Ave stairwell — servitors emerging. EXTREMELY DANGEROUS. Not all civilians evacuated."
-    },
-    {
-      "id": "loc_003",
-      "name": "8th Avenue and 31st Street (surface)",
-      "region": "manhattan",
-      "threat_level": 1,
-      "discovered_day": 1,
-      "notes": "Street-level Manhattan. Inside colossal cavern — ceiling 200ft up, bioluminescent blue-green minerals provide perpetual dim twilight. No sky visible. Underground lake surrounds island. Gallery mouths visible in distant cavern walls."
-    },
-    {
-      "id": "loc_002",
-      "name": "NYU Langone / Bellevue complex",
-      "region": "manhattan",
-      "threat_level": 0,
-      "discovered_day": 1,
-      "notes": "Shake's workplace and adjacent apartment. Major medical complex — two institutions sharing campus, ~5000 people across both on any given day. Residential towers attached (medical students, residents, some staff live on-site). BELLEVUE (public, scouted Night 1): pharmacy back stock intact, cafeteria storage raided for water, skeleton crew but organized — disaster response DNA, becoming community hub. LANGONE (private/academic, scouted Day 2, Know SUCCESS 9 vs DC 8): NOT deserted — hundreds of inpatients who can't be moved (ICU, post-surgical, oncology, labor & delivery), plus residents and students from attached housing. But leadership vacuum: senior attendings and department chairs who commute from suburbs left for families. Junior residents running the show floor by floor, improvising. Less organized than Bellevue — no unified command structure, each floor operating semi-independently. Research wings quieter but not empty. Supply situation better than Bellevue (stockrooms less looted, Shake has badge access to restricted floors) but nobody has done a unified inventory. Key difference: Bellevue has organized leadership and community trust; Langone has more supplies, more helpless patients, and less coordination."
-    },
-    {
-      "id": "loc_004",
-      "name": "Akhil's apartment building",
-      "region": "manhattan",
-      "threat_level": 0,
-      "discovered_day": 1,
-      "notes": "Walk-up on East Side, ~15 blocks north of Bellevue. Akhil's roommates (Derek et al.) sheltering inside. Akhil not present — was at Mount Sinai for shift."
-    },
-    {
-      "id": "loc_005",
-      "name": "Mount Sinai Hospital",
-      "region": "manhattan",
-      "threat_level": 1,
-      "discovered_day": 1,
-      "notes": "Major hospital, Upper East Side. Operating by candlelight and improvised lighting. Overwhelmed with surge casualties — crush injuries, lacerations, smoke inhalation from underground. Akhil working triage in ER annex."
-    }
-  ],
-  "campaign_arcs": [
-    {
-      "id": "arc_001",
-      "name": "The Transport",
-      "status": "active",
-      "description": "NYC is transported to the Latter Earth. Survive the immediate chaos and find your people.",
-      "beats": [
-        { "beat_name": "The Lights Go Out", "trigger_condition": "Transport occurs", "status": "completed", "payoff_description": "All technology fails. The train stops. Darkness." },
-        { "beat_name": "Find Akhil", "trigger_condition": "Player decides to locate brother", "status": "completed", "payoff_description": "Akhil found alive at Mount Sinai, working triage in ER annex" },
-        { "beat_name": "The First Surge", "trigger_condition": "Gallery Seal Degradation clock hits 1", "status": "completed", "payoff_description": "Servitors breach the galleries. Mass casualties." }
-      ]
-    }
-  ],
+  "known_npcs": [],
+  "known_locations": [],
+  "campaign_arcs": [],
   "active_quests": [],
-  "chronicle": [
-    {
-      "day": 1,
-      "time": "18:00",
-      "event": "Shake Rao arrives at Penn Station aboard Amtrak from Delaware. The Transport occurs.",
-      "significance": "critical",
-      "tags": ["transport", "session_start", "penn_station"]
-    },
-    {
-      "day": 1,
-      "time": "18:03",
-      "event": "Night Black Eyes art activates spontaneously. Shake gains darkvision. Removes contacts — vision is clearer without them.",
-      "significance": "major",
-      "tags": ["accursed", "night_black_eyes", "awakening"]
-    },
-    {
-      "day": 1,
-      "time": "18:05",
-      "event": "Shake opens train emergency door release and leads 12 passengers out of darkened Amtrak car into Penn Station tunnel.",
-      "significance": "moderate",
-      "tags": ["penn_station", "leadership", "evacuation"]
-    },
-    {
-      "day": 1,
-      "time": "18:07",
-      "event": "Shake retrieves duffel bag of food from train. Attempts first accursed blade manifestation — Effort committed, blade appears but unstable (Magic/INT check failed, 6 vs DC 8). Blade causes pain on manifestation, flickers.",
-      "significance": "major",
-      "tags": ["accursed", "accursed_blade", "awakening", "failed_check"]
-    },
-    {
-      "day": 1,
-      "time": "18:20",
-      "event": "Group moves toward platform. Notice/scavenge FAILED (3 vs DC 6) — nothing useful found. Connect/leadership FAILED (4 vs DC 8) — group fragments, 5 passengers split off. Notice/threats FAILED (6 vs DC 8) — Shake misses the tracery pattern converging on the concourse until too late. Arrives at main concourse with 7 of 12 passengers.",
-      "significance": "moderate",
-      "tags": ["penn_station", "failed_check", "group_fragmented", "tunnel_traverse"]
-    },
-    {
-      "day": 1,
-      "time": "18:25",
-      "event": "Shake loots Penn Station shop for water and energy bars (Notice SUCCESS, 7 vs DC 6), leaves cash. Fails to identify safer exit (Know FAILED, 7 vs DC 8) — heads directly toward 7th Ave central stairwell where tracery shimmer is thickest. Approaching breach point with 7 civilians.",
-      "significance": "major",
-      "tags": ["penn_station", "scavenge", "failed_check", "gallery_approach"]
-    },
-    {
-      "day": 1,
-      "time": "18:30",
-      "event": "Shake spots servitors (3 stone-insect constructs) behind thinning shimmer at 7th Ave stairwell. Quietly retreats group (DEX SUCCESS, 8 vs DC 8). Rallies concourse crowd toward 8th Ave exits (Connect SUCCESS, 11 vs DC 9, margin +2). Significant portion of crowd redirected. Shimmer still thinning — breach imminent.",
-      "significance": "major",
-      "tags": ["penn_station", "servitors", "gallery_precursor", "leadership", "evacuation"]
-    },
-    {
-      "day": 1,
-      "time": "18:35",
-      "event": "Shake emerges from 8th Ave exit with ~47 survivors. FIRST REVELATION: world_outside — Manhattan is inside a colossal cavern. No sky. Bioluminescent blue-green ceiling ~200ft up. Underground lake surrounds the island. Gallery mouths visible in distant cavern walls. Behind them, gallery seal breach begins (clock_gallery_seals → 1, portent fired). Screaming from below.",
-      "significance": "critical",
-      "tags": ["surface_emergence", "revelation_world_outside", "gallery_breach", "clock_tick"]
-    },
-    {
-      "day": 1,
-      "time": "19:20",
-      "event": "Shake treks 2 miles east from 8th Ave to apartment near Bellevue through panicking Manhattan streets. Scavenges supplies from abandoned bodega (Notice SUCCESS, 8 vs DC 7, margin +1): water bottles x3, canned tuna x2, box of crackers. Penn Station group dispersed during trek — each heading to their own people. Witnesses chaos: subway entrances with screaming from below, thousands on streets, no working technology, blue-green cavern light. Arrives at apartment building.",
-      "significance": "moderate",
-      "tags": ["travel", "scavenge", "apartment", "bellevue"]
-    },
-    {
-      "day": 1,
-      "time": "19:25",
-      "event": "Shake re-manifests Accursed Blade in two-handed form (Magic/INT SUCCESS, 12 vs DC 8, margin +4). Blade is stable, responsive — no pain, no flicker. Effort recommitted (1/2). Weapon upgraded to 1d10 two-handed.",
-      "significance": "moderate",
-      "tags": ["accursed", "accursed_blade", "stable_manifestation"]
-    },
-    {
-      "day": 1,
-      "time": "19:50",
-      "event": "Shake corrects blade understanding (no Effort needed, 2d6+Magic two-handed, Shock 2/15). Dismisses blade, gears up at apartment, changes into scrubs and practical clothes. Heads north 15 blocks to Akhil's building. Streets chaotic but surface-level threats minimal — surge confined to underground.",
-      "significance": "moderate",
-      "tags": ["travel", "find_akhil", "gear_up"]
-    },
-    {
-      "day": 1,
-      "time": "20:55",
-      "event": "Shake treks ~50 blocks north from Akhil's apartment to Mount Sinai Hospital. Streets increasingly chaotic — pharmacy looting, NYPD without working radios, subway grates breathing copper-smelling air. Darkvision gives significant navigational advantage. Arrives at Mount Sinai to find hospital operating by candlelight, overwhelmed with surge casualties from underground. Finds Akhil alive, working triage in ER annex. Reunion. Beat COMPLETED: Find Akhil.",
-      "significance": "major",
-      "tags": ["travel", "find_akhil", "mount_sinai", "akhil_reunion", "beat_completed"]
-    },
-    {
-      "day": 1,
-      "time": "22:10",
-      "event": "Shake pulls Akhil out of Mount Sinai triage over protest. They trek ~65 blocks south back to Shake's apartment near Bellevue. Scavenge en route (Notice SUCCESS, 11 vs DC 8, margin +3): water bottles x6, canned goods x4, box of matches, first aid supplies Akhil grabbed from Mount Sinai stockroom. Akhil carries second backpack. Streets quieter now — people retreating indoors. Arrive at apartment, hole up.",
-      "significance": "moderate",
-      "tags": ["travel", "scavenge", "akhil", "apartment", "regroup"]
-    },
-    {
-      "day": 1,
-      "time": "22:30",
-      "event": "Shake tells Akhil everything. Demonstrates Night Black Eyes (darkvision), manifests Accursed Blade in the apartment kitchen. Explains the isekai — NYC transported to another world, the cavern ceiling, the gallery breaches, the servitors. Akhil processes with characteristic pragmatism. SECOND REVELATION (personal): magic_real — Akhil witnesses sorcery firsthand. They eat meal-prep containers (wet curries, will spoil first) for dinner and hydration. Shake barricades Akhil in the apartment.",
-      "significance": "major",
-      "tags": ["revelation_magic_real", "akhil", "accursed_blade", "night_black_eyes", "rest", "apartment"]
-    },
-    {
-      "day": 1,
-      "time": "23:00",
-      "event": "Shake scouts Bellevue Hospital complex solo. Darkvision advantage. Notice SUCCESS (9 vs DC 9, margin 0) — barely finds what he's looking for. Pharmacy partially looted but back stock intact. Recovers 8 water jugs from cafeteria storage room. Skeleton crew still operating: a few nurses, couple of residents. Building structurally sound. Returns to apartment with water haul.",
-      "significance": "moderate",
-      "tags": ["scout", "bellevue", "scavenge", "water", "solo"]
-    },
-    {
-      "day": 2,
-      "time": "07:00",
-      "event": "Brothers sleep in shifts — Shake takes first watch, Akhil relieves at 3 AM. Night passes without incident. Wake at 7 AM (internal clock — no day/night cycle visible in cavern). Eat energy bars and canned tuna for breakfast, share water. Full rest — HP restored, Effort reset.",
-      "significance": "minor",
-      "tags": ["rest", "apartment", "day_transition"]
-    },
-    {
-      "day": 2,
-      "time": "08:30",
-      "event": "Shake ventures out solo into Day 2 Manhattan. Darkvision advantage in building interiors. SCAVENGE FAILED (Notice 9 vs DC 10, margin -1) — easy pickings are gone. Stores stripped or being guarded. Other scavengers have been out all night. INTELLIGENCE GATHERING SUCCESS (Notice 9 vs DC 8, margin +1): observes NYPD foot patrols with megaphones, civilian subway barricades, fire hydrants cracked for water, bodies being carried up from underground. Bellevue becoming de facto community hub. Hears rumor that the water surrounding the island isn't the East River. FDNY reportedly organizing command post at City Hall.",
-      "significance": "major",
-      "tags": ["scout", "day_2", "intelligence", "failed_scavenge", "world_state"]
-    },
-    {
-      "day": 2,
-      "time": "10:30",
-      "event": "Shake scouts NYU Langone — his own workplace. Know SUCCESS (9 vs DC 8, margin +1) — institutional knowledge. NOT deserted: hundreds of inpatients who can't be moved (ICU, post-surgical, oncology, L&D), plus residents and med students from attached residential towers. But leadership vacuum — senior attendings and department chairs fled to families in suburbs. Junior residents running each floor semi-independently, no unified command. Contrast with Bellevue: Bellevue has organized leadership (Dr. Obi on the steps with whiteboards, disaster response culture) but is being overwhelmed by community demand. Langone has more supplies (stockrooms less picked over, Shake has badge access) and more helpless patients, but less coordination. Nobody has done a unified inventory across both institutions. Notice FAILED (7 vs DC 8) on detailed operational assessment — Shake gets the big picture but misses some floor-by-floor specifics.",
-      "significance": "major",
-      "tags": ["scout", "nyu_langone", "bellevue", "intelligence", "supplies", "day_2"]
-    }
-  ],
-  "clock_log": [
-    {
-      "clock": "clock_gallery_seals",
-      "change": "+1",
-      "new_value": "1",
-      "reason": "Servitor shimmer collapse at Penn Station 7th Ave stairwell. Breach begins across Manhattan subway galleries.",
-      "day": 1,
-      "time": "18:35"
-    }
-  ],
-  "combat_state": {
-    "active": false
-  },
+  "chronicle": [],
+  "clock_log": [],
+  "combat_state": { "active": false },
   "consequence_tracker": [],
   "session": {
     "drama_budget": 3,
@@ -420,15 +75,11 @@
     "turns_since_hard_move": 0
   },
   "world_pulse": {
-    "day": 2,
-    "news": "Monday morning — T+16 hours. Manhattan adjusting to permanent twilight. NYPD organizing foot patrols with megaphones. Hospitals overwhelmed. Grocery stores empty or defended.",
-    "rumors": [
-      "Subway barricades holding but people hear sounds from below at night",
-      "Someone at Bellevue claims the water around the island isn't the East River — it's something else",
-      "FDNY chief seen organizing a command post at City Hall with hand-drawn maps"
-    ],
-    "trends": ["civilian barricading of subway entrances", "fire hydrant water distribution", "hospitals becoming community hubs"],
+    "day": 1,
+    "news": "",
+    "rumors": [],
+    "trends": [],
     "arrivals": []
   },
-  "last_played": "2026-03-09T18:00:00Z"
+  "last_played": "2026-03-09T00:00:00Z"
 }
