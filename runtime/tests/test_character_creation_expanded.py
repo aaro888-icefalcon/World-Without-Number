@@ -401,10 +401,10 @@ def test_focus_selection(t):
         char = create_character(
             name="FocusExpert", class_name="expert", background_id=5,
             method="standard_array",
-            foci=["connected", "diplomat"]  # both non-combat
+            foci=["connected", "diplomatic_grace"]  # both non-combat
         )
         assert "connected" in char["foci"]
-        assert "diplomat" in char["foci"]
+        assert "diplomatic_grace" in char["foci"]
         t.ok("Expert can pick non-combat foci")
     except Exception as e:
         t.error("Expert focus", e)
