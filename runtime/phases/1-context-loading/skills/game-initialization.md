@@ -36,7 +36,7 @@ This prevents hallucination and ensures options match the actual game data.
 
 Ask the player one question:
 
-> "Who are you? Describe your character — name, who they are, what they're good at, what matters to them."
+> "Who are you? Describe your character — name, who they are, what they're good at, what matters to them. Where in the city were you when everything changed? Who matters to you here?"
 
 Wait for response. **Save concept immediately** to state.json:
 
@@ -153,6 +153,17 @@ If adjustments are needed, re-run `query-chargen-options` with updated class/par
 }
 ```
 
+#### 2d. Extract world seeds from concept
+
+After the build is approved, review the player's concept for world-relevant details:
+
+- **Named NPCs mentioned** → seed into `known_npcs` with basic voice cards after `initialize-game` runs
+- **Locations mentioned** → add to `known_locations` (merge with NYC defaults)
+- **Faction affiliations implied** → adjust `pc_standing` entries (e.g., if player describes being a cop → JDA standing +1)
+- **Relationships mentioned** → seed into appropriate trackers
+
+These concept-derived overrides are applied to the generated state AFTER `initialize-game` runs (Step 3), before writing the final state.json. This is the same pattern as any Phase 5 persistence — the CLI produces the base state; the GM enriches it from the concept.
+
 ### Step 3: Execute and Confirm
 
 Once the player approves, run initialization with all parameters:
@@ -179,11 +190,16 @@ python runtime/scripts/emergence_cli.py initialize-game \
 
 After execution:
 1. Parse the JSON output
-2. Write `state.json` with the `state` field from the output (removes `creation_progress`)
-3. Validate with `python runtime/scripts/validate_state.py runtime/state.json`
-4. Display the character sheet using the character-sheet-template
-5. Render the opening scene using the scene-template
-6. Present the opening narrative (see Opening Scene Protocol below)
+2. Apply concept-derived world seeds from Step 2d:
+   - Merge concept-extracted NPCs into `state.known_npcs`
+   - Adjust `state.pc_standing` based on implied affiliations
+   - Add concept-mentioned locations to `state.known_locations`
+   - Store concept text in `state.meta.character_concept` for future reference
+3. Write `state.json` with the enriched state (removes `creation_progress`)
+4. Validate with `python runtime/scripts/validate_state.py runtime/state.json`
+5. Display the character sheet using the character-sheet-template
+6. Render the opening scene using the scene-template
+7. Present the opening narrative (see Opening Scene Protocol below)
 
 ## Resuming Interrupted Creation
 

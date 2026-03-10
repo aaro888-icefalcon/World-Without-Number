@@ -74,7 +74,7 @@ Every game turn follows this sequence. No steps may be skipped or reordered.
 
 0. **World preamble** — `check-triggers`. Fire high-priority commands.
 1. **Capture + classify** — Player intent → CLI command via `action-classification.md`.
-   If "no mechanic" → classify as `narrative` pseudo-command (still enters the loop).
+   Every action maps to a CLI command. `skill-check` is the universal fallback (Hard Rule #14).
 2. **Expand** — `expand-action` → pre-commands + primary + declared chains.
 3. **Validate input** — Provenance check.
 4. **Snapshot** — `state-snapshot` (for delta detection).

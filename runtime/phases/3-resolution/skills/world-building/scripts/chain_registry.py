@@ -94,7 +94,7 @@ PRE_COMMAND_RULES = [
         "prepend": None,  # No prepend — this is a routing override
         "state_condition": lambda state: _location_is_known(state),
         "skip_primary": False,  # Don't skip; just flag for GM awareness
-        "reason": "Location already in known_locations — consider narrative instead of generate-scene",
+        "reason": "Location already in known_locations — consider skill-check (Notice, DC 6) instead of generate-scene",
         "advisory": True,
     },
 ]
@@ -156,20 +156,6 @@ def expand_action(action_type, state):
           - advisories: list of non-blocking notes for the GM
           - arithmetic_trace: string summary
     """
-    # Narrative pseudo-command: no CLI execution, no chains, no pre-commands.
-    # The turn loop skips CLI (step 5 narrative branch) and calls
-    # select_move("narrative", {}) which dispatches to _move_narrative_fallback.
-    if action_type == "narrative":
-        return {
-            "action_type": "narrative",
-            "primary": "narrative",
-            "skip_cli": True,
-            "pre_commands": [],
-            "declared_chains": [],
-            "advisories": [],
-            "arithmetic_trace": "Action: narrative | No CLI execution | GM move still fires via narrative fallback",
-        }
-
     pre_commands = []
     advisories = []
 
