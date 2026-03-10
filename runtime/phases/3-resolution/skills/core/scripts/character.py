@@ -379,7 +379,8 @@ def create_character(name, class_name, background_id, method="boosted_3d6",
                      spells=None, equipment_package=None, skill_method=None,
                      free_skill=None, attribute_assignments=None,
                      background_skills=None, physical_boost=None,
-                     mental_boost=None):
+                     mental_boost=None, known_arts=None,
+                     class_ability_overrides=None):
     """Create a complete WWN character.
 
     Args:
@@ -398,6 +399,8 @@ def create_character(name, class_name, background_id, method="boosted_3d6",
         background_skills: List of 2 skill names granted by background (GM-selected).
         physical_boost: Physical attribute to boost +2 (str/dex/con).
         mental_boost: Mental attribute to boost +2 (int/wis/cha).
+        known_arts: List of art names to use instead of auto-picking from tables.
+        class_ability_overrides: List of class ability names to replace defaults.
 
     Returns a dict suitable for embedding in state.json character field.
     """
@@ -459,6 +462,10 @@ def create_character(name, class_name, background_id, method="boosted_3d6",
         hit_die_str = cls["progression"][1]["hd"]
         attack_bonus = cls["progression"][1]["ab"]
         class_abilities = list(cls["abilities"].keys())
+
+    # Apply class ability overrides if provided
+    if class_ability_overrides is not None:
+        class_abilities = list(class_ability_overrides)
 
     hp = calculate_hp(hit_die_str, con_mod)
     saves = calculate_saving_throws(level, attributes)
@@ -527,24 +534,29 @@ def create_character(name, class_name, background_id, method="boosted_3d6",
     if class_name == "adventurer":
         character["partial_classes"] = sorted(partial_classes)
         # Assign starting arts from new partial classes
-        known_arts = []
-        for pc in partial_classes:
-            if pc in PARTIAL_CLASSES:
-                pc_data = PARTIAL_CLASSES[pc]
-                if pc_data.get("fixed_progression"):
-                    # Fixed arts (e.g., Mageslayer): assign level 1 arts
-                    fixed = pc_data.get("fixed_arts_by_level", {})
-                    for art_name in fixed.get(1, []):
-                        known_arts.append(art_name)
-                else:
-                    # Normal art progression: count arts gained at level 1
-                    arts_at_1 = pc_data.get("art_progression", {}).get(1, 0)
-                    if arts_at_1 > 0 and pc_data.get("arts"):
-                        # Assign first N arts (player would normally choose)
-                        for i in range(min(arts_at_1, len(pc_data["arts"]))):
-                            known_arts.append(pc_data["arts"][i]["name"])
-        if known_arts:
-            character["known_arts"] = known_arts
+        if known_arts is not None:
+            # Explicit art selection — use exactly what was passed
+            character["known_arts"] = list(known_arts)
+        else:
+            # Auto-pick from tables (legacy behavior)
+            auto_arts = []
+            for pc in partial_classes:
+                if pc in PARTIAL_CLASSES:
+                    pc_data = PARTIAL_CLASSES[pc]
+                    if pc_data.get("fixed_progression"):
+                        # Fixed arts (e.g., Mageslayer): assign level 1 arts
+                        fixed = pc_data.get("fixed_arts_by_level", {})
+                        for art_name in fixed.get(1, []):
+                            auto_arts.append(art_name)
+                    else:
+                        # Normal art progression: count arts gained at level 1
+                        arts_at_1 = pc_data.get("art_progression", {}).get(1, 0)
+                        if arts_at_1 > 0 and pc_data.get("arts"):
+                            # Assign first N arts (player would normally choose)
+                            for i in range(min(arts_at_1, len(pc_data["arts"]))):
+                                auto_arts.append(pc_data["arts"][i]["name"])
+            if auto_arts:
+                character["known_arts"] = auto_arts
 
     # Magic-specific fields
     if tradition:

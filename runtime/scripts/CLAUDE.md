@@ -52,11 +52,12 @@ Entry point scripts for CLI execution and validation. Domain modules (the actual
 | `level-up` | Advance character to target level | core |
 | `generate-dungeon` | Generate procedural dungeon | exploration |
 | `initialize-game` | Initialize new game (character + world state) | initialization |
+| `query-chargen-options` | Query valid chargen options from Python tables | initialization |
 
 ## Domain Module Locations
 
 Domain scripts are physically co-located with their skills in Phase 3:
-- `phases/3-resolution/skills/core/scripts/` — dice.py, character.py, conditions.py, magic.py
+- `phases/3-resolution/skills/core/scripts/` — dice.py, character.py, chargen_query.py, conditions.py, magic.py
 - `phases/3-resolution/skills/core/tables/` — attributes.py, skills.py, equipment.py, classes.py, backgrounds.py, foci.py, magic_items.py
 - `phases/3-resolution/skills/combat/scripts/` — combat.py, behavior.py, encounter.py
 - `phases/3-resolution/skills/combat/tables/` — bestiary.py, encounter_tables.py

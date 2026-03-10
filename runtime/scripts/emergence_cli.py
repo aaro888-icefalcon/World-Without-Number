@@ -26,6 +26,7 @@ Commands:
     post-resolution  Detect state deltas and suggest follow-ups (step 5.5)
     state-snapshot   Create pre-resolution state snapshot
     initialize-game  Initialize a new game (character + world state)
+    query-chargen-options  Query valid chargen options from Python tables
 """
 
 import argparse
@@ -421,6 +422,12 @@ def cmd_initialize_game(args):
     background_skills = None
     if args.background_skills:
         background_skills = [s.strip() for s in args.background_skills.split(",")]
+    known_arts = None
+    if args.known_arts is not None:
+        known_arts = [a.strip() for a in args.known_arts.split(",") if a.strip()]
+    class_ability_overrides = None
+    if args.class_ability_overrides is not None:
+        class_ability_overrides = [a.strip() for a in args.class_ability_overrides.split(",") if a.strip()]
     result = initialize_game(
         name=args.name,
         class_name=getattr(args, 'class'),
@@ -439,8 +446,24 @@ def cmd_initialize_game(args):
         background_skills=background_skills,
         physical_boost=args.physical_boost,
         mental_boost=args.mental_boost,
+        known_arts=known_arts,
+        class_ability_overrides=class_ability_overrides,
     )
     result["seed"] = args.seed
+    print(json.dumps(result, indent=2, default=str))
+
+
+def cmd_query_chargen_options(args):
+    """Query character creation options filtered by class/partial classes."""
+    from chargen_query import query_chargen_options
+    partial_classes = None
+    if args.partial_classes:
+        partial_classes = [p.strip() for p in args.partial_classes.split(",")]
+    result = query_chargen_options(
+        class_name=getattr(args, 'class'),
+        partial_classes=partial_classes,
+        background_id=args.background,
+    )
     print(json.dumps(result, indent=2, default=str))
 
 
@@ -655,6 +678,20 @@ def main():
     p_init.add_argument("--mental-boost", type=str, default=None,
                          choices=["intelligence", "wisdom", "charisma"],
                          help="Mental attribute to boost +2 from background")
+    p_init.add_argument("--known-arts", type=str, default=None,
+                         help="Comma-separated art names (overrides auto-pick)")
+    p_init.add_argument("--class-ability-overrides", type=str, default=None,
+                         help="Comma-separated class ability names (replaces default abilities)")
+
+    # query-chargen-options
+    p_query = subparsers.add_parser("query-chargen-options", parents=[seed_parent],
+                                     help="Query valid chargen options from Python tables")
+    p_query.add_argument("--class", type=str, required=True,
+                          choices=["warrior", "expert", "mage", "adventurer"])
+    p_query.add_argument("--partial-classes", type=str, default=None,
+                          help="Comma-separated partial classes for adventurer")
+    p_query.add_argument("--background", type=int, default=None,
+                          help="Background ID (1-20) for background-specific info")
 
     # ── Parse and dispatch ────────────────────────────────────────────────────
 
@@ -689,6 +726,7 @@ def main():
         "level-up": cmd_level_up,
         "generate-dungeon": cmd_generate_dungeon,
         "initialize-game": cmd_initialize_game,
+        "query-chargen-options": cmd_query_chargen_options,
     }
 
     if args.command not in commands:
