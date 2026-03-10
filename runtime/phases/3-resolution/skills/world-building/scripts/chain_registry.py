@@ -94,7 +94,7 @@ PRE_COMMAND_RULES = [
         "prepend": None,  # No prepend — this is a routing override
         "state_condition": lambda state: _location_is_known(state),
         "skip_primary": False,  # Don't skip; just flag for GM awareness
-        "reason": "Location already in known_locations — consider narrative instead of generate-scene",
+        "reason": "Location already in known_locations — consider skill-check (Notice, DC 6) instead of generate-scene",
         "advisory": True,
     },
 ]

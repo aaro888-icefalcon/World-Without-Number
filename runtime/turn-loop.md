@@ -33,7 +33,7 @@ This document defines the strict turn protocol for runtime play.
      - **pre_commands**: commands that must run BEFORE the primary (e.g., `generate-npc` before `reaction-roll` if NPC unknown)
      - **primary**: the classified command (unchanged)
      - **declared_chains**: commands that WILL or MAY fire after the primary (e.g., `world-tick` after `travel`)
-     - **advisories**: non-blocking notes (e.g., "location already known — consider narrative")
+     - **advisories**: non-blocking notes (e.g., "location already known — consider skill-check instead")
    - Review advisories and adjust if warranted.
    - The full command sequence for step 4 is: pre_commands → primary → (post-chains resolved after execution).
    - Source of truth for chain rules: `phases/3-resolution/skills/world-building/scripts/chain_registry.py`.
@@ -62,7 +62,7 @@ This document defines the strict turn protocol for runtime play.
 
 6. **★ Select GM move (anti-stagnation)**
    - Run `select_move(command_name, command_result, ...)` from `gm_moves.py` on the primary result.
-   - **Every player-action turn produces minimum Tier 1.** No Tier 0 exits. (Hard Rule #13)
+   - **Every player-action turn produces minimum Tier 1.** No Tier 0 exits. (Hard Rules #13, #14)
    - **Tier 1** (soft move): foreshadow, telegraph, opportunity, information. Counter increments.
    - **Tier 2** (hard move): consequence lands, telegraph escalates. Forced after 5 consecutive Tier 1 turns. Counter resets.
    - **Tier 3** (world move): clock/faction/environment shift. Forced after 8 consecutive Tier 1 turns. Counter resets.

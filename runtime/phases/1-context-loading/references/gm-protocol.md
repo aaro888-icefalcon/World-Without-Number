@@ -136,3 +136,5 @@ Each player-action primary has its own move dispatcher in `gm_moves.py`:
 - **cast-spell**: magic ripples without double-taxing spell costs
 - **reaction-roll**: disposition IS the move, diplomacy integration
 - **travel**: promote most dramatic event, portents outrank travel events
+
+There is no non-mechanical turn. Every player action produces a CLI execution + GM move. Even passive actions ("I sit by the fire") are classified as `skill-check` with DC 6 — the cost of an unnecessary easy roll is trivial; the cost of skipping mechanics is a dead world.

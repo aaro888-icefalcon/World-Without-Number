@@ -176,6 +176,189 @@ NYC_WORLD_SITUATION = {
     "revelations_count": 0,
 }
 
+NYC_INITIAL_FACTIONS = [
+    {
+        "id": "faction_jda",
+        "name": "Joint Defense Authority (JDA)",
+        "archetype": "military",
+        "goal": "Maintain order, defend perimeter, control gallery access",
+        "clock": {"name": "JDA Overextension", "current": 0, "max": 8},
+        "description": "Combined NYPD/National Guard force (~46K). Maintains order and defends against external threats.",
+        "disposition_to_pc": "neutral",
+        "power_level": 7,
+        "resources": ["Armed personnel", "Fortified positions"],
+    },
+    {
+        "id": "faction_council",
+        "name": "Council of Five",
+        "archetype": "government",
+        "goal": "Maintain federation, coordinate borough resources, manage external diplomacy",
+        "clock": {"name": "Council Cohesion", "current": 0, "max": 6},
+        "description": "One representative per borough. Routine decisions by 3/5 majority, major decisions require unanimity.",
+        "disposition_to_pc": "neutral",
+        "power_level": 8,
+        "resources": ["Political authority", "Borough representatives", "JDA command authority"],
+    },
+    {
+        "id": "faction_organized_crime",
+        "name": "Organized Crime Networks",
+        "archetype": "criminal",
+        "goal": "Control black market, expand territory, profit from scarcity",
+        "clock": {"name": "Criminal Consolidation", "current": 0, "max": 6},
+        "description": "Pre-existing criminal organizations adapting to post-Transport reality. Control black markets.",
+        "disposition_to_pc": "wary",
+        "power_level": 5,
+        "resources": ["Smuggling networks", "Muscle", "Pre-Transport wealth"],
+    },
+    {
+        "id": "faction_academic",
+        "name": "Academic Community",
+        "archetype": "scholarly",
+        "goal": "Understand the Transport, study magic, preserve knowledge",
+        "clock": {"name": "Research Breakthrough", "current": 0, "max": 10},
+        "description": "University faculty and researchers studying the Transport, magic, and the new world.",
+        "disposition_to_pc": "friendly",
+        "power_level": 3,
+        "resources": ["Expertise", "Library collections", "Laboratory equipment"],
+    },
+    {
+        "id": "faction_labor",
+        "name": "Labor Unions",
+        "archetype": "civic",
+        "goal": "Protect workers, control essential services, fair resource distribution",
+        "clock": {"name": "Infrastructure Decay", "current": 0, "max": 8},
+        "description": "Construction, sanitation, and utility workers. Essential for infrastructure without electronics.",
+        "disposition_to_pc": "neutral",
+        "power_level": 5,
+        "resources": ["Skilled labor", "Tools", "Infrastructure knowledge"],
+    },
+]
+
+NYC_INITIAL_THREATS = [
+    {
+        "id": "threat_verdancy",
+        "name": "The Verdancy",
+        "threat_type": "biological",
+        "region": "western-passes",
+        "clock": {"name": "Verdancy Advance", "current": 0, "max": 8},
+        "threat_level": 7,
+        "description": "Biological mega-organism approaching from the west. Spore-drifts, carnivorous plants, transformed wildlife.",
+        "status": "active",
+    },
+    {
+        "id": "threat_gallery_imperator",
+        "name": "Gallery Servitors / Imperator",
+        "threat_type": "dungeon",
+        "region": "carven-peaks",
+        "clock": {"name": "Gallery Seal Degradation", "current": 0, "max": 8},
+        "threat_level": 8,
+        "description": "Underground dungeon complex beneath Manhattan. The Imperator drives periodic surges of servitor creatures.",
+        "status": "active",
+    },
+    {
+        "id": "threat_pelegrin",
+        "name": "Pelegrinian Empire",
+        "threat_type": "geopolitical",
+        "region": "pelegrin",
+        "clock": {"name": "Pelegrinian Pressure", "current": 0, "max": 10},
+        "threat_level": 5,
+        "description": "Expansionist empire applying diplomatic and economic pressure. May escalate to military confrontation.",
+        "status": "active",
+    },
+]
+
+NYC_INITIAL_LOCATIONS = [
+    {
+        "id": "loc_lower_manhattan",
+        "name": "Carven Peaks — Lower Manhattan",
+        "region": "carven-peaks",
+        "description": "Dense urban canyon beneath a 200ft stone ceiling, lit by bioluminescent fungus. Gallery mouths dot the waterfront.",
+        "threat_level": 3,
+        "discovered_day": 1,
+    },
+    {
+        "id": "loc_gallery_mouth",
+        "name": "Gallery Mouth — Waterfront",
+        "region": "carven-peaks",
+        "description": "A gaping entrance to the 9-level gallery dungeon beneath the city. Visible from the Lower Manhattan waterfront.",
+        "threat_level": 6,
+        "discovered_day": 1,
+    },
+    {
+        "id": "loc_council_chamber",
+        "name": "Council Chamber — City Hall",
+        "region": "carven-peaks",
+        "description": "Repurposed City Hall serving as the Council of Five meeting place. Guarded by JDA personnel.",
+        "threat_level": 1,
+        "discovered_day": 1,
+    },
+]
+
+NYC_INITIAL_ARCS = [
+    {
+        "id": "arc_food_crisis",
+        "name": "The Food Crisis",
+        "status": "active",
+        "description": "NYC has ~8 days of food remaining. Finding sustainable food sources is urgent.",
+        "beats": [
+            {"id": "beat_rationing", "trigger": "food_clock >= 2", "status": "pending", "description": "Rationing begins, social unrest rises"},
+            {"id": "beat_food_source", "trigger": "player_discovers_food_source", "status": "pending", "description": "A potential solution emerges"},
+        ],
+    },
+    {
+        "id": "arc_gallery_below",
+        "name": "The Gallery Below",
+        "status": "active",
+        "description": "The 9-level dungeon beneath Manhattan is both a threat and a resource. Understanding and containing it is vital.",
+        "beats": [
+            {"id": "beat_first_delve", "trigger": "player_enters_gallery", "status": "pending", "description": "First descent into the galleries"},
+            {"id": "beat_surge_event", "trigger": "gallery_seals_clock >= 5", "status": "pending", "description": "A significant surge threatens the surface"},
+        ],
+    },
+]
+
+NYC_INITIAL_RELATIONS = [
+    {
+        "faction_a": "faction_jda",
+        "faction_b": "faction_council",
+        "relation_type": "tense_cooperation",
+        "description": "JDA enforces Council directives but chafes under civilian oversight.",
+        "history": [],
+    },
+    {
+        "faction_a": "faction_council",
+        "faction_b": "faction_labor",
+        "relation_type": "dependent",
+        "description": "Council depends on labor unions for infrastructure; unions leverage this for political power.",
+        "history": [],
+    },
+]
+
+NYC_INITIAL_PC_STANDING = [
+    {"faction_id": "faction_jda", "rank": "unknown", "disposition": "neutral", "reputation_events": []},
+    {"faction_id": "faction_council", "rank": "unknown", "disposition": "neutral", "reputation_events": []},
+    {"faction_id": "faction_organized_crime", "rank": "unknown", "disposition": "neutral", "reputation_events": []},
+    {"faction_id": "faction_academic", "rank": "unknown", "disposition": "neutral", "reputation_events": []},
+    {"faction_id": "faction_labor", "rank": "unknown", "disposition": "neutral", "reputation_events": []},
+]
+
+NYC_INITIAL_WORLD_PULSE = {
+    "day": 1,
+    "news": "Day 1 after the Transport. New York City has been ripped from Earth and deposited in a vast underground cavern.",
+    "rumors": [
+        "Something breached the galleries overnight — JDA sealed the waterfront entrances",
+        "The bridges lead to wilderness now, not New Jersey",
+        "People are saying electronics just don't work anymore — not broken, just dead",
+        "There is a ceiling above us. Stone. Maybe 200 feet up. It glows.",
+    ],
+    "trends": [
+        "Food rationing will begin soon — 8 days of supply at current consumption",
+        "All electronics are dead — no phones, no internet, no power grid",
+        "The JDA is trying to establish a perimeter but they are spread thin",
+    ],
+    "arrivals": [],
+}
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # DEFAULT (GENERIC) CAMPAIGN SEED DATA
@@ -220,11 +403,31 @@ def generate_initial_state(character_data, campaign="default", seed=None):
         campaign_meta = dict(NYC_CAMPAIGN_META)
         clocks = [dict(c) for c in NYC_INITIAL_CLOCKS]
         world_situation = dict(NYC_WORLD_SITUATION)
+        human_factions = [dict(f) for f in NYC_INITIAL_FACTIONS]
+        external_threats = [dict(t) for t in NYC_INITIAL_THREATS]
+        known_locations = [dict(l) for l in NYC_INITIAL_LOCATIONS]
+        campaign_arcs = [dict(a) for a in NYC_INITIAL_ARCS]
+        inter_group_relations = [dict(r) for r in NYC_INITIAL_RELATIONS]
+        pc_standing = [dict(s) for s in NYC_INITIAL_PC_STANDING]
+        world_pulse = dict(NYC_INITIAL_WORLD_PULSE)
     else:
         scene = dict(DEFAULT_INITIAL_SCENE)
         campaign_meta = dict(DEFAULT_CAMPAIGN_META)
         clocks = []
         world_situation = {}
+        human_factions = []
+        external_threats = []
+        known_locations = []
+        campaign_arcs = []
+        inter_group_relations = []
+        pc_standing = []
+        world_pulse = {
+            "day": 1,
+            "news": "A new story begins.",
+            "rumors": [],
+            "trends": [],
+            "arrivals": [],
+        }
 
     campaign_meta["start_date"] = datetime.utcnow().strftime("%Y-%m-%d")
 
@@ -243,15 +446,15 @@ def generate_initial_state(character_data, campaign="default", seed=None):
         "current_time": campaign_meta["current_time"],
         "clocks": clocks,
         "world_situation": world_situation,
-        "inter_group_relations": [],
-        "pc_standing": [],
-        "human_factions": [],
-        "external_threats": [],
+        "inter_group_relations": inter_group_relations,
+        "pc_standing": pc_standing,
+        "human_factions": human_factions,
+        "external_threats": external_threats,
         "meta_clocks": [],
         "faction_relationships": [],
         "known_npcs": [],
-        "known_locations": [],
-        "campaign_arcs": [],
+        "known_locations": known_locations,
+        "campaign_arcs": campaign_arcs,
         "active_quests": [],
         "chronicle": [
             {
@@ -268,14 +471,9 @@ def generate_initial_state(character_data, campaign="default", seed=None):
         "session": {
             "drama_budget": 3,
             "drama_events": [],
+            "turns_since_hard_move": 0,
         },
-        "world_pulse": {
-            "day": 1,
-            "news": "A new story begins.",
-            "rumors": [],
-            "trends": [],
-            "arrivals": [],
-        },
+        "world_pulse": world_pulse,
         "last_played": now,
     }
 

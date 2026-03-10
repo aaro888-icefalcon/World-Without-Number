@@ -35,7 +35,6 @@ This prevents misinterpretation (AI Limitation L2) and preserves player agency.
 | "Generate an encounter / what do we find" | Encounter | `encounter` | `encounter --terrain forest --threat-level 4` |
 | "I level up / I gain a level / advance to level X" | Level Up | `level-up` | `level-up --name Kira --class warrior --current-level 1 --target-level 2 --attributes '{"strength":14,...}' --hp-max 8 --attack-bonus 1` |
 | "Explore the dungeon / what's in this dungeon" | Dungeon Gen | `generate-dungeon` | `generate-dungeon --depth 2 --theme tomb` |
-| Pure narrative / dialogue / observation | No Mechanic | (none) | Resolve in Phase 4 narratively — no CLI needed |
 
 ## Attribute/Skill Selection Guide
 
@@ -64,6 +63,23 @@ When the player's intent maps to a skill check, choose the most appropriate comb
 | Challenging | 10 | Difficult for untrained, reasonable for skilled |
 | Hard | 12 | Even skilled characters may fail |
 | Very Hard | 14 | Only experts have a good chance |
+
+## Universal Mechanical Classification
+
+**Every player action maps to a CLI command. There is no non-mechanical classification.** If no specific command matches, use `skill-check`. This is the universal catch-all.
+
+Even seemingly passive actions ("I sit by the fire", "I pray silently") are classified as `skill-check` with DC 6 and a generous attribute. The roll always succeeds but still feeds the GM move system, keeping every turn mechanically grounded. The cost of an unnecessary easy roll is trivial; the cost of skipping mechanics is a dead world.
+
+### Examples
+
+| Player says | CLI Command | Why |
+|---|---|---|
+| "I look around the room" | `skill-check` (Notice, DC 8) | Player wants information → mechanical |
+| "I try to read the NPC's mood" | `skill-check` (Notice or Talk, DC 8) | Attempting to gain information |
+| "I say hello to the merchant" | `reaction-roll` | Social interaction with NPC |
+| "I examine the lock" | `skill-check` (Notice, DC 8) | Gathering tactical information |
+| "I sit and rest by the fire" | `skill-check` (Wisdom/Survive, DC 6) | Passive action → trivial check, feeds GM move |
+| "I tell my companion about my past" | `skill-check` (Charisma/Talk, DC 6) | Self-expression → trivial check, feeds GM move |
 
 ## Fallback Rule
 
@@ -114,7 +130,7 @@ The same player intent may map to different commands depending on game state. Ch
 
 | Player Intent | State Condition | Route To | Otherwise |
 |---|---|---|---|
-| "Describe the area" / scene description | Location NOT in `known_locations` | `generate-scene` | Narrate from existing `current_scene` (no CLI) |
+| "Describe the area" / scene description | Location NOT in `known_locations` | `generate-scene` | `skill-check` (Notice, DC 6) — narrate from existing `current_scene` |
 | "I talk to [NPC name]" | NPC NOT in `known_npcs` | `generate-npc` → `reaction-roll` | `reaction-roll` only (NPC already exists) |
 | "I attack" | `combat_state.active` is false | Start combat: set up combat state, THEN `attack` | `attack` directly (combat already active) |
 | "I rest / camp for the night" | In dangerous area (`threat_level` >= 3) | `encounter` check THEN `world-tick` | `world-tick --days 1` directly |

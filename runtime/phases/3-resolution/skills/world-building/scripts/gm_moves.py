@@ -546,7 +546,9 @@ def _move_for_travel(command_result, gate_type=None, scene_elements=None,
 def _move_narrative_fallback(command_result, gate_type=None, scene_elements=None,
                              telegraphed_threats=None, combat_state=None,
                              chain_results=None, pre_command_results=None):
-    """Fallback for narrative pseudo-commands (no CLI). Always Tier 1."""
+    """Dead-code safety net: default fallback for unknown command types in _DISPATCH.
+    Since every player action now maps to a CLI command (Hard Rule #14), this
+    should never be reached in normal operation. Kept as a safety net."""
     return _make_move(
         tier=1,
         move_type="world_breathes",

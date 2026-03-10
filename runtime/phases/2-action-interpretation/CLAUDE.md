@@ -20,3 +20,6 @@ Classify the player's declared action and select the appropriate CLI command.
 
 ## Fallback Rule
 If no specific CLI command matches, fall back to `skill-check` with the most appropriate attribute/skill and a GM-chosen difficulty. Never say "you can't do that" unless physically impossible.
+
+## Every Action Is Mechanical
+Every player action MUST map to a CLI command. `skill-check` is the universal fallback. There is no non-mechanical classification. Even passive actions (sitting, thinking, adjusting gear) use `skill-check` with DC 6 to feed the GM move system. See `references/action-classification.md` §Universal Mechanical Classification.
