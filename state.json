@@ -1,0 +1,355 @@
+{
+  "schema_version": "7.5.0",
+  "content_version": "1.0.0",
+  "meta": {
+    "last_played": "2026-03-10T05:59:32Z",
+    "session_number": 1
+  },
+  "character": {
+    "name": "Abhishek Rao",
+    "class": "adventurer",
+    "level": 1,
+    "xp": 0,
+    "background": "Physician",
+    "attributes": {
+      "strength": 9,
+      "dexterity": 16,
+      "constitution": 13,
+      "intelligence": 18,
+      "wisdom": 13,
+      "charisma": 14
+    },
+    "hp": {
+      "current": 8,
+      "max": 8
+    },
+    "attack_bonus": 1,
+    "armor_class": 11,
+    "saving_throws": {
+      "physical": 15,
+      "evasion": 13,
+      "mental": 14,
+      "luck": 15
+    },
+    "skills": {
+      "administer": -1,
+      "connect": 0,
+      "convince": -1,
+      "craft": -1,
+      "exert": -1,
+      "heal": 0,
+      "know": 0,
+      "lead": -1,
+      "magic": 1,
+      "notice": 0,
+      "perform": -1,
+      "pray": -1,
+      "punch": -1,
+      "ride": -1,
+      "sail": -1,
+      "shoot": -1,
+      "sneak": -1,
+      "stab": -1,
+      "survive": -1,
+      "trade": -1,
+      "work": -1
+    },
+    "system_strain": {
+      "current": 0,
+      "max": 13
+    },
+    "effort": {
+      "current": 0,
+      "max": 3
+    },
+    "equipment": {
+      "readied": [
+        {
+          "name": "Backpack (personal items)",
+          "encumbrance": 1
+        }
+      ],
+      "stowed": [
+        {
+          "name": "Duffel bag (chilled meals)",
+          "encumbrance": 2
+        },
+        {
+          "name": "Phone (dead)",
+          "encumbrance": 0
+        }
+      ],
+      "coins": {
+        "copper": 0,
+        "silver": 0,
+        "gold": 0
+      }
+    },
+    "foci": [
+      "all_directions_edge_style",
+      "gifted_chirurgeon"
+    ],
+    "class_abilities": [
+      "veteran_luck_limited"
+    ],
+    "partial_classes": [
+      "accursed",
+      "warrior"
+    ],
+    "known_arts": [
+      "Accursed Blade",
+      "Night-Black Eyes"
+    ],
+    "spells_known": []
+  },
+  "world": {},
+  "current_scene": {
+    "scene_id": "scene_001",
+    "location": "Penn Station \u2014 Amtrak Platform",
+    "region": "carven-peaks",
+    "region_id": "carven-peaks",
+    "threat_level": 2,
+    "scene_type": "exploration"
+  },
+  "campaign": {
+    "name": "NYC \u2014 Carven Peaks Campaign",
+    "current_day": 1,
+    "current_time": "18:00",
+    "current_location": "Penn Station \u2014 Amtrak Platform",
+    "start_date": "2026-03-10"
+  },
+  "current_day": 1,
+  "current_time": "18:00",
+  "clocks": [
+    {
+      "id": "clock_food_crisis",
+      "name": "Food Crisis",
+      "current": 0,
+      "max": 6,
+      "owner": "nyc_population",
+      "goal": "Starvation spiral",
+      "completion_effect": "Mass starvation, total social collapse",
+      "hidden": false,
+      "status": "active",
+      "history": [],
+      "portents": [
+        {
+          "at": 2,
+          "event": "Rationing begins, social tension rises",
+          "mechanical": "Social checks +1 difficulty",
+          "fired": false
+        },
+        {
+          "at": 4,
+          "event": "Food riots break out in outer boroughs",
+          "mechanical": "Urban threat level +2",
+          "fired": false
+        },
+        {
+          "at": 6,
+          "event": "Starvation spiral begins",
+          "mechanical": "Mass casualties, faction collapse",
+          "fired": false
+        }
+      ]
+    },
+    {
+      "id": "clock_verdancy_front",
+      "name": "Verdancy Western Front",
+      "current": 0,
+      "max": 8,
+      "owner": "the_verdancy",
+      "goal": "Overrun western boroughs",
+      "completion_effect": "Western boroughs overrun, population retreat",
+      "hidden": false,
+      "status": "active",
+      "history": [],
+      "portents": [
+        {
+          "at": 2,
+          "event": "Spore-drifts cross western passes",
+          "mechanical": "Western travel hazard +1",
+          "fired": false
+        },
+        {
+          "at": 4,
+          "event": "Carnivorous creatures appear",
+          "mechanical": "Western encounters shift to Verdancy types",
+          "fired": false
+        },
+        {
+          "at": 6,
+          "event": "Western valleys contested",
+          "mechanical": "Western borough threat level +3",
+          "fired": false
+        }
+      ]
+    },
+    {
+      "id": "clock_pelegrinian",
+      "name": "Pelegrinian Pressure",
+      "current": 0,
+      "max": 10,
+      "owner": "pelegrin",
+      "goal": "Subdue or vassalize NYC",
+      "completion_effect": "Military confrontation or forced vassalage",
+      "hidden": true,
+      "status": "active",
+      "history": [],
+      "portents": [
+        {
+          "at": 3,
+          "event": "Economic pressure begins",
+          "mechanical": "Trade prices +20%",
+          "fired": false
+        },
+        {
+          "at": 6,
+          "event": "Diplomatic isolation deepens",
+          "mechanical": "External faction disposition -2",
+          "fired": false
+        },
+        {
+          "at": 9,
+          "event": "Military buildup on border",
+          "mechanical": "Threat of invasion imminent",
+          "fired": false
+        }
+      ]
+    },
+    {
+      "id": "clock_gallery_seals",
+      "name": "Gallery Seal Degradation",
+      "current": 0,
+      "max": 8,
+      "owner": "imperator",
+      "goal": "Weaken containment",
+      "completion_effect": "Major surge event, Level 1 overrun",
+      "hidden": true,
+      "status": "active",
+      "history": [],
+      "portents": [
+        {
+          "at": 2,
+          "event": "Surge frequency increases",
+          "mechanical": "Gallery encounter rate +1",
+          "fired": false
+        },
+        {
+          "at": 5,
+          "event": "Deeper servitors appear on upper levels",
+          "mechanical": "Gallery creature tier +1",
+          "fired": false
+        },
+        {
+          "at": 8,
+          "event": "Seals fail, massive surge",
+          "mechanical": "Level 1 overrun, evacuation required",
+          "fired": false
+        }
+      ]
+    },
+    {
+      "id": "clock_manthva_succession",
+      "name": "Manthva Succession",
+      "current": 0,
+      "max": 6,
+      "owner": "manthva_houses",
+      "goal": "Resolve succession",
+      "completion_effect": "Succession resolved (winner depends on NYC actions)",
+      "hidden": true,
+      "status": "active",
+      "history": [],
+      "portents": [
+        {
+          "at": 2,
+          "event": "House tensions escalate",
+          "mechanical": "Manthva diplomacy checks +1 difficulty",
+          "fired": false
+        },
+        {
+          "at": 4,
+          "event": "Intelligence becomes conditional",
+          "mechanical": "Manthva info requires favors",
+          "fired": false
+        }
+      ]
+    },
+    {
+      "id": "clock_borough_divergence",
+      "name": "Borough Divergence",
+      "current": 0,
+      "max": 6,
+      "owner": "nyc_boroughs",
+      "goal": "Full borough independence",
+      "completion_effect": "Full borough independence, Council dissolution",
+      "hidden": false,
+      "status": "active",
+      "history": [],
+      "portents": [
+        {
+          "at": 2,
+          "event": "Borough autonomy increases",
+          "mechanical": "Cross-borough cooperation checks +1 difficulty",
+          "fired": false
+        },
+        {
+          "at": 4,
+          "event": "Council authority weakens",
+          "mechanical": "Central directives ignored 50% of the time",
+          "fired": false
+        }
+      ]
+    }
+  ],
+  "world_situation": {
+    "transport_day": 0,
+    "days_since_transport": 1,
+    "food_supply_days": 8,
+    "technology_status": "all_electronics_dead",
+    "government_status": "fragmented",
+    "population": 9500000,
+    "surge_status": "initial_breach_contained",
+    "verdancy_status": "spore_drifts_approaching",
+    "revelations_count": 0
+  },
+  "inter_group_relations": [],
+  "pc_standing": [],
+  "human_factions": [],
+  "external_threats": [],
+  "meta_clocks": [],
+  "faction_relationships": [],
+  "known_npcs": [],
+  "known_locations": [],
+  "campaign_arcs": [],
+  "active_quests": [],
+  "chronicle": [
+    {
+      "day": 1,
+      "time": "18:00",
+      "event": "The Transport. Abhishek Rao is on Amtrak pulling into Penn Station when the world changes.",
+      "significance": "major",
+      "tags": [
+        "campaign_start",
+        "transport"
+      ]
+    }
+  ],
+  "clock_log": [],
+  "combat_state": {
+    "active": false
+  },
+  "consequence_tracker": [],
+  "session": {
+    "drama_budget": 3,
+    "drama_events": []
+  },
+  "world_pulse": {
+    "day": 1,
+    "news": "A new story begins.",
+    "rumors": [],
+    "trends": [],
+    "arrivals": []
+  },
+  "last_played": "2026-03-10T05:59:32Z"
+}
