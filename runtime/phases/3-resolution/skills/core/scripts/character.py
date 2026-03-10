@@ -25,6 +25,19 @@ from equipment import EQUIPMENT_PACKAGES
 from traditions import TRADITIONS
 from partial_classes import PARTIAL_CLASSES, BASE_TYPE_MAP, INVALID_COMBOS
 
+# Maximum skill level achievable during character creation through stacking grants.
+_CHARGEN_SKILL_CAP = 1
+
+
+def _grant_skill(skills_dict, skill_key):
+    """Grant one rank of a skill, stacking up to _CHARGEN_SKILL_CAP.
+
+    Each grant increments by 1 (from -1 unskilled → 0 trained → 1 skilled).
+    Multiple sources (background, free pick, focus bonus, class bonus) stack.
+    """
+    if skill_key in skills_dict:
+        skills_dict[skill_key] = min(_CHARGEN_SKILL_CAP, skills_dict[skill_key] + 1)
+
 
 def _roll_3d6():
     return sum(random.randint(1, 6) for _ in range(3))
@@ -123,15 +136,12 @@ def apply_background(background_id, skills_dict, background_skills=None):
     if background_skills:
         # New streamlined model: GM picks 2 skills from background
         for skill_name in background_skills:
-            skill_key = skill_name.lower()
-            if skill_key in skills_dict:
-                skills_dict[skill_key] = max(skills_dict[skill_key], 0)
+            _grant_skill(skills_dict, skill_name.lower())
     else:
         # Legacy fallback: just apply free skill
         free_skill = bg["free_skill"]  # e.g., "Stab-0"
         skill_name = free_skill.split("-")[0].lower()
-        if skill_name in skills_dict:
-            skills_dict[skill_name] = max(skills_dict[skill_name], 0)
+        _grant_skill(skills_dict, skill_name)
     return bg["name"]
 
 
@@ -165,8 +175,7 @@ def apply_quick_skills(background_id, skills_dict):
     bg = BACKGROUNDS[background_id]
     for qs in bg.get("quick_skills", []):
         skill_name = qs.split("-")[0].lower()
-        if skill_name in skills_dict:
-            skills_dict[skill_name] = max(skills_dict[skill_name], 0)
+        _grant_skill(skills_dict, skill_name)
 
 
 def _get_adventurer_combo_key(partial_classes):
@@ -429,8 +438,8 @@ def create_character(name, class_name, background_id, method="boosted_3d6",
         apply_quick_skills(background_id, skills_dict)
 
     # 5. Apply free skill pick
-    if free_skill and free_skill in skills_dict:
-        skills_dict[free_skill] = max(skills_dict[free_skill], 0)
+    if free_skill:
+        _grant_skill(skills_dict, free_skill)
 
     # 6. Calculate derived stats
     con_mod = get_modifier(attributes["constitution"])
@@ -462,8 +471,8 @@ def create_character(name, class_name, background_id, method="boosted_3d6",
         for pc in partial_classes:
             if pc in PARTIAL_CLASSES:
                 bonus = PARTIAL_CLASSES[pc].get("bonus_skill")
-                if bonus and bonus in skills_dict:
-                    skills_dict[bonus] = max(skills_dict[bonus], 0)
+                if bonus:
+                    _grant_skill(skills_dict, bonus)
 
     # 7. Calculate effort
     effort_max = _calculate_effort(class_name, attributes, partial_classes, skills_dict)
@@ -551,9 +560,8 @@ def create_character(name, class_name, background_id, method="boosted_3d6",
             "max": sp_entry.get("spell_points", 1),
         }
         # Apply invoker bonus skill
-        if "magic" in skills_dict:
-            skills_dict["magic"] = max(skills_dict.get("magic", -1), 0)
-            character["skills"] = skills_dict
+        _grant_skill(skills_dict, "magic")
+        character["skills"] = skills_dict
 
     # Partial Invoker spell points
     if class_name == "adventurer" and partial_classes and "invoker" in partial_classes:
