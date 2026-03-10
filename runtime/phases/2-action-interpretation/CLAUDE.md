@@ -20,3 +20,6 @@ Classify the player's declared action and select the appropriate CLI command.
 
 ## Fallback Rule
 If no specific CLI command matches, fall back to `skill-check` with the most appropriate attribute/skill and a GM-chosen difficulty. Never say "you can't do that" unless physically impossible.
+
+## Classification Bias: Mechanical First
+**Default to `skill-check` over `narrative`.** The `narrative` classification should be rare — reserved for actions with genuinely zero mechanical stakes (sitting, thinking, adjusting gear). If an action attempts to change the world, gain information, or influence anyone, it is mechanical. See `references/action-classification.md` §Narrative vs Skill-Check for the decision tree and examples.

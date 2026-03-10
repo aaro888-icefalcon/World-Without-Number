@@ -35,7 +35,7 @@ This prevents misinterpretation (AI Limitation L2) and preserves player agency.
 | "Generate an encounter / what do we find" | Encounter | `encounter` | `encounter --terrain forest --threat-level 4` |
 | "I level up / I gain a level / advance to level X" | Level Up | `level-up` | `level-up --name Kira --class warrior --current-level 1 --target-level 2 --attributes '{"strength":14,...}' --hp-max 8 --attack-bonus 1` |
 | "Explore the dungeon / what's in this dungeon" | Dungeon Gen | `generate-dungeon` | `generate-dungeon --depth 2 --theme tomb` |
-| Pure narrative / dialogue / observation | No Mechanic | (none) | Resolve in Phase 4 narratively — no CLI needed |
+| Pure narrative / dialogue / observation | No Mechanic | `narrative` | Skips CLI (step 5 narrative branch). GM move still fires via `_move_narrative_fallback`. See §Narrative vs Skill-Check below |
 
 ## Attribute/Skill Selection Guide
 
@@ -64,6 +64,27 @@ When the player's intent maps to a skill check, choose the most appropriate comb
 | Challenging | 10 | Difficult for untrained, reasonable for skilled |
 | Hard | 12 | Even skilled characters may fail |
 | Very Hard | 14 | Only experts have a good chance |
+
+## Narrative vs Skill-Check Boundary
+
+**Default to `skill-check`, not `narrative`.** The `narrative` classification is reserved for actions with genuinely zero mechanical consequence. Use this decision tree:
+
+1. **Does the action attempt to change the world, gain information, or influence an NPC?** → `skill-check` (or more specific command). Even "I look around" is a Notice check if the player wants to learn something new.
+2. **Does the action have a chance of failure that would matter?** → `skill-check`. If failure would change the scene, it's mechanical.
+3. **Is the action purely self-expression with no world interaction?** → `narrative`. Examples: "I sit by the fire and think about home", "I pray silently", "I adjust my pack straps".
+
+**When in doubt, classify as `skill-check`.** A Difficulty 6 skill-check with a generous attribute still produces a mechanical result, feeds the GM move system, and keeps the turn loop honest. The cost of an unnecessary easy roll is low. The cost of skipping mechanics is a dead world.
+
+### Examples of correct classification
+
+| Player says | WRONG | RIGHT | Why |
+|---|---|---|---|
+| "I look around the room" | `narrative` | `skill-check` (Notice, DC 8) | Player wants information → mechanical |
+| "I try to read the NPC's mood" | `narrative` | `skill-check` (Notice or Talk, DC 8) | Attempting to gain information |
+| "I say hello to the merchant" | `narrative` | `reaction-roll` | Social interaction with NPC |
+| "I examine the lock" | `narrative` | `skill-check` (Notice, DC 8) | Gathering tactical information |
+| "I sit and rest by the fire" | `skill-check` | `narrative` | No world interaction, no failure state |
+| "I tell my companion about my past" | `skill-check` | `narrative` | Pure self-expression |
 
 ## Fallback Rule
 

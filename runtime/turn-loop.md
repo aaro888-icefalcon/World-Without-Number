@@ -49,7 +49,8 @@ This document defines the strict turn protocol for runtime play.
      This snapshot is used in step 7 for post-resolution delta detection.
 
 5. **Apply mechanics via CLI**
-   - Execute the command sequence from step 2 in order:
+   - **Narrative-only branch**: if expand-action returns `skip_cli: true` (primary is `"narrative"`), skip CLI execution entirely. Set `command_result` to `{}` and proceed directly to step 6. Pre-commands and post-chains do not apply for narrative primaries.
+   - **Mechanical branch** (all other primaries): execute the command sequence from step 2 in order:
      1. Execute pre_commands (if any).
      2. Execute the primary command.
      3. After each command, evaluate post-chains using the command's result:
@@ -62,6 +63,7 @@ This document defines the strict turn protocol for runtime play.
 
 6. **★ Select GM move (anti-stagnation)**
    - Run `select_move(command_name, command_result, ...)` from `gm_moves.py` on the primary result.
+   - For `"narrative"` primaries, call `select_move("narrative", {}, ...)` — this dispatches to `_move_narrative_fallback`, which returns a Tier 1 "world_breathes" move. The world still responds even to non-mechanical actions.
    - **Every player-action turn produces minimum Tier 1.** No Tier 0 exits. (Hard Rule #13)
    - **Tier 1** (soft move): foreshadow, telegraph, opportunity, information. Counter increments.
    - **Tier 2** (hard move): consequence lands, telegraph escalates. Forced after 5 consecutive Tier 1 turns. Counter resets.
@@ -70,7 +72,7 @@ This document defines the strict turn protocol for runtime play.
    - Execute `suggested_chain` command if specified.
    - Feed `narrative_directive` to Phase 4 narration.
    - Update `session.turns_since_hard_move` per `counter_update`.
-   - Six command dispatchers handle player-action primaries differently:
+   - Six command dispatchers handle player-action primaries differently (narrative primaries use `_move_narrative_fallback`):
      - `skill-check`: gate-type aware, margin thresholds, telegraph escalation
      - `attack`: battlefield evolves every round, behavior profile foreshadow
      - `save`: reactive — resolves prior threat, event leaves a mark
@@ -130,7 +132,8 @@ Step 2:  expand-action ──── chain_registry.py
                 │
 Steps 3-4: Validate ─── state-snapshot
                 │
-Step 5:  Execute ─── pre_commands → primary → post-chains
+Step 5:  Execute ─┬─ primary == "narrative"? → skip CLI, result = {}
+                │ └─ otherwise → pre_commands → primary → post-chains
                 │         (evaluate conditions, accumulate chain_results)
                 │
 Step 6:  ★ Select GM move ─── gm_moves.py

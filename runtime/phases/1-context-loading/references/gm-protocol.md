@@ -136,3 +136,7 @@ Each player-action primary has its own move dispatcher in `gm_moves.py`:
 - **cast-spell**: magic ripples without double-taxing spell costs
 - **reaction-roll**: disposition IS the move, diplomacy integration
 - **travel**: promote most dramatic event, portents outrank travel events
+- **narrative** (fallback): `_move_narrative_fallback` — always Tier 1 "world_breathes". Even quiet moments reveal something. Draw from scene_elements or world_pulse rumors.
+
+### Narrative Actions — Mechanical Bias
+Most player actions that seem "narrative" should actually be classified as `skill-check`. The `narrative` classification is reserved for actions with genuinely zero mechanical stakes (thinking, praying silently, adjusting gear). See `action-classification.md` §Narrative vs Skill-Check for the decision tree. When in doubt, use `skill-check` with DC 6 — the cost of an unnecessary easy roll is low; the cost of skipping mechanics is a dead world.
