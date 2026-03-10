@@ -41,6 +41,7 @@ PARTIAL_CLASSES = {
         "description": "Eldritch pact-wielder with otherworldly blade and bolt powers.",
         "base_type": "mage",
         "bonus_skill": "magic",
+        "combat_skill": "magic",  # Accursed uses Magic for Blade/Bolt attack and damage rolls
         "effort_formula": "magic_skill + max(int_mod, cha_mod)",
         "has_spells": False,
         "restrictions": [],

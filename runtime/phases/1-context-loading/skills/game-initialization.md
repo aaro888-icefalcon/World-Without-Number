@@ -20,7 +20,7 @@ Check these conditions in order:
 
 All games use the **NYC — Carven Peaks Campaign**. No campaign selection step.
 
-## Interactive Initialization Protocol (6 Steps)
+## Interactive Initialization Protocol (7 Steps)
 
 ### Step 1: Welcome and Character Description
 
@@ -44,7 +44,6 @@ Based on the player's description, the GM:
    - Roll 3d6 for each of the six attributes
    - Replace the lowest rolled score with 14 (guaranteeing at least one strong stat)
    - GM assigns the rolled scores to attributes based on the character concept
-   - Present the rolls and assignment to the player for confirmation
 
 2. **Selects background** (from the 20 WWN backgrounds) that best fits the description. The background provides:
    - **2 skills at level 0** — chosen by GM from the background's skill list to match the concept
@@ -52,51 +51,96 @@ Based on the player's description, the GM:
    - **+2 to one mental attribute** (Intelligence, Wisdom, or Charisma)
    - Choose boost targets that reinforce the character concept
 
-Present the background, skills, and boosts to the player. Show final attribute scores after boosts (capped at 18).
+Present everything together in one block: the rolled scores, attribute assignments, background, background skills, boost targets, and final attribute scores after boosts (capped at 18). Wait for player confirmation before proceeding.
 
 ### Step 3: Background Focus
 
-Present all available foci organized by category, and recommend 1-2 that complement the character concept and background. This is the character's first focus pick.
+Present **General foci only** with descriptions, and recommend 1-2 that complement the character concept and background. This is the character's first focus pick. Class-restricted foci are presented later in Step 5 after class selection.
 
-**Foci Categories** (present ALL categories — player may pick from any they qualify for):
+**General Foci** (any class):
+- alert — Cannot be surprised, +1 initiative, bonus Notice
+- artisan — Enhanced crafting, cheaper mods, bonus Craft
+- assassin — Concealed weapons, surprise attacks can't miss, bonus Sneak
+- authority — Attract followers, command loyalty, bonus Lead
+- close_combatant — Bonus combat skill, +1 AC in melee, improved unarmed/short weapons
+- connected — Contacts in every city, find black markets, bonus Connect
+- cultured — Social knowledge, language facility, bonus Connect
+- dealmaker — Better buying/selling prices, bonus Trade
+- die_hard — +2 max HP per level, bonus Physical save
+- diplomatic_grace — Defuse hostility, prevent ambushes, bonus Convince
+- gifted_chirurgeon — Faster/better healing, stabilize dying, bonus Heal
+- henchkeeper — Extra and more loyal henchmen, bonus Lead
+- impostor — Master of disguise, false identities, bonus Perform or Sneak
+- lucky — Once per week, negate a lethal/crippling outcome
+- poisoner — Craft and apply poisons, identify toxins, bonus Heal
+- rider — Expert mounted combat and riding, bonus Ride
+- specialist (repeatable) — Gain any non-combat skill as bonus, reroll failed checks in it
+- spirit_familiar — Magical companion (cat/hawk/etc.) with scouting/spying abilities
+- trapmaster — Detect and disarm traps, craft improvised traps, bonus Notice
+- unique_gift — Custom unusual ability or magical knack (GM approval)
+- well_met — Improved reaction rolls, naturally likable
+- xenoblooded — Alien heritage: choose darkvision, natural weapon, or environmental immunity
 
-- **General Foci** (any class): alert, artisan, assassin, authority, close_combatant, connected, cultured, dealmaker, die_hard, diplomatic_grace, gifted_chirurgeon, henchkeeper, impostor, lucky, poisoner, rider, specialist, spirit_familiar, trapmaster, unique_gift, well_met, xenoblooded
-- **Warrior Foci** (Warriors or Partial Warriors only): armsmaster, close_combatant, deadeye, impervious_defense, shocking_assault, snipers_eye, unarmed_combatant, valiant_defender, whirlwind_assault
-- **Maqqatban Knight Foci** (Warrior/Partial Warrior only, one style max): all_directions_edge_style, catalytic_soul_style, ghost_archer_style, one_point_strike_style, pyre_of_heaven_style, righteous_iron_style, world_tree_lance_style, wrathful_mountain_style
-- **Expert Foci** (Experts or Partial Experts only): polymath
-- **Amundi Godblood Foci** (Expert/Partial Expert only, one godblood max): danger_sense, folie_a_deux, master_tracker, night_walker, pack_beast, provident_crafter, walk_like_wind, wildtongue
-- **Arcane Secret Foci** (Mages or Partial Mages only, one secret max): armored_magic, atlantean_divination, iteral_pacting, nagadi_hemomancy, old_empire_sigilism, vothite_mind_sorcery
-- **Non-Mage Foci** (cannot be taken by Mages/Partial Mages): developed_attribute, nullifier
-- **Non-Human Origin Foci** (any class, one origin max): man, accipiter_anak, aristoi_anak, choeru_beastfolk, deepfolk, ghoul, guer_beastfolk, harbinger_anak, hua_beastfolk, kitsune_beastfolk, manu_beastfolk, nahu_beastfolk, pichi_beastfolk, piren_beastfolk, special_origin, sui_beastfolk, usagi_beastfolk, zakathi
-
-**Extended partial class base types for focus eligibility:**
-- Partial Expert includes: expert, bard, wise
-- Partial Warrior includes: warrior, mageslayer
-- Partial Mage includes: mage, accursed, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble
+**Non-Human Origin Foci** (any class, one origin max):
+- man — Pick any non-Magic bonus skill, +1 to any attribute modifier
+- accipiter_anak — Eagle-kin: flight, keen vision, bonus Exert
+- aristoi_anak — Noble-born: social authority, bonus Lead + one other
+- choeru_beastfolk — Pig-kin: resilient, enhanced smell, bonus Convince or Connect
+- deepfolk — Underground dweller: darkvision, stonecunning, bonus skill
+- ghoul — Undead eater: must consume flesh, resist poison/disease, darkvision
+- guer_beastfolk — Wolf-kin: pack tactics, tracking, bonus Notice or Sneak
+- harbinger_anak — Shadow-kin: stealth, intimidation, bonus Sneak or Convince
+- hua_beastfolk — Bear-kin: powerful build, natural weapons, bonus Exert
+- kitsune_beastfolk — Fox-kin: shapeshifting, social cunning, bonus Notice or Convince
+- manu_beastfolk — Bird-kin: gliding, keen senses, bonus Exert or Survive
+- nahu_beastfolk — Snake-kin: flexibility, venom, bonus Sneak or Notice
+- pichi_beastfolk — Mouse-kin: small, stealthy, perceptive, bonus Notice
+- piren_beastfolk — Fish-kin: aquatic breathing, swimming, bonus Exert
+- special_origin — Custom racial/species origin (GM approval)
+- sui_beastfolk — Lizard-kin: scales, environmental resilience, bonus Survive
+- usagi_beastfolk — Rabbit-kin: speed, agility, keen hearing, bonus Exert or Sneak
+- zakathi — Reptilian: natural armor, darkvision, bonus Exert
 
 Wait for player choice.
 
 ### Step 4: Class Selection
 
-Present the four WWN classes:
+Present the four WWN classes with descriptions:
 
 ```
 Classes:
-  Warrior  — Combat specialist. Best HP, attack bonus, and Killing Blow ability.
-  Expert   — Skill specialist. Reroll failed skill checks, extra skill points.
-  Mage     — Arcane caster. Spells and Effort system, tradition-based magic.
+  Warrior    — Combat specialist. Best HP, attack bonus, and Killing Blow ability.
+  Expert     — Skill specialist. Reroll failed skill checks, extra skill points.
+  Mage       — Arcane caster. Spells and Effort system, tradition-based magic.
   Adventurer — Dual-class. Pick two partial classes for hybrid abilities.
 ```
 
-If **Adventurer** is chosen, ask which two partial classes:
-- Core: warrior, expert, mage
-- Extended (expert-type): bard, wise
-- Extended (warrior-type): mageslayer
-- Extended (mage-type): accursed, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble
+Then **always** present all partial class options. These are relevant for Adventurer builds but also help all players understand the system's breadth:
+
+**Core Partial Classes:**
+- warrior — Partial combat specialist. Veteran's Luck (negate hit once/scene), bonus Warrior focus
+- expert — Partial skill specialist. Masterful Expertise (reroll one non-combat check/scene), bonus non-combat skill
+- mage — Partial arcane caster. Reduced spell slots but access to tradition spells and Effort
+
+**Extended Partial Classes (expert-type, replaces partial expert):**
+- bard — Performer charged with the Legacy's power through music, song, and speech. Uses Perform skill + Cha for Effort. Arts include Battle Cry, Cursed Tune, Entangle Incantation, Rally
+- wise — Low-magic scholar, priest, or oracle. No Effort pool. Arts include divination, curses, blessings, and social influence
+
+**Extended Partial Classes (warrior-type, replaces partial warrior):**
+- mageslayer — Anti-magic combat specialist focused on countering spellcasters. Uses Magic skill for Effort. Fixed art progression: Antimage, Magebane, Spellshield, etc.
+
+**Extended Partial Classes (mage-type, replaces partial mage):**
+- accursed — Eldritch pact-wielder. **Magic is the combat skill** (used for Accursed Blade/Bolt attack and damage rolls). Effort = Magic + max(Int, Cha) mod. Arts: Accursed Blade (1d8 melee, +Magic damage), Accursed Bolt (1d8+Magic ranged, 200'), plus curses and shadow powers
+- invoker — Adunic spell-point caster. Casts High Magic spells using spell points instead of Vancian slots. No arts. Uses Magic skill
+- skinshifter — Darian shapeshifter who masters alternate animal and humanoid forms. Effort = Survive + max(Con, Cha) mod. Arts: Change Form, natural weapons, wings, armor
+- duelist — Kistian martial fencer specializing in evasion and single-weapon combat. Effort = Stab + max(Dex, Int) mod. Arts: Favored Weapon, Dodge Doom, Code Duello
+- beastmaster — Llaigisan animal companion specialist who bonds with a loyal beast. Effort = Survive + max(Wis, Cha) mod. Arts: Bind Companion, natural weapons, telepathic link
+- blood_priest — Sarulite divine miracle worker channeling faith through prayer. Effort = Pray + max(Wis, Cha) mod. Arts: Merciful Healing, Smite the Wicked, Turn False Life
+- thought_noble — Vothite psychic who manipulates minds with invisible mental arts. Effort = Notice + max(Int, Wis) mod. Arts: telepathy, mind reading, telekinesis, psychic damage
 
 **Invalid combinations:** mageslayer cannot pair with any mage-type partial class.
 
-If the class is **Mage** or any partial class has base type mage (mage, accursed, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble), prompt for **tradition selection**:
+Then **always** present all mage traditions. These are relevant for Mage and any mage-type partial class:
 
 ```
 Mage Traditions:
@@ -114,13 +158,114 @@ Wait for player choice.
 
 ### Step 5: Second Focus and Free Skill
 
-Present all available foci again (same categories as Step 3, filtered by class restrictions from Step 4). This is the character's second focus pick. The player may not pick the same focus twice (unless it is marked repeatable, e.g., specialist, developed_attribute).
+Present foci **filtered by the class chosen in Step 4**. Include all categories the character qualifies for based on class and partial class selections. This is the character's second focus pick. The player may not pick the same focus twice (unless it is marked repeatable, e.g., specialist, developed_attribute).
 
-Then ask for one free skill pick (any skill set to level 0).
+**General Foci** (always available — same list as Step 3):
+- alert, artisan, assassin, authority, close_combatant, connected, cultured, dealmaker, die_hard, diplomatic_grace, gifted_chirurgeon, henchkeeper, impostor, lucky, poisoner, rider, specialist, spirit_familiar, trapmaster, unique_gift, well_met, xenoblooded
+
+**Warrior Foci** (Warriors or Partial Warriors only):
+- armsmaster — Add Stab to melee/thrown damage, instant weapon swap, bonus Stab
+- deadeye — +1 ranged hit, ignore shooting into melee penalty, bonus Shoot
+- impervious_defense — Innate AC 15 + half level, bonus to AC in heavy armor
+- shocking_assault — Melee damage die explodes, bonus Punch or Stab
+- snipers_eye — +2 ranged damage, negate cover penalties, bonus Shoot
+- unarmed_combatant — Fists deal 1d6+Punch, improved grappling, bonus Punch
+- valiant_defender — Screen ally as instant, +1 AC when defending, bonus Stab or Punch
+- whirlwind_assault — Extra melee attack per round at -2, bonus Stab
+
+**Maqqatban Knight Foci** (Warrior/Partial Warrior only, one style max):
+- all_directions_edge_style — Bonus combat skill, +1 AC, enhanced Shock
+- catalytic_soul_style — Boost allies' Shock, ranged stance, bonus Shoot
+- ghost_archer_style — Ranged attacks ignore cover, hit fleeing foes, bonus Shoot
+- one_point_strike_style — Massive single-strike damage, bonus combat skill
+- pyre_of_heaven_style — Fire-enhanced attacks, area Shock damage, bonus combat skill
+- righteous_iron_style — Defensive dueling, counter-attack triggers, bonus Exert
+- world_tree_lance_style — Extended reach, charge attacks, mounted synergy, bonus Stab
+- wrathful_mountain_style — Heavy weapon mastery, improved Shock, bonus Stab or Punch
+
+**Expert Foci** (Experts or Partial Experts only):
+- polymath — Gain any one bonus skill, versatile expertise
+
+**Amundi Godblood Foci** (Expert/Partial Expert only, one godblood max):
+- danger_sense — Preternatural threat awareness, bonus Notice
+- folie_a_deux — Shared madness, social manipulation, bonus Convince
+- master_tracker — Supernatural tracking ability, bonus Survive
+- night_walker — See in darkness, move silently, bonus Sneak
+- pack_beast — Superhuman carrying capacity, bonus Exert
+- provident_crafter — Craft items from nothing, bonus Craft
+- walk_like_wind — Supernatural speed and agility, bonus Exert
+- wildtongue — Speak with animals and plants, bonus Survive
+
+**Arcane Secret Foci** (Mages or Partial Mages only, one secret max):
+- armored_magic — Cast spells in armor (light at L1, any at L2)
+- atlantean_divination — Scrying and detection magic, bonus Know
+- iteral_pacting — Bind and bargain with entities, bonus Pray
+- nagadi_hemomancy — Blood-powered healing and curses, bonus Heal
+- old_empire_sigilism — Embed spells in tokens as traps/wards
+- vothite_mind_sorcery — Silent/gestureless casting, mental spell delivery
+
+**Non-Mage Foci** (cannot be taken by Mages/Partial Mages):
+- developed_attribute (repeatable) — +1 to chosen attribute modifier (max +2)
+- nullifier — +2 saves vs magic for you and nearby allies, disrupt enemy spells
+
+**Non-Human Origin Foci** (any class, one origin max — skip if already chosen in Step 3):
+- (same list as Step 3)
+
+**Extended partial class base types for focus eligibility:**
+- Partial Expert includes: expert, bard, wise
+- Partial Warrior includes: warrior, mageslayer
+- Partial Mage includes: mage, accursed, invoker, skinshifter, duelist, beastmaster, blood_priest, thought_noble
+
+Then ask for one free skill pick (any skill set to level 0). Note: if a skill is gained from multiple sources (background + free pick + focus bonus + class bonus), each additional grant stacks to a maximum of level 1.
 
 Wait for player choices.
 
-### Step 6: Execute and Confirm
+### Step 6: Class-Specific Choices
+
+Based on the class and tradition selected in Step 4, prompt for class-specific mechanical choices. Skip sections that do not apply.
+
+#### Mage or Partial Mage with Spellcasting Tradition (high_mage, elementalist, necromancer, invoker)
+
+**Starting Arts**: Present the tradition's full art list. The character picks starting arts based on their art progression:
+- Full Mage: 2 arts at level 1
+- Partial Mage (mage, invoker): 1 art at level 1
+
+**Starting Spells**: Present all level-1 spells available to the character's tradition. High Magic spells are available to all spellcasting traditions.
+- Full Mage: picks 4 level-1 spells
+- Partial Mage (mage): picks 3 level-1 spells
+- Invoker: picks 3 level-1 spells (cast via spell points, not Vancian slots)
+
+#### Partial Mage with Non-Spellcasting Tradition (healer, vowed)
+
+**Starting Arts**: Present the tradition's full art list. The character picks 1 art at level 1.
+- No spell selection (these traditions do not use spells)
+
+#### Extended Partial Classes with Arts (accursed, bard, skinshifter, duelist, beastmaster, blood_priest, thought_noble)
+
+**Starting Arts**: Present the class's full art list. The character picks starting arts based on their art progression at level 1:
+- Most extended partials: 2 arts at level 1 (check `art_progression[1]` in class definition)
+- Some arts are mandatory starting picks (e.g., Accursed always starts with Accursed Blade + Accursed Bolt; Skinshifter always starts with Change Form)
+
+#### Mageslayer (fixed progression — no choice)
+
+Arts are assigned automatically at each level. No player selection needed. Inform the player which arts they start with:
+- Level 1: Antimage, Magebane
+
+#### Wise (special — no Effort, mixed arts)
+
+**Starting Arts**: Present the wise art list (general, divination, curses_and_blessings categories). The character picks starting arts based on their art progression at level 1.
+
+#### Warrior (no arts/spells)
+
+No class-specific choices needed. Inform the player of their Killing Blow ability and bonus attack progression.
+
+#### Expert (no arts/spells)
+
+No class-specific choices needed. Inform the player of their Masterful Expertise ability (reroll one failed non-combat skill check per scene).
+
+Wait for player choices (if any).
+
+### Step 7: Execute and Confirm
 
 Run the initialization:
 
