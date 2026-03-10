@@ -287,8 +287,13 @@ def initialize_game(name, class_name, background_id, method="boosted_3d6",
                      foci=None, spells=None, equipment_package=None,
                      skill_method=None, free_skill=None, seed=None,
                      attribute_assignments=None, background_skills=None,
-                     physical_boost=None, mental_boost=None):
+                     physical_boost=None, mental_boost=None,
+                     known_arts=None, class_ability_overrides=None):
     """Full game initialization: create character + generate world state.
+
+    Args:
+        known_arts: List of art names to use instead of auto-picking.
+        class_ability_overrides: List of class ability names to replace defaults.
 
     Returns:
         dict with "state" (complete state.json), "character_summary", and "initialization_report"
@@ -312,6 +317,8 @@ def initialize_game(name, class_name, background_id, method="boosted_3d6",
         background_skills=background_skills,
         physical_boost=physical_boost,
         mental_boost=mental_boost,
+        known_arts=known_arts,
+        class_ability_overrides=class_ability_overrides,
     )
 
     # Build the complete state
